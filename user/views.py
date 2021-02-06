@@ -33,3 +33,5 @@ def login(request):
             return JsonResponse('false', safe=False)
     else:
         return render(request, 'user/login.html')
+
+
