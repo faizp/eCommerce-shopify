@@ -1,0 +1,26 @@
+{% extends 'user/index.html' %}
+{% block content %}
+
+    <div class="card card2 p-3">
+
+        <form method="POST" action="{% url 'index' %}">{% csrf_token %}
+            <div class="alert-danger" role="alert"><span id="invalid" style="color: red"></span></div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Enter your Username</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp"
+                       placeholder="Enter Username">
+
+            </div>
+            <div class="form-group mt-2">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+            </div>
+            <div class="form-group mt-3">
+                <button type="button" id="btn" class="btn btn-outline-success">Sign In</button>
+            </div>
+            <small class="text-muted mt-3">
+                Don't have an Account? <a class="ml-2" href="{% url 'signup' %}">Sign Up</a>
+            </small>
+        </form>
+    </div>
+{% endblock %}
