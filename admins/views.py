@@ -4,15 +4,21 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    return render(request, 'admins/home.html')
+    if request.session.has_key('password'):
+        return render(request, 'admins/home.html')
+    else:
+        return redirect(admin_login)
 
 
 def user_view(request):
-    user = User.objects.all()
-    context = {
-        'user': user
-    }
-    return render(request, 'admins/user-view.html', context)
+    if request.session.has_key('password'):
+        user = User.objects.all()
+        context = {
+            'user': user
+        }
+        return render(request, 'admins/user-view.html', context)
+    else:
+        return redirect(admin_login)
 
 
 def admin_login(request):
