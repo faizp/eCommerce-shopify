@@ -11,26 +11,29 @@
 </head>
 <body>
 <header>
-    <nav style="height: 6em;" class="navbar navbar-expand-lg navbar-light bg-light">
-        <h2 class="heading p-5">SHOPIFY ADMIN</h2>
-
+    <nav class="navbar navbar-light bg-light justify-content-between p-3">
+        <a class="navbar-brand">SHOPIFY ADMIN</a>
+{#        <form class="form-inline">#}
+{#            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+            <a href="{% url 'admin-logout' %}" class="btn btn-danger my-2 my-sm-0" type="button">Logout</a>
+{#        </form>#}
     </nav>
 </header>
 <section>
-<div class="row">
-    <div class="col-md-2">
-     <div class="sidebar">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar">
                 <a href="{% url 'admin-home' %}">Home</a>
                 <a href="{% url 'user-view' %}">Users</a>
                 <a href="{% url 'product-view' %}">Products</a>
                 <a href="#">Offers</a>
             </div>
+        </div>
+        <div class="col-md-10">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
-    <div class="col-md-10">
-        {% block content %}
-        {% endblock %}
-    </div>
-</div>
 </section>
 
 

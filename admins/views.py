@@ -100,3 +100,32 @@ def edit_user(request,id):
             return render(request, 'admins/edit.html', {'user':user})
     else:
         return redirect(admin_login)
+
+
+def edit_product(request,id):
+    if request.session.has_key('password'):
+        if request.method == 'POST':
+            product = Product.objects.get(id = id)
+            p_category = request.POST.get('product-category')
+            categry = Category.objects.get(pk=p_category)
+            product.category = categry
+            product.name = request.POST.get('product-name')
+            product.price = request.POST.get('product-price')
+            product.image1 = request.POST.get('image1')
+            product.image2 = request.POST.get('image2')
+            product.image3 = request.POST.get('image3')
+            product.sec_category = request.POST.get('product-main-category')
+            product.description = request.POST.get('description')
+            product.save()
+            return redirect(product_view)
+
+        else:
+            category = Category.objects.all()
+            product = Product.objects.get(id = id)
+            context = {
+                'product':product,
+                'category':category
+            }
+            return render(request, 'admins/edit-product.html', context)
+    else:
+        return redirect(admin_login)
