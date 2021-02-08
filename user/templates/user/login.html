@@ -1,9 +1,10 @@
 {% extends 'user/index.html' %}
 {% block content %}
 
-    <div class="card card2 p-3">
+    <div style="width: 20em" class="card mt-3 p-3">
 
         <form method="POST" action="{% url 'index' %}">
+            <h3>Sign In</h3>
             <div class="alert-danger" role="alert"><span id="invalid" style="color: red"></span></div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Enter your Username</label>

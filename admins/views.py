@@ -73,3 +73,30 @@ def add_product(request):
             return render(request, 'admins/add-product.html', {'category':category})
     else:
         return redirect(admin_login)
+
+def delete_user(request,id):
+    user = User.objects.get(id = id)
+    user.delete()
+    return redirect(user_view)
+
+def delete_product(request,id):
+    product = Product.objects.get(id = id)
+    product.delete()
+    return redirect(product_view)
+
+
+def edit_user(request,id):
+    if request.session.has_key('password'):
+        if request.method == 'POST':
+            user = User.objects.get(id = id)
+            user.username = request.POST.get('username')
+            user.email = request.POST.get('email')
+            user.first_name = request.POST.get('first-name')
+            user.last_name = request.POST.get('last-name')
+            user.save()
+            return redirect(user_view)
+        else:
+            user = User.objects.get(id = id)
+            return render(request, 'admins/edit.html', {'user':user})
+    else:
+        return redirect(admin_login)
