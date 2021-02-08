@@ -1,0 +1,45 @@
+{% extends 'admins/base.html' %}
+{% block content %}
+    <div class="row">
+        <h3>Add Product</h3>
+        <form style="width: 35em" method="POST">
+            <div class="form-group">
+                <label for="product-catergory">Select category</label>
+                <select class="form-control" name="product-category" id="product-catergory" required>
+                    {% for catergory in category %}
+                    <option value="{{ catergory.id }}">{{ catergory.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product-name">Name of the product</label>
+                <input type="text" name="product-name" class="form-control" id="product-name"
+                       placeholder="Please enter the product name..." required>
+            </div>
+            <div class="form-group">
+                <label for="product-price">Price</label>
+                <input type="text" name="product-price" class="form-control" id="product-price"
+                       placeholder="Please enter the product price..." required>
+            </div>
+            <div class="form-group">
+                <label for="image1">Select images of product</label><br>
+                <input type="file" name="image1" class="form-control-file" id="image1" required>
+                <input type="file" name="image2" class="form-control-file" id="image2" required>
+                <input type="file" name="image3" class="form-control-file" id="image3" required>
+            </div>
+            <div class="form-group">
+                <label for="product-main-category">Select main category</label>
+                <select class="form-control" name="product-main-category" id="product-main-catergory" required>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Kids</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product-description">Description</label>
+                <textarea class="form-control" name="product-description" id="product-description" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add product</button>
+        </form>
+    </div>
+{% endblock %}

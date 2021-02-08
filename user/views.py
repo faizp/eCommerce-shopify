@@ -22,7 +22,7 @@ def register(request):
     return render(request, 'user/register.html', {"form": form})
 
 
-def login(request):
+def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
