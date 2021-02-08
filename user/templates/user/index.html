@@ -16,7 +16,7 @@
 {#header#}
 <header>
     <div class="row">
-{#navbar#}
+        {#navbar#}
         <div class="navbar navbar-expand-lg bg-light main-nav">
             <div class="container">
                 <div class="col-md-1">
@@ -30,53 +30,62 @@
                         <button type="button" class="btn btn-outline-primary">search</button>
                     </div>
                 </div>
-                <div class="col-md-2 text-center">
-                    <i class="bi bi-cart4"></i>
-                </div>
-                <div class="col-md-1">
-                    <i class="bi bi-person-circle"></i>
-                </div>
+                {% if request.user.is_authenticated %}
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-cart4"></i>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                {% else %}
+                    <div class="col-md-2 text-center">
+                        <i class="bi bi-cart4"></i>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{% url 'signin' %}"><h6 style="color: black; text-decoration: none">LOGIN</h6></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div class="row">
-    <div class="navbar sec-nav">
+        <div class="navbar sec-nav">
             <div class="container text-center">
-                    <div class="col-md-4">
-                        Men
-                    </div>
-                    <div class="col-md-4">
-                        Women
-                    </div>
-                    <div class="col-md-4">
-                        Kids
-                    </div>
+                <div class="col-md-4">
+                    Men
+                </div>
+                <div class="col-md-4">
+                    Women
+                </div>
+                <div class="col-md-4">
+                    Kids
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </header>
 <section>
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </section>
 {#footer code#}
-  <footer>
+<footer>
     <div class="row">
-      <div class="col-md-12 text-center mt-3">
-{#        <a href="https://www.facebook.com/profile.php?id=100007834050982" class="fa fa-facebook-official fa-2x" aria-hidden="true"></a>#}
-{#        <a href="https://www.linkedin.com/in/faiz-p/" class="fa fa-linkedin-square fa-2x" aria-hidden="true"></a>#}
-{#        <a href="https://www.instagram.com/ffaiz_p/" class="fa fa-instagram fa-2x" aria-hidden="true"></a>#}
-{#        <a href="https://github.com/faizp" class="fa fa-github fa-2x" aria-hidden="true"></a>#}
-        <hr style="width: 70%; margin-left: 15%;">
+        <div class="col-md-12 text-center mt-3">
+            {#        <a href="https://www.facebook.com/profile.php?id=100007834050982" class="fa fa-facebook-official fa-2x" aria-hidden="true"></a>#}
+            {#        <a href="https://www.linkedin.com/in/faiz-p/" class="fa fa-linkedin-square fa-2x" aria-hidden="true"></a>#}
+            {#        <a href="https://www.instagram.com/ffaiz_p/" class="fa fa-instagram fa-2x" aria-hidden="true"></a>#}
+            {#        <a href="https://github.com/faizp" class="fa fa-github fa-2x" aria-hidden="true"></a>#}
+            <hr style="width: 70%; margin-left: 15%;">
 
-        <p class="">© 2020 | All rights reserved</p>
-      </div>
+            <p class="">© 2020 | All rights reserved</p>
+        </div>
 
     </div>
-  </footer>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
         crossorigin="anonymous"></script>
