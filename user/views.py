@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from . forms import UserRegisterForm
+from django.contrib.auth.models import User
+from shop.models import Product
 from django.contrib.auth import login, authenticate, logout
-# from django.views.decorators.csrf import csrf_protect
 
 
 def index(request):
-    return render(request, 'user/home.html')
+    products = Product.objects.all()
+    return render(request, 'user/home.html', {'product': products})
 
 
 def register(request):
@@ -20,7 +22,6 @@ def register(request):
     return render(request, 'user/register.html', {"form": form})
 
 
-# @csrf_protect
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -35,3 +36,6 @@ def login(request):
         return render(request, 'user/login.html')
 
 
+def logout(request):
+    logout(request)
+    return redirect(login)

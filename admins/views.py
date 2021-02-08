@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from shop.models import Product
 
 
 def home(request):
@@ -41,3 +42,9 @@ def admin_logout(request):
     if request.session.has_key('password'):
         request.session.flush()
         return redirect(admin_login)
+
+
+def product_view(request):
+    if request.session.has_key('password'):
+        products = Product.objects.all()
+        return render(request, 'admins/product-view.html', {'products': products})
