@@ -115,6 +115,7 @@ def edit_product(request,id):
             product.image1 = request.FILES.get('image1')
             product.image2 = request.FILES.get('image2')
             product.image3 = request.FILES.get('image3')
+            print(product.image1)
             product.sec_category = request.POST.get('product-main-category')
             product.description = request.POST.get('description')
             product.save()

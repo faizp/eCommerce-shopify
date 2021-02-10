@@ -3,12 +3,12 @@
     <div class="row">
         {% for product in product %}
             <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ product.image1_url }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
+                <div class="card text-center shadow mt-2" style="width: 15rem">
+                    <img class="card-img-top" src="{{ product.image1_url }}" style="height: 15em; width: 15rem;" alt="Card image cap">
+                    <div class="card-body" style="height: 5em">
+                        <h6 class="card-title">{{ product.name }} - {{ product.sec_category }}</h6>
+                        <p class="card-text">{{ product.price }} rs</p>
+{#                        <a href="#" class="btn btn-primary">Add to cart</a>#}
                     </div>
                 </div>
             </div>
