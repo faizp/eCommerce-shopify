@@ -8,6 +8,7 @@
                     <div class="card-body" style="height: 5em">
                         <h6 class="card-title">{{ product.name }} - {{ product.sec_category }}</h6>
                         <p class="card-text">{{ product.price }} rs</p>
+                        <a href="{% url 'add-cart' product.id %}"><button type="button" class="btn btn-primary"></button></a>
                     </div>
                 </div>
             </div>

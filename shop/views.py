@@ -1,14 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # from django.views.decorators.http import require_POST
-# from .models import Product
-# from .cart import Cart
+from .models import Product, Cart
 # from .forms import CartAddProductForm
 
 
-@login_required
+
 def cart(request):
     return render(request, 'user/cart.html')
+
+@login_required
+def add_to_cart(request,p_id):
+    user = request.user.id
+    print(user)
+    product = Product.objects.get(id=p_id)
+    us = User.objects.get(pk=user)
+    cart = Cart.objects.create(user_id = us, product_id = product)
+    cart.save()
+    print(cart)
+    return redirect('cart')
 
 
 
