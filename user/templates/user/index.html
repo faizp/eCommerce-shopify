@@ -32,20 +32,20 @@
                 </div>
                 {% if request.user.is_authenticated %}
                     <div class="col-md-2 text-center">
-                        <i class="bi bi-cart4"></i>
+                        <a href="{% url 'cart' %}"><i style="color: black" class="bi bi-cart4"></i></a>
                     </div>
                     <div class="col-md-1">
                         <i class="bi bi-person-circle"></i>
                     </div>
-                    <div class="col-md-1 mt-3">
-                        <a href="{% url 'logout' %}"><h6 style="color: black; text-decoration: none">Logout</h6></a>
+                    <div class="col-md-1 mt-1">
+                        <a href="{% url 'logout' %}"><btn class="btn">LOGOUT</btn></a>
                     </div>
                 {% else %}
                     <div class="col-md-2 text-center">
-                        <i class="bi bi-cart4"></i>
+                        <a href="{% url 'signin' %}"><i style="color: black" class="bi bi-cart4"></i></a>
                     </div>
-                    <div class="col-md-1 mt-3">
-                        <a href="{% url 'signin' %}"><h6 style="color: black; text-decoration: none">LOGIN</h6></a>
+                    <div class="col-md-1 mt-1">
+                        <a href="{% url 'signin' %}"><btn class="btn">LOGIN</btn></a>
                     </div>
                 {% endif %}
             </div>

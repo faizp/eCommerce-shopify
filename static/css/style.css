@@ -13,6 +13,11 @@
 body{
     overflow-x: hidden;
 }
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+
+}
 
 /* The side navigation menu */
 .sidebar {

@@ -1,0 +1,38 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 p-3">
+            <div class="card shadow" style="height: 9em;">
+                <div class="card-horizontal" style="display: flex">
+                    <div class="img-square-wrapper border">
+                        <img class="img-fluid" style="width: 8em; height: 100%;"
+                             src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+                             alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <h6 class="card-title mt-1">HIGHLANDER</h6>
+                                <h6 class="card-title text-muted mt-1">CATEGORY: </h6>
+                                <h6 class="card-title text-muted mt-1">SIZE: </h6>
+                            </div>
+                            <div class="col-md-3">PRICE:</div>
+                            <div class="col-md-3">
+                                <p class="small muted text-center">QTY: <span
+                                        class="mt-1 card-title text-success">86</span>
+                                    <a style="size: 2em" class="btn btn-small">+</a><a class="btn btn-small">-</a>
+                                </p>
+                                <button class="btn btn-danger">REMOVE ITEM</button>
+                            </div>
+                        </div>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                {#                <div class="card-footer">#}
+                {#                    <small class="text-muted">Last updated 3 mins ago</small>#}
+                {#                </div>#}
+            </div>
+        </div>
+        <div class="col-md-4">hellow</div>
+    </div>
+{% endblock %}

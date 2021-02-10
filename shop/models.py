@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -32,3 +33,10 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
+
+class Cart(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    created_date = models.DateTimeField(auto_now_add=True)
