@@ -2,24 +2,26 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8 p-3">
+            {% for cart in carts %}
+
             <div class="card shadow" style="height: 9em;">
                 <div class="card-horizontal" style="display: flex">
                     <div class="img-square-wrapper border">
-                        <img class="img-fluid" style="width: 8em; height: 100%;"
-                             src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+                        <img class="img-fluid" style="width: 8em; height: 9em;"
+                             src="{{ cart.product.image1_url }}"
                              alt="Card image cap">
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mt-1">
-                                <h6 class="card-title mt-1">HIGHLANDER</h6>
-                                <h6 class="card-title text-muted mt-1">CATEGORY: </h6>
+                                <h6 class="card-title mt-1">{{ cart.product.name }}</h6>
+                                <h6 class="card-title text-muted mt-1">CATEGORY: {{ cart.product.category }} </h6>
                                 <h6 class="card-title text-muted mt-1">SIZE: </h6>
                             </div>
-                            <div class="col-md-3">PRICE:</div>
+                            <div class="col-md-3">PRICE: {{ cart.product.price }}</div>
                             <div class="col-md-3">
-                                <p class="small muted text-center">QTY: <span
-                                        class="mt-1 card-title text-success">86</span>
+                                <p class="small muted text-center">QTY:<span
+                                        class="mt-1 card-title text-success">{{ cart.quantity }}</span>
                                     <a style="size: 2em" class="btn btn-small">+</a><a class="btn btn-small">-</a>
                                 </p>
                                 <button class="btn btn-danger">REMOVE ITEM</button>
@@ -32,6 +34,7 @@
                 {#                    <small class="text-muted">Last updated 3 mins ago</small>#}
                 {#                </div>#}
             </div>
+        {% endfor %}
         </div>
         <div class="col-md-4">hellow</div>
     </div>

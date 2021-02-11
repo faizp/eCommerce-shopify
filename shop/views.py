@@ -6,19 +6,19 @@ from .models import Product, Cart
 # from .forms import CartAddProductForm
 
 
-
+@login_required
 def cart(request):
-    return render(request, 'user/cart.html')
+    user = request.user.id
+    carts = Cart.objects.filter(user_id=user)
+    context = {
+        'carts': carts,
+
+    }
+    return render(request, 'user/cart.html', context)
 
 @login_required
 def add_to_cart(request,p_id):
-    user = request.user.id
-    print(user)
-    product = Product.objects.get(id=p_id)
-    us = User.objects.get(pk=user)
-    cart = Cart.objects.create(user_id = us, product_id = product)
-    cart.save()
-    print(cart)
+    Cart.objects.create(user = request.user, product_id = p_id)
     return redirect('cart')
 
 

@@ -61,10 +61,8 @@ def add_product(request):
             image1 = request.FILES.get('image1')
             image2 = request.FILES.get('image2')
             image3 = request.FILES.get('image3')
-            # print(image3.url,image2,image1)
             sub_category = request.POST.get('product-main-category')
             description = request.POST.get('product-description')
-            # print(description)
             categry = Category.objects.get(pk=p_category)
             product = Product.objects.create(category=categry,name=name,price=price,image1=image1,image2=image2,image3=image3,description=description,sec_category=sub_category)
             product.save()
@@ -115,7 +113,6 @@ def edit_product(request,id):
             product.image1 = request.FILES.get('image1')
             product.image2 = request.FILES.get('image2')
             product.image3 = request.FILES.get('image3')
-            print(product.image1)
             product.sec_category = request.POST.get('product-main-category')
             product.description = request.POST.get('description')
             product.save()
@@ -125,8 +122,8 @@ def edit_product(request,id):
             category = Category.objects.all()
             product = Product.objects.get(id = id)
             context = {
-                'product':product,
-                'category':category
+                'product': product,
+                'category': category
             }
             return render(request, 'admins/edit-product.html', context)
     else:
