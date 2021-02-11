@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.contrib.auth.models import User
-# from django.views.decorators.http import require_POST
 from .models import Product, Cart
-# from .forms import CartAddProductForm
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required
@@ -16,13 +16,22 @@ def cart(request):
     }
     return render(request, 'user/cart.html', context)
 
+
+@csrf_exempt
 @login_required
 def add_to_cart(request,p_id):
-    Cart.objects.create(user = request.user, product_id = p_id)
-    return redirect('cart')
+    user = request.user
+    if Cart.objects.filter(user=user, product_id=p_id).exists():
+        cart = Cart.objects.get(user=user, product_id=p_id)
+        cart.quantity += 1
+        cart.save()
+    else:
+        Cart.objects.create(user = user, product_id = p_id)
+    return JsonResponse('true', safe=False)
 
 
-
+def add_quantity(request,cart_id):
+    pass
 
 
 

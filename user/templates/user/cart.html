@@ -3,8 +3,7 @@
     <div class="row">
         <div class="col-md-8 p-3">
             {% for cart in carts %}
-
-            <div class="card shadow" style="height: 9em;">
+            <div class="card shadow mt-1" style="height: 9em;">
                 <div class="card-horizontal" style="display: flex">
                     <div class="img-square-wrapper border">
                         <img class="img-fluid" style="width: 8em; height: 9em;"
@@ -22,7 +21,7 @@
                             <div class="col-md-3">
                                 <p class="small muted text-center">QTY:<span
                                         class="mt-1 card-title text-success">{{ cart.quantity }}</span>
-                                    <a style="size: 2em" class="btn btn-small">+</a><a class="btn btn-small">-</a>
+                                    <a style="size: 2em" class="btn btn-small" onclick="addQuantity('{{ cart.id }}')">+</a><a class="btn btn-small">-</a>
                                 </p>
                                 <button class="btn btn-danger">REMOVE ITEM</button>
                             </div>
@@ -30,9 +29,7 @@
                         <p class="card-text"></p>
                     </div>
                 </div>
-                {#                <div class="card-footer">#}
-                {#                    <small class="text-muted">Last updated 3 mins ago</small>#}
-                {#                </div>#}
+
             </div>
         {% endfor %}
         </div>
