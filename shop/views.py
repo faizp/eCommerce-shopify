@@ -30,6 +30,12 @@ def add_to_cart(request,p_id):
     return JsonResponse('true', safe=False)
 
 
+def remove_from_cart(request, id):
+    product = Cart.objects.get(id=id)
+    product.delete()
+    return redirect('cart')
+
+
 def add_quantity(request,cart_id):
     pass
 

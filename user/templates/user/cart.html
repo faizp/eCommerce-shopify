@@ -23,7 +23,7 @@
                                         class="mt-1 card-title text-success">{{ cart.quantity }}</span>
                                     <a style="size: 2em" class="btn btn-small" onclick="addQuantity('{{ cart.id }}')">+</a><a class="btn btn-small">-</a>
                                 </p>
-                                <button class="btn btn-danger">REMOVE ITEM</button>
+                                <a href="{% url 'remove-from-cart' cart.id %}"> <button class="btn btn-danger">REMOVE ITEM</button></a>
                             </div>
                         </div>
                         <p class="card-text"></p>
