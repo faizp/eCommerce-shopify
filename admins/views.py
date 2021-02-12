@@ -10,7 +10,7 @@ def home(request):
     if request.session.has_key('password'):
         return render(request, 'admins/home.html')
     else:
-        return redirect(admin_login)
+        return redirect('admin-login')
 
 
 def user_view(request):
@@ -21,12 +21,12 @@ def user_view(request):
         }
         return render(request, 'admins/user-view.html', context)
     else:
-        return redirect(admin_login)
+        return redirect('admin-login')
 
 
 def admin_login(request):
     if request.session.has_key('password'):
-        return redirect(home)
+        return redirect('admin-home')
     else:
         if request.method == 'POST':
             username = request.POST['username']
@@ -43,13 +43,16 @@ def admin_login(request):
 def admin_logout(request):
     if request.session.has_key('password'):
         request.session.flush()
-        return redirect(admin_login)
+        return redirect('admin-login')
 
 
 def product_view(request):
     if request.session.has_key('password'):
         products = Product.objects.all()
         return render(request, 'admins/product-view.html', {'products': products})
+    else:
+        return redirect('admin-login')
+
 
 @csrf_exempt
 def add_product(request):
@@ -66,22 +69,24 @@ def add_product(request):
             categry = Category.objects.get(pk=p_category)
             product = Product.objects.create(category=categry,name=name,price=price,image1=image1,image2=image2,image3=image3,description=description,sec_category=sub_category)
             product.save()
-            return redirect(home)
+            return redirect('admin-home')
         else:
             category = Category.objects.all()
             return render(request, 'admins/add-product.html', {'category':category})
     else:
-        return redirect(admin_login)
+        return redirect('admin-login')
+
 
 def delete_user(request,id):
     user = User.objects.get(id = id)
     user.delete()
-    return redirect(user_view)
+    return redirect('user-view')
+
 
 def delete_product(request,id):
     product = Product.objects.get(id = id)
     product.delete()
-    return redirect(product_view)
+    return redirect('product-view')
 
 
 def edit_user(request,id):
@@ -98,7 +103,7 @@ def edit_user(request,id):
             user = User.objects.get(id = id)
             return render(request, 'admins/edit.html', {'user':user})
     else:
-        return redirect(admin_login)
+        return redirect('admin-login')
 
 
 def edit_product(request,id):
@@ -116,7 +121,7 @@ def edit_product(request,id):
             product.sec_category = request.POST.get('product-main-category')
             product.description = request.POST.get('description')
             product.save()
-            return redirect(product_view)
+            return redirect('product-view')
 
         else:
             category = Category.objects.all()
@@ -127,4 +132,53 @@ def edit_product(request,id):
             }
             return render(request, 'admins/edit-product.html', context)
     else:
-        return redirect(admin_login)
+        return redirect('admin-login')
+
+
+def category(request):
+    if request.session.has_key('password'):
+        categories = Category.objects.all()
+        context = {
+            'categories': categories
+        }
+        return render(request, 'admins/category.html', context)
+    else:
+        return redirect('admin-login')
+
+
+@csrf_exempt
+def add_category(request):
+    if request.session.has_key('password'):
+        if request.method == 'POST':
+            name = request.POST.get('category-name')
+            print(name)
+            cat = Category.objects.create(name=name)
+            cat.save()
+            return redirect('categories')
+        else:
+            return render(request, 'admins/add-category.html')
+    else:
+        return redirect('admin-login')
+
+
+
+def delete_category(request, id):
+    if request.session.has_key('password'):
+        category = Category.objects.get(id=id)
+        category.delete()
+        return redirect('categories')
+
+
+@csrf_exempt
+def edit_category(request, id):
+    if request.session.has_key('password'):
+        if request.method == 'POST':
+            category = Category.objects.get(id=id)
+            category.name = request.POST.get('category-name')
+            category.save()
+            return redirect('categories')
+        else:
+            category = Category.objects.get(id=id)
+            return render(request, 'admins/edit-category.html', {'category': category})
+    else:
+        return redirect('admin-login')
