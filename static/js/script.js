@@ -36,6 +36,13 @@ function addToCart (id) {
         })
 }
 
+$(document).ready(function(){
+    $('#add-to-cart').click(function(){
+        $('#alert').show()
+    })
+});
+
+
 function addQuantiy(id) {
     $.ajax({
 

@@ -34,6 +34,22 @@ class Product(models.Model):
             url = ''
         return url
 
+    @property
+    def image2_url(self):
+        try:
+            url = self.image2.url
+        except:
+            url = ''
+        return url
+
+    @property
+    def image3_url(self):
+        try:
+            url = self.image3.url
+        except:
+            url = ''
+        return url
+
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

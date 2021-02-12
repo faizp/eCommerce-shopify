@@ -1,0 +1,115 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row mt-3 text-center">
+        <h3>PRODUCT DETAILS: </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12 text-center p-5">
+                    <div class="card card-pic shadow-lg" style="width: 20em;">
+                        <img class="img-fluid border center-block shadow-lg rounded mx-auto d-block"
+                             src="{{ product.image1_url }}">
+                    </div>
+                </div>
+                <div class="col-md-6 p-2">
+                    <div class="card shadow-lg" style="width: 10em; margin-left: 9em">
+                        <img class="img-fluid border shadow-lg rounded mx-auto d-block"
+                             src="{{ product.image2_url }}">
+
+                    </div>
+                </div>
+                <div class="col-md-6 p-2">
+                    <div class="card shadow-lg" style="width: 10em;">
+                        <img class="img-fluid border shadow-lg rounded mx-auto d-block"
+                             src="{{ product.image3_url }}">
+                    </div>
+                </div>
+                {#                <div class="col-md-4 p-2">#}
+                {#                    <div class="card shadow-lg">#}
+                {#                        <img class="img-fluid shadow-lg rounded mx-auto d-block"#}
+                {#                             src="{{ product.image1_url }}">#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5 style="margin-top: 5em">{{ product.name }}</h5>
+            <p class="text-muted text-uppercase small">{{ product.sec_category }}</p>
+            <p>PRICE: <span class="mr-1"><strong>{{ product.price }} rs</strong></span></p>
+            <p class="pt-1"><span class="text-muted">Description:</span><br> {{ product.description }}</p>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <tbody>
+                    <tr>
+                        <th class="pl-0 w-25" scope="row"><strong>Category</strong></th>
+                        <td>{{ product.category }}</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                        <td>Blue</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-0 w-25" scope="row"><strong>Availability</strong></th>
+                        <td>{% if product.availability %}
+                            <span style="color: green">Availabale</span>
+                        {% else %}
+                            <span style="color: red">Not available</span>
+                        {% endif %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive mb-2">
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                    <tr>
+                        {#                        <td class="pl-0 pb-0 w-25">Quantity</td>#}
+                        <td class="pb-0">Select size</td>
+                    </tr>
+                    <tr>
+                        {#                        <td class="pl-0">#}
+                        {#                            <div class="def-number-input number-input safari_only mb-0">#}
+                        {#                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"#}
+                        {#                                        class="minus"></button>#}
+                        {#                                <input class="quantity" min="0" name="quantity" value="1" type="number">#}
+                        {#                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"#}
+                        {#                                        class="plus"></button>#}
+                        {#                            </div>#}
+                        {#                        </td>#}
+                        <td>
+                            <div class="mt-1">
+                                <div class="form-check form-check-inline pl-0">
+                                    <input type="radio" class="form-check-input" id="small" name="materialExampleRadios"
+                                           checked>
+                                    <label class="form-check-label small text-uppercase card-link-secondary"
+                                           for="small">Small</label>
+                                </div>
+                                <div class="form-check form-check-inline pl-0">
+                                    <input type="radio" class="form-check-input" id="medium"
+                                           name="materialExampleRadios">
+                                    <label class="form-check-label small text-uppercase card-link-secondary"
+                                           for="medium">Medium</label>
+                                </div>
+                                <div class="form-check form-check-inline pl-0">
+                                    <input type="radio" class="form-check-input" id="large"
+                                           name="materialExampleRadios">
+                                    <label class="form-check-label small text-uppercase card-link-secondary"
+                                           for="large">Large</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" style="background-color: orangered; width: 20em" class="btn text-white"
+                    id="add-to-cart" onclick="addToCart({{ product.id }})">ADD TO CART
+            </button>
+
+            {#            <h1>{{ product.name }}</h1>#}
+            {#            <h2>{{ product.category }}</h2>#}
+        </div>
+    </div>
+
+{% endblock %}

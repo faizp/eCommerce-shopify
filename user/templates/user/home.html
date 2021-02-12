@@ -6,9 +6,8 @@
                 <div class="card text-center shadow mt-2" style="width: 15rem">
                     <img class="card-img-top" src="{{ product.image1_url }}" style="height: 15em; width: 15rem;" alt="Card image cap">
                     <div class="card-body" style="height: 5em">
-                        <h6 class="card-title">{{ product.name }} - {{ product.sec_category }}</h6>
+                        <a href="{% url 'product-view' product.id %}" class="card-title">{{ product.name }} - {{ product.sec_category }}</a>
                         <p class="card-text">{{ product.price }} rs</p>
-                        <button type="button" class="btn btn-primary" id="add-to-cart" onclick="addToCart({{ product.id }})"></button>
                     </div>
                 </div>
             </div>

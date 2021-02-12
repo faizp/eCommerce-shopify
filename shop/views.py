@@ -34,7 +34,16 @@ def add_quantity(request,cart_id):
     pass
 
 
-
+def product_view(request,id):
+    product = Product.objects.get(id=id)
+    print(product)
+    print(product.image2)
+    print(product.image3)
+    print(product.image1)
+    context = {
+        'product': product
+    }
+    return render(request, 'user/product-view.html', context)
 
 
 
