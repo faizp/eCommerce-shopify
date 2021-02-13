@@ -78,9 +78,14 @@ div.content {
 }
 
 .card-pic {
-        margin: 0 auto; /* Added */
-        float: none; /* Added */
-        margin-bottom: 10px; /* Added */
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
 }
 
+/*.zoom:hover {*/
+  /*-ms-transform: scale(1.5); !* IE 9 *!*/
+  /*-webkit-transform: scale(1.5); !* Safari 3-8 *!*/
+  /*transform: scale(1.5);*/
+/*}/*/
 
