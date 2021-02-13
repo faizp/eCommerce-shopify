@@ -77,9 +77,13 @@ def add_product(request):
         return redirect('admin-login')
 
 
-def delete_user(request,id):
+def block_user(request,id):
     user = User.objects.get(id = id)
-    user.delete()
+    if user.is_active:
+        user.is_active = False
+    else:
+        user.is_active = True
+    user.save()
     return redirect('user-view')
 
 
