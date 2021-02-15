@@ -36,12 +36,6 @@ function addToCart (id) {
         })
 }
 
-$(document).ready(function(){
-    $('#add-to-cart').click(function(){
-        $('#alert').show()
-    })
-});
-
 
 function addQuantiy(id) {
     $.ajax({
@@ -50,19 +44,4 @@ function addQuantiy(id) {
 
 }
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#image1').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#image1").change(function(){
-        readURL(this);
-    });
 

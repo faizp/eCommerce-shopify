@@ -1,36 +1,40 @@
 {% extends 'user/index.html' %}
 {% block content %}
-    <div class="row mt-3 text-center">
-        <h3>PRODUCT DETAILS: </h3>
+    <div style="display: none" id="product-added" class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        Success! message sent successfully.
+    </div>
+    <div class="row text-center bg-light" style="height: 5em">
+        <h3 class="mt-3">PRODUCT DETAILS: </h3>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12 text-center p-5">
-                    <div class="card card-pic shadow-lg" style="width: 20em;">
-                        <img class="img-fluid border center-block shadow-lg rounded mx-auto d-block"
-                             src="{{ product.image1_url }}">
+                    <div class="card card-pic shadow-lg" style="width: 20em; height: 20em; margin-left: 10em">
+                        <figure class="zoom" onmousemove="zoom(event)" style="background-image: url({{ product.image1_url }});" >
+                            <img id="zoomImg" class="img-fluid border center-block shadow-lg rounded mx-auto d-block"
+                                src="{{ product.image1_url }}" >
+                        </figure>
                     </div>
                 </div>
-                <div class="col-md-6 p-2">
+                <div class="col-md-6 p-5">
                     <div class="card shadow-lg" style="width: 10em; margin-left: 9em">
-                        <img class="img-fluid border shadow-lg rounded mx-auto d-block"
+                        <figure class="zoom" onmousemove="zoom(event)" style="background-image: url({{ product.image2_url }});" >
+                        <img id="zoomImg" class="img-fluid border shadow-lg rounded mx-auto d-block"
                              src="{{ product.image2_url }}">
+                        </figure>
 
                     </div>
                 </div>
-                <div class="col-md-6 p-2">
+                <div class="col-md-6 p-5">
                     <div class="card shadow-lg" style="width: 10em;">
-                        <img class="img-fluid border shadow-lg rounded mx-auto d-block"
+                        <figure class="zoom" onmousemove="zoom(event)" style="background-image: url({{ product.image3_url }});" >
+                        <img id="zoomImg" class="img-fluid border shadow-lg rounded mx-auto d-block"
                              src="{{ product.image3_url }}">
+                        </figure>
                     </div>
                 </div>
-                {#                <div class="col-md-4 p-2">#}
-                {#                    <div class="card shadow-lg">#}
-                {#                        <img class="img-fluid shadow-lg rounded mx-auto d-block"#}
-                {#                             src="{{ product.image1_url }}">#}
-                {#                    </div>#}
-                {#                </div>#}
             </div>
         </div>
         <div class="col-md-6">
@@ -111,5 +115,17 @@
             {#            <h2>{{ product.category }}</h2>#}
         </div>
     </div>
+    <script>
+    var zoomImg = document.getElementById("zoomImg")
+        function zoom(e) {
+            var zoomer = e.currentTarget;
+
+            e.offsetX ? (offsetX = e.offsetX) : (offsetX[0] = e.pageX);
+            e.offsetY ? (offsetY = e.offsetY) : (offsetX[0] = e.pageX);
+            x = (offsetX / zoomer.offsetWidth) * 100;
+            y = (offsetY / zoomer.offsetHeight) * 100;
+            zoomer.style.backgroundPosition = x + "%" + " " + y + "%";
+        }
+    </script>
 
 {% endblock %}
