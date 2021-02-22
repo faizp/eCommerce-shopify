@@ -1,0 +1,18 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row">
+        {% for product in products %}
+           <div class="col-md-3">
+           <a style="text-decoration: none; color: black" href="{% url 'product-view' product.id %}">
+                <div class="card text-center shadow mt-2" style="width: 15rem">
+                    <img class="card-img-top" src="{{ product.image1_url }}" style="height: 15em; width: 15rem;" alt="Card image cap">
+                    <div class="card-body" style="height: 5em">
+                        <p class="card-title">{{ product.name }} - {{ product.sec_category }}</p>
+                        <p class="card-text">{{ product.price }} rs</p>
+                    </div>
+                </div>
+               </a>
+           </div>
+        {% endfor %}
+    </div>
+{% endblock %}

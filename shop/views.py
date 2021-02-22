@@ -64,27 +64,28 @@ def product_view(request,id):
     return render(request, 'user/product-view.html', context)
 
 
+def men(request):
+    products = Product.objects.filter(sec_category='Male')
+    print(products)
+    context = {
+        'products': products
+    }
+    return render(request, 'user/men.html', context)
 
 
+def women(request):
+    products = Product.objects.filter(sec_category='Female')
+    print(products)
+    context = {
+        'products': products
+    }
+    return render(request, 'user/men.html', context)
 
 
-
-
-
-
-# @require_POST
-# def cart_add(request, product_id):
-#     cart = Cart(request)
-#     product = get_object_or_404(Product, id=product_id)
-#     form = CartAddProductForm(request.POST)
-#     if form.is_valid():
-#         cd = form.cleaned_data
-#         cart.add(product=product,quantity=cd['quantity'], ovverride_quantity=cd['ovveride'])
-#     return redirect('cart:cart_detail')
-#
-# @require_POST
-# def cart_remove(request, product_id):
-#     cart = Cart(request)
-#     product = get_object_or_404(Product, id=product_id)
-#     cart.remove(product)
-#     return redirect('cart:cart_detail')
+def kids(request):
+    products = Product.objects.filter(sec_category='Kids')
+    print(products)
+    context = {
+        'products': products
+    }
+    return render(request, 'user/men.html', context)

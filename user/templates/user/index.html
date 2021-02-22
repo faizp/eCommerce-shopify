@@ -22,7 +22,8 @@
                 <div class="col-md-1">
                     <img class="image image-thumbnail" src='{% static "images/icon.jpg" %}'>
                 </div>
-                <div class="col-md-2">SHOPIFY</div>
+                <div class="col-md-2"><a href="{% url 'index' %}" style="text-decoration: none; color: black;
+">SHOPIFY</a></div>
                 <div class="col-md-6">
                     <div class="input-group">
                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
@@ -59,13 +60,13 @@
         <div class="navbar shadow-sm sec-nav">
             <div class="container text-center">
                 <div class="col-md-4">
-                    Men
+                    <a style="text-decoration: none; color: black" href="{% url 'men-category' %}">Men</a>
                 </div>
                 <div class="col-md-4">
-                    Women
+                    <a style="text-decoration: none; color: black" href="{% url 'women-category' %}">Women</a>
                 </div>
                 <div class="col-md-4">
-                    Kids
+                    <a style="text-decoration: none; color: black" href="{% url 'kids-category' %}">Kids</a>
                 </div>
             </div>
         </div>
