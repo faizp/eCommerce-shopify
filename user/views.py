@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from . forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from .models import Profile
 from shop.models import Product
 from django.contrib.auth import login, authenticate, logout
 
@@ -41,6 +42,13 @@ def login_user(request):
             return render(request, 'user/login.html')
     else:
         return redirect(index)
+
+
+def profile(request):
+    user = request.user
+    profile = Profile.objects.get(user = user)
+    return render(request, 'user/profile.html', {'profile':profile})
+
 
 
 def logout_user(request):

@@ -16,4 +16,5 @@ urlpatterns = [
     path('men/', shop_view.men, name='men-category'),
     path('women/', shop_view.women, name='women-category'),
     path('kids/', shop_view.kids, name='kids-category'),
+    path('profile/', views.profile, name='user-profile')
 ]
