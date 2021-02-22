@@ -21,3 +21,13 @@ class Profile(models.Model):
         return url
 
 
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    house_name = models.CharField(max_length=50)
+    town = models.CharField(max_length=20)
+    district = models.CharField(max_length=20)
+    state = models.CharField(max_length=15)
+    pin_code = models.IntegerField(default=000000)
+    type = models.CharField(max_length=6)
+
+

@@ -1,0 +1,55 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row bg-light">
+        <h5 style="height: 3em;margin-top: 2em" class="text-center">Addresses</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <div class="card p-2 mt-1">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6>Saved Addresses</h6>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-outline-success"> + ADD NEW ADDRESS</button>
+                    </div>
+                </div>
+
+                {% for address in address %}
+
+                    <div class="card p-2 mt-1">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p>{{ address.house_name }}<br>
+                            {{ address.town }},
+                            {{ address.district }}<br>
+                            {{ address.state }},
+                            {{ address.pin_code }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="border text-center rounded-circle"><span class="small text-muted">{{ address.type }}</span></p>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-6 border-top"><span style="color: blue;">EDIT</span></div>
+                        <div class="col-md-6 border-top"><span style="color: red;">DELETE</span></div>
+                    </div>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="width: 13em;margin-top: 2em" class="card text-center p-4 rounded shadow">
+                <a style="text-decoration: none; color: black;" href="{% url 'user-profile' %}">Profile</a>
+                <a style="text-decoration: none; color: black" href="{% url 'user-addresses' %}">Addresses</a>
+                <a style="text-decoration: none; color: black;" href="">My Orders</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

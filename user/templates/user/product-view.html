@@ -68,19 +68,9 @@
                 <table class="table table-sm table-borderless">
                     <tbody>
                     <tr>
-                        {#                        <td class="pl-0 pb-0 w-25">Quantity</td>#}
                         <td class="pb-0">Select size</td>
                     </tr>
                     <tr>
-                        {#                        <td class="pl-0">#}
-                        {#                            <div class="def-number-input number-input safari_only mb-0">#}
-                        {#                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"#}
-                        {#                                        class="minus"></button>#}
-                        {#                                <input class="quantity" min="0" name="quantity" value="1" type="number">#}
-                        {#                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"#}
-                        {#                                        class="plus"></button>#}
-                        {#                            </div>#}
-                        {#                        </td>#}
                         <td>
                             <div class="mt-1">
                                 <div class="form-check form-check-inline pl-0">
@@ -110,9 +100,6 @@
             <button type="button" style="background-color: orangered; width: 20em" class="btn text-white"
                     id="add-to-cart" onclick="addToCart({{ product.id }})">ADD TO CART
             </button>
-
-            {#            <h1>{{ product.name }}</h1>#}
-            {#            <h2>{{ product.category }}</h2>#}
         </div>
     </div>
     <script>

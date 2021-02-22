@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from . forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from .models import Profile
+from .models import Profile, Address
 from shop.models import Product
 from django.contrib.auth import login, authenticate, logout
 
@@ -43,6 +43,15 @@ def login_user(request):
     else:
         return redirect(index)
 
+
+def addresses(request):
+    user = request.user
+    address = Address.objects.filter(user = user)
+    print(address)
+    context = {
+        'address': address
+    }
+    return render(request, 'user/addresses.html', context)
 
 def profile(request):
     user = request.user
