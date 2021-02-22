@@ -17,5 +17,8 @@ urlpatterns = [
     path('women/', shop_view.women, name='women-category'),
     path('kids/', shop_view.kids, name='kids-category'),
     path('profile/', views.profile, name='user-profile'),
-    path('address/', views.addresses, name='user-addresses')
+    path('address/', views.addresses, name='user-addresses'),
+    path('add_new_address/', views.add_new_address, name='add-new-address'),
+    path('delete_address/<int:id>', views.delete_address, name='delete-address'),
+    path('edit-address/<int:id>', views.edit_address, name='edit-address')
 ]

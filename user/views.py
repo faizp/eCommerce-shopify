@@ -47,11 +47,43 @@ def login_user(request):
 def addresses(request):
     user = request.user
     address = Address.objects.filter(user = user)
-    print(address)
     context = {
         'address': address
     }
     return render(request, 'user/addresses.html', context)
+
+
+def add_new_address(request):
+    user = request.user
+    if request.method == 'POST':
+        house_name = request.POST.get('house-name')
+        town = request.POST.get('town')
+        district = request.POST.get('district')
+        state = request.POST.get('state')
+        pin_code = request.POST['pin-code']
+        address_type = request.POST.get('address-type')
+        Address.objects.create(user = user, house_name = house_name, town = town, district = district, state = state, pin_code = pin_code, type = address_type)
+        return redirect('user-addresses')
+
+
+def edit_address(request, id):
+    address = Address.objects.get(id = id)
+    print(address)
+    address.house_name = request.POST.get('house-name')
+    address.town = request.POST.get('town')
+    address.district = request.POST.get('district')
+    address.state = request.POST.get('state')
+    address.pin_code = request.POST['pin-code']
+    address.address_type = request.POST.get('address-type')
+    address.save()
+    return redirect('user-addresses')
+
+
+def delete_address(request, id):
+    address = Address.objects.get(id = id)
+    address.delete()
+    return redirect('user-addresses')
+
 
 def profile(request):
     user = request.user

@@ -27,7 +27,7 @@ class Address(models.Model):
     town = models.CharField(max_length=20)
     district = models.CharField(max_length=20)
     state = models.CharField(max_length=15)
-    pin_code = models.IntegerField(default=000000)
+    pin_code = models.IntegerField(default=000000, null=True)
     type = models.CharField(max_length=6)
 
 
