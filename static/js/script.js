@@ -29,19 +29,35 @@ $('#btn').click(function () {
 })
 
 
-function addToCart (id) {
+function addToCart(id) {
     $.ajax({
-            url: '/add_cart/'+id,
-            method: 'POST',
-        })
+        url: '/add_cart/' + id,
+        method: 'POST',
+    })
 }
 
 
-function addQuantiy(id) {
+function addQuantity(id) {
     $.ajax({
+        url: '/add_quantity/' + id,
+        method: 'POST',
+        success: function (data) {
+         console.log(data.quantity)
+            $('#'+id+'-quantity').html(data.quantity)
+        }
+    })
+}
 
+
+function reduceQuantity(id) {
+    $.ajax({
+        url: '/reduce_quantity/' + id,
+        method: 'POST',
+        success: function (data) {
+            $('#'+id+'-quantity').html(data.quantity)
+
+        }
     })
 
 }
-
 

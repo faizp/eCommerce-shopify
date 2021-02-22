@@ -36,8 +36,20 @@ def remove_from_cart(request, id):
     return redirect('cart')
 
 
+@csrf_exempt
 def add_quantity(request,cart_id):
-    pass
+    cart = Cart.objects.get(id = cart_id)
+    cart.quantity += 1
+    cart.save()
+    return JsonResponse({'quantity': cart.quantity})
+
+
+@csrf_exempt
+def reduce_quantity(request, cart_id):
+    cart = Cart.objects.get(id = cart_id)
+    cart.quantity -= 1
+    cart.save()
+    return JsonResponse({'quantity': cart.quantity})
 
 
 def product_view(request,id):

@@ -3,35 +3,38 @@
     <div class="row">
         <div class="col-md-8 p-3">
             {% for cart in carts %}
-            <div class="card shadow mt-1" style="height: 9em;">
-                <div class="card-horizontal" style="display: flex">
-                    <div class="img-square-wrapper border">
-                        <img class="img-fluid zoom" style="width: 8em; height: 9em;"
-                             src="{{ cart.product.image1_url }}"
-                             alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mt-1">
-                                <h6 class="card-title mt-1">{{ cart.product.name }}</h6>
-                                <h6 class="card-title text-muted mt-1">CATEGORY: {{ cart.product.category }} </h6>
-                                <h6 class="card-title text-muted mt-1">SIZE: </h6>
-                            </div>
-                            <div class="col-md-3">PRICE: {{ cart.product.price }}</div>
-                            <div class="col-md-3">
-                                <p class="small muted text-center">QTY:<span
-                                        class="mt-1 card-title text-success">{{ cart.quantity }}</span>
-                                    <a style="size: 2em" class="btn btn-small" onclick="addQuantity('{{ cart.id }}')">+</a><a class="btn btn-small">-</a>
-                                </p>
-                                <a href="{% url 'remove-from-cart' cart.id %}"> <button class="btn btn-danger">REMOVE ITEM</button></a>
-                            </div>
+                <div class="card shadow mt-1" style="height: 9em;">
+                    <div class="card-horizontal" style="display: flex">
+                        <div class="img-square-wrapper border">
+                            <img class="img-fluid zoom" style="width: 8em; height: 9em;"
+                                 src="{{ cart.product.image1_url }}"
+                                 alt="Card image cap">
                         </div>
-                        <p class="card-text"></p>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mt-1">
+                                    <h6 class="card-title mt-1">{{ cart.product.name }}</h6>
+                                    <h6 class="card-title text-muted mt-1">CATEGORY: {{ cart.product.category }} </h6>
+                                    <h6 class="card-title text-muted mt-1">SIZE: </h6>
+                                </div>
+                                <div class="col-md-3">PRICE: {{ cart.product.price }}</div>
+                                <div class="col-md-3">
+                                    <p class="small muted text-center">QTY:<span id="{{ cart.id }}-quantity"
+                                                                                 class="mt-1 card-title text-success">{{ cart.quantity }}</span>
+                                        <a style="size: 2em" class="btn btn-small" onclick="addQuantity({{ cart.id }})">+</a>
+                                        <a class="btn btn-small" onclick="reduceQuantity({{ cart.id }})">-</a>
+                                    </p>
+                                    <a href="{% url 'remove-from-cart' cart.id %}">
+                                        <button class="btn btn-danger">REMOVE ITEM</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="card-text"></p>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
         </div>
         <div class="col-md-4">hellow</div>
     </div>
