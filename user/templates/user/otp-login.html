@@ -1,0 +1,116 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div style="height: 5em" class="row bg-light text-center">
+        <h5 style="margin-top: 1em">Login with Otp</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert-danger text-center " id="error"></div>
+            <div class="row">
+                <div class="col-md-8">
+                    <form>
+                        <div class="form-group">
+                            <label for="phone">Phone number</label>
+                            <input type="email" class="form-control" id="phone" name="phone"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter Phone number">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" id="submit-phone" class="btn btn-outline-secondary mt-4">Send OTP</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <form>
+                        <div class="form-group">
+                            <label for="phone">Enter OTP</label>
+                            <input type="text" class="form-control" id="otp" name="otp"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter OTP number">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" id="verify" class="btn btn-outline-success mt-4">Verify</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $('#submit-phone').click(function () {
+            var phone = $('#phone').val()
+            data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'phone': phone,
+            }
+            var error = false
+            if (phone == '') {
+                $('#error').html("Please enter a phone number")
+                console.log('hi')
+                error = true
+            } else {
+                $('#error').html('')
+                console.log('hoy')
+            }
+            if (!error) {
+                $.ajax({
+                    url: '/otp-login/',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+{#                    success: function (data) {#}
+{#                        if (data == 'true') {#}
+{#                            console.log('hi')#}
+{#                            window.location.replace('/')#}
+{#                        }#}
+{#                        if (data == 'false') {#}
+{#                            $('#errorotp').html("OTP invalid")#}
+{#                        }#}
+{#                    }#}
+                })
+            }
+        })
+
+        $('#verify').click(function () {
+            var otp = $('#otp').val()
+            data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'otp': otp,
+            }
+            var error = false
+            if (otp == '') {
+                $('#error').html("Please enter a phone number")
+                console.log('hi')
+                error = true
+            } else {
+                $('#error').html('')
+                console.log('hoy')
+            }
+            if (!error) {
+                $.ajax({
+                    url: '/otp/',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 'true') {
+                            console.log('hi')
+                            window.location.replace('/')
+                        }
+                        if (data == 'false') {
+                            $('#error').html("OTP invalid")
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+{% endblock %}

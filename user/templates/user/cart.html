@@ -15,12 +15,16 @@
                                 <div class="col-md-6 mt-1">
                                     <h6 class="card-title mt-1">{{ cart.product.name }}</h6>
                                     <h6 class="card-title text-muted mt-1">CATEGORY: {{ cart.product.category }} </h6>
-                                    <h6 class="card-title text-muted mt-1">SIZE: </h6>
+                                    <h6 class="card-title text-muted mt-1">SIZE: {{ cart.size }}</h6>
                                 </div>
-                                <div class="col-md-3">PRICE: {{ cart.product.price }}</div>
+                                <div class="col-md-3">PRICE: {{ cart.product.price }}
+                                <br>
+                                TOTAL AMOUNT: <span id="{{ cart.id }}-price">{{ cart.quantiy }}</span>
+                                </div>
+
                                 <div class="col-md-3">
                                     <p class="small muted text-center">QTY:<span id="{{ cart.id }}-quantity"
-                                                                                 class="mt-1 card-title text-success">{{ cart.quantity }}</span>
+                                                                                 class="mt-1 card-title text-success"> {{ cart.quantity }}</span>
                                         <a style="size: 2em; color: green" class="btn btn-small"
                                            onclick="addQuantity({{ cart.id }})">+</a>
                                         <a style="size: 2em; color: red;" class="btn btn-small"
@@ -39,7 +43,7 @@
             {% endfor %}
         </div>
         <div class="col-md-4">
-            <div style="margin-left: 3em;x" class="shadow card mt-5">
+            <div style="margin-left: 3em;" class="shadow card mt-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">AMOUNT DETAILS</h5>
                     <p class="card-text"></p>

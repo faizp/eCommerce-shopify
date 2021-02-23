@@ -41,7 +41,11 @@ def add_quantity(request,cart_id):
     cart = Cart.objects.get(id = cart_id)
     cart.quantity += 1
     cart.save()
-    return JsonResponse({'quantity': cart.quantity})
+    context = {
+        'quantity': cart.quantity,
+        'price': cart.product.price
+    }
+    return JsonResponse(context)
 
 
 @csrf_exempt

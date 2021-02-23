@@ -20,5 +20,7 @@ urlpatterns = [
     path('address/', views.addresses, name='user-addresses'),
     path('add_new_address/', views.add_new_address, name='add-new-address'),
     path('delete_address/<int:id>', views.delete_address, name='delete-address'),
-    path('edit-address/<int:id>', views.edit_address, name='edit-address')
+    path('edit-address/<int:id>', views.edit_address, name='edit-address'),
+    path('otp-login/', views.phone, name='otp-login'),
+    path('otp/', views.otp_login, name='otp-verify')
 ]
