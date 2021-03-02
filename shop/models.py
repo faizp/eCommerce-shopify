@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from user.models import Address
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(unique=True,max_length=200)
     available = models.BooleanField(default=True)
 
     def __str__(self):
@@ -57,3 +58,18 @@ class Cart(models.Model):
     quantity = models.IntegerField(default=1)
     size = models.CharField(max_length=10, default='SMALL')
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
+    quantity = models.IntegerField(default=1)
+    price = models.CharField(max_length=7, default=0.0)
+    size = models.CharField(max_length=10)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    payment_status = models.BooleanField(default=False)
+    order_status = models.BooleanField(default=True)
+    transaction_id = models.CharField(max_length=20)
+    order_date = models.DateTimeField(auto_now_add=True)
+
+

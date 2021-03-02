@@ -154,11 +154,12 @@ def category(request):
 def add_category(request):
     if request.session.has_key('password'):
         if request.method == 'POST':
-            name = request.POST.get('category-name')
-            print(name)
-            cat = Category.objects.create(name=name)
-            cat.save()
-            return redirect('categories')
+            name = request.POST['category']
+            if Category.objects.filter(name = name).exists():
+                return JsonResponse('false', safe=False)
+            else:
+                Category.objects.create(name=name)
+                return JsonResponse('true', safe=False)
         else:
             return render(request, 'admins/add-category.html')
     else:
@@ -186,3 +187,7 @@ def edit_category(request, id):
             return render(request, 'admins/edit-category.html', {'category': category})
     else:
         return redirect('admin-login')
+
+
+def orders(request):
+    return render(request, 'admins/order.html')

@@ -42,10 +42,9 @@ function addQuantity(id) {
         url: '/add_quantity/' + id,
         method: 'POST',
         success: function (data) {
-         console.log(data.quantity);
             $('#'+id+'-quantity').html(data.quantity);
-            // console.log(data.quantity * data.price);
-            // $('#'+id+'-price').html(data.quantity * data.price)
+            console.log(data.total)
+            $('#'+id+'-price').html(data.total)
         }
     })
 }
@@ -57,7 +56,7 @@ function reduceQuantity(id) {
         method: 'POST',
         success: function (data) {
             $('#'+id+'-quantity').html(data.quantity)
-
+            $('#'+id+'-price').html(data.total)
         }
     })
 

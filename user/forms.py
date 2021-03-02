@@ -7,9 +7,8 @@ class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length= 10)
     last_name = forms.CharField(max_length=10)
-    phone_number = forms.CharField(max_length=12)
 
 
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email','phone_number','password1','password2']
+        fields = ['username','first_name','last_name','email','password1','password2']

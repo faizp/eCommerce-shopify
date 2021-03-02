@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .models import Product, Cart
+from user.models import Address
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -10,23 +11,28 @@ from django.views.decorators.csrf import csrf_exempt
 def cart(request):
     user = request.user.id
     carts = Cart.objects.filter(user_id=user)
+    total = 0
+    for cart in carts:
+        total = total + cart.product.price * cart.quantity
+        cart.total = cart.product.price * cart.quantity
     context = {
         'carts': carts,
-
+        'total': total
     }
     return render(request, 'user/cart.html', context)
 
 
 @csrf_exempt
 @login_required
-def add_to_cart(request,p_id):
+def add_to_cart(request, p_id):
     user = request.user
     if Cart.objects.filter(user=user, product_id=p_id).exists():
         cart = Cart.objects.get(user=user, product_id=p_id)
         cart.quantity += 1
+        cart.ordered = False
         cart.save()
     else:
-        Cart.objects.create(user = user, product_id = p_id)
+        Cart.objects.create(user=user, product_id=p_id)
     return JsonResponse('true', safe=False)
 
 
@@ -37,31 +43,33 @@ def remove_from_cart(request, id):
 
 
 @csrf_exempt
-def add_quantity(request,cart_id):
-    cart = Cart.objects.get(id = cart_id)
+def add_quantity(request, cart_id):
+    cart = Cart.objects.get(id=cart_id)
     cart.quantity += 1
     cart.save()
-    context = {
+    total = cart.quantity * cart.product.price
+    data = {
         'quantity': cart.quantity,
-        'price': cart.product.price
+        'total': total
     }
-    return JsonResponse(context)
+    return JsonResponse(data)
 
 
 @csrf_exempt
 def reduce_quantity(request, cart_id):
-    cart = Cart.objects.get(id = cart_id)
+    cart = Cart.objects.get(id=cart_id)
     cart.quantity -= 1
     cart.save()
-    return JsonResponse({'quantity': cart.quantity})
+    total = cart.quantity * cart.product.price
+    data = {
+        'quantity': cart.quantity,
+        'total': total
+    }
+    return JsonResponse(data)
 
 
-def product_view(request,id):
+def product_view(request, id):
     product = Product.objects.get(id=id)
-    print(product)
-    print(product.image2)
-    print(product.image3)
-    print(product.image1)
     context = {
         'product': product
     }
@@ -93,3 +101,42 @@ def kids(request):
         'products': products
     }
     return render(request, 'user/men.html', context)
+
+
+def place_order(request):
+    pass
+#     user = request.user
+#     # if request.method == 'POST':
+#     # address = request.POST['address']
+#     # print(address)
+#     address = Address.objects.filter(user=user).first()
+#     cart = Cart.objects.filter(user=user)
+#     total = 0
+#     for cart in cart:
+#         total = total + cart.product.price * cart.quantity
+#         cart.ordered = True
+#         cart.save()
+#     print(total)
+#     Order.objects.create(user=user, address=address, amount=total)
+#     return redirect('order-confirm')
+#     # else:
+#     #     return redirect('payment-page')
+
+
+def payment_page(request):
+    user = request.user
+    address = Address.objects.filter(user=user)
+    cart = Cart.objects.filter(user=user)
+    total = 0
+    for cart in cart:
+        total = total + cart.product.price * cart.quantity
+
+    context = {
+        'address': address,
+        'total': total
+    }
+    return render(request, 'user/payment-page.html', context)
+
+
+def order_confirm(request):
+    return render(request, 'user/order-confirmed.html')

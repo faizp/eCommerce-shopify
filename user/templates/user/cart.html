@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="col-md-3">PRICE: {{ cart.product.price }}
                                 <br>
-                                TOTAL AMOUNT: <span id="{{ cart.id }}-price">{{ cart.quantiy }}</span>
+                                TOTAL AMOUNT: <p id="{{ cart.id }}-price">{{ cart.total }}</p>
                                 </div>
 
                                 <div class="col-md-3">
@@ -44,10 +44,13 @@
         </div>
         <div class="col-md-4">
             <div style="margin-left: 3em;" class="shadow card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title text-center">AMOUNT DETAILS</h5>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card-body text-center">
+                    <h5 class="card-title">AMOUNT DETAILS</h5>
+                    <p class="card-text">
+                        Total Amount for your products:<br>
+                        <strong>{{ total }} rs</strong>
+                    </p>
+                    <a href="{% url 'payment-page' %}"><button style="background-color: orangered" class="btn text-white">Place order</button></a>
                 </div>
             </div>
         </div>

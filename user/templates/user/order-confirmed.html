@@ -1,0 +1,15 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-title text-center">
+                congratulations you order is on the way
+            </div>
+            <a href="{% url 'cart' %}"><button class="btn btn-primary">GO BACK TO CART</button></a>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+    </div>
+{% endblock %}

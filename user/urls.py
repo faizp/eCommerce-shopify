@@ -22,5 +22,9 @@ urlpatterns = [
     path('delete_address/<int:id>', views.delete_address, name='delete-address'),
     path('edit-address/<int:id>', views.edit_address, name='edit-address'),
     path('otp-login/', views.phone, name='otp-login'),
-    path('otp/', views.otp_login, name='otp-verify')
+    path('otp/', views.otp_login, name='otp-verify'),
+    path('place-order/', shop_view.place_order, name='place-order'),
+    path('payment-page/', shop_view.payment_page, name='payment-page'),
+    path('register/', views.register_user, name = 'register-user'),
+    path('order-confirm/', shop_view.order_confirm, name='order-confirm')
 ]

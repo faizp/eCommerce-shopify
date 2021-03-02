@@ -19,8 +19,10 @@ def register(request):
         if request.method == 'POST':
             form = UserRegisterForm(request.POST)
             if form.is_valid():
-                form.save()
-                return redirect(index)
+                user = form.save()
+                print(user)
+                login(request, user)
+                return redirect('register-user')
         else:
             form = UserRegisterForm()
         return render(request, 'user/register.html', {"form": form})
@@ -96,6 +98,22 @@ def profile(request):
 def logout_user(request):
     logout(request)
     return redirect(index)
+
+
+def register_user(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            image = request.FILES.get('image')
+            print(image)
+            phone = request.POST.get('phone')
+            print(phone)
+            Profile.objects.create(user = user, image = image, phone_num = phone)
+            return redirect('index')
+        else:
+            return render(request, 'user/register_user.html')
+    else:
+        return redirect('login')
 
 
 def phone(request):
