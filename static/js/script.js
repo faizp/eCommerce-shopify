@@ -30,12 +30,15 @@ $('#btn').click(function () {
 
 
 function addToCart(id) {
+    var size = $('input[name="gender"]:checked').val();
+    console.log(size)
     $.ajax({
         url: '/add_cart/' + id,
         method: 'POST',
+        data: {'size': size},
+        dataType: 'json',
         success: function () {
             $('.toast').toast('show')
-            console.log('sdf')
         }
     })
 }

@@ -26,13 +26,13 @@ def cart(request):
 @login_required
 def add_to_cart(request, p_id):
     user = request.user
+    size = request.POST['size']
     if Cart.objects.filter(user=user, product_id=p_id).exists():
         cart = Cart.objects.get(user=user, product_id=p_id)
         cart.quantity += 1
-        cart.ordered = False
         cart.save()
     else:
-        Cart.objects.create(user=user, product_id=p_id)
+        Cart.objects.create(user=user, product_id=p_id, size=size)
     return JsonResponse('true', safe=False)
 
 
