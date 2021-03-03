@@ -69,7 +69,7 @@ class Order(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     payment_status = models.BooleanField(default=False)
     order_status = models.BooleanField(default=True)
-    transaction_id = models.CharField(max_length=20)
+    transaction_id = models.CharField(max_length=256)
     order_date = models.DateTimeField(auto_now_add=True)
 
 

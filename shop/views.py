@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from .models import Product, Cart
+from .models import Product, Cart, Order
 from user.models import Address
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+import uuid
 
 
 @login_required
@@ -73,7 +75,8 @@ def reduce_quantity(request, cart_id):
     data = {
         'quantity': cart.quantity,
         'item_total': item_total,
-        'total': total
+        'total': total,
+        # 'carts': serializers.serialize('json', carts)
     }
     return JsonResponse(data)
 
@@ -113,26 +116,21 @@ def kids(request):
     return render(request, 'user/men.html', context)
 
 
+@csrf_exempt
 def place_order(request):
-    pass
-#     user = request.user
-#     # if request.method == 'POST':
-#     # address = request.POST['address']
-#     # print(address)
-#     address = Address.objects.filter(user=user).first()
-#     cart = Cart.objects.filter(user=user)
-#     total = 0
-#     for cart in cart:
-#         total = total + cart.product.price * cart.quantity
-#         cart.ordered = True
-#         cart.save()
-#     print(total)
-#     Order.objects.create(user=user, address=address, amount=total)
-#     return redirect('order-confirm')
-#     # else:
-#     #     return redirect('payment-page')
+    user = request.user
+    address = request.POST['address']
+    carts = Cart.objects.filter(user=user)
+    transaction_id = uuid.uuid4()
+    address_id = Address.objects.get(id = address)
+    for cart in carts:
+        Order.objects.create(user=user, product=cart.product, quantity=cart.quantity, price=cart.product.price,
+                             size=cart.size, address=address_id, transaction_id=transaction_id)
+    carts.delete()
+    return JsonResponse('true', safe=False)
 
 
+@csrf_exempt
 def payment_page(request):
     user = request.user
     address = Address.objects.filter(user=user)

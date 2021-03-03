@@ -29,10 +29,10 @@
 </head>
 <body>
 {#header#}
-<header>
+<header style="z-index: 0;top: 0;">
     <div class="row">
         {#navbar#}
-        <div class="navbar navbar-expand-lg bg-light shadow-lg main-nav">
+        <div style="position: fixed" class="navbar navbar-expand-lg bg-light shadow-lg main-nav">
             <div class="container">
                 <div class="col-md-1">
                     <img class="image image-thumbnail" src='{% static "images/icon.jpg" %}'>
@@ -74,7 +74,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="navbar shadow-sm sec-nav">
+        <div style="position: fixed;margin-top: 5em" class="navbar shadow-sm sec-nav">
             <div class="container text-center">
                 <div class="col-md-4">
                     <a style="text-decoration: none; color: black" href="{% url 'men-category' %}">Men</a>
@@ -90,7 +90,7 @@
     </div>
     </div>
 </header>
-<section>
+<section style="margin-top: 8em">
     <div class="container">
         {% block content %}
         {% endblock %}
