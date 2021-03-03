@@ -45,11 +45,16 @@ def remove_from_cart(request, id):
 @csrf_exempt
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
+    carts = Cart.objects.filter(user=request.user)
     cart.quantity += 1
     cart.save()
-    total = cart.quantity * cart.product.price
+    item_total = cart.quantity * cart.product.price
+    total = 0
+    for x in carts:
+        total = total + x.quantity * x.product.price
     data = {
         'quantity': cart.quantity,
+        'item_total': item_total,
         'total': total
     }
     return JsonResponse(data)
@@ -60,9 +65,14 @@ def reduce_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     cart.quantity -= 1
     cart.save()
-    total = cart.quantity * cart.product.price
+    item_total = cart.quantity * cart.product.price
+    carts = Cart.objects.filter(user_id=request.user)
+    total = 0
+    for x in carts:
+        total = total + x.product.price * x.quantity
     data = {
         'quantity': cart.quantity,
+        'item_total': item_total,
         'total': total
     }
     return JsonResponse(data)

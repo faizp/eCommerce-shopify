@@ -3,7 +3,7 @@
     <div class="row">
         <div class="column">
             <h1>Add Category</h1>
-            <span style="width: 100%;" class="alert-danger text-center" id="category-error"></span>
+            <span style="width: 100%;" class=" alert-danger text-center" id="category-error"></span>
             <form style="width: 20em">
                 <div class="form-group">
                     <label for="category-name">Name:</label>
@@ -17,21 +17,26 @@
     <script>
         function addCategory() {
             var category = $('#category-name').val()
-            $.ajax({
-                url: '/admin/add-category/',
-                method: 'POST',
-                data : {'category' : category },
-                dataType : 'json',
-                success: function (data) {
-                    if (data == 'true'){
-                        window.location.replace('/admin/categories/')
-                    }
-                    if (data == 'false'){
-                        $('#category-error').html("This category already exists")
-                    }
+            if (category == "") {
 
-                }
-            })
+                $('#category-error').html("Please type a catergory name")
+            } else {
+                $.ajax({
+                    url: '/admin/add-category/',
+                    method: 'POST',
+                    data: {'category': category},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 'true') {
+                            window.location.replace('/admin/categories/')
+                        }
+                        if (data == 'false') {
+                            $('#category-error').html("This category already exists")
+                        }
+
+                    }
+                })
+            }
         }
     </script>
 {% endblock %}

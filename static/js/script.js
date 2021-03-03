@@ -33,6 +33,10 @@ function addToCart(id) {
     $.ajax({
         url: '/add_cart/' + id,
         method: 'POST',
+        success: function () {
+            $('.toast').toast('show')
+            console.log('sdf')
+        }
     })
 }
 
@@ -42,9 +46,10 @@ function addQuantity(id) {
         url: '/add_quantity/' + id,
         method: 'POST',
         success: function (data) {
-            $('#'+id+'-quantity').html(data.quantity);
+            $('#' + id + '-quantity').html(data.quantity);
             console.log(data.total)
-            $('#'+id+'-price').html(data.total)
+            $('#' + id + '-price').html(data.item_total)
+            $('#total-amount').html(data.total)
         }
     })
 }
@@ -55,10 +60,10 @@ function reduceQuantity(id) {
         url: '/reduce_quantity/' + id,
         method: 'POST',
         success: function (data) {
-            $('#'+id+'-quantity').html(data.quantity)
-            $('#'+id+'-price').html(data.total)
+            $('#' + id + '-quantity').html(data.quantity)
+            $('#' + id + '-price').html(data.item_total)
+            $('#total-amount').html(data.total)
         }
     })
-
 }
 

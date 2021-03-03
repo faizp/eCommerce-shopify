@@ -2,30 +2,35 @@
 {% block content %}
     <div class="row mt-2">
         <div class="col-md-10"></div>
-        <div class="col-md-2 text-success text-center"><a style="text-decoration: none; color: green;" href="#">+ Add User</a></div>
+{#        <div class="col-md-2 text-success text-center"><a style="text-decoration: none; color: green;" href="#">+ Add#}
+{#            User</a></div>#}
     </div>
     <div class="row">
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">USERNAME</th>
-            <th scope="col">NAME</th>
-            <th scope="col">EMAIL
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in user %}
+        <table class="table">
+            <thead class="thead-dark">
             <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ user.first_name }} {{ user.last_name }}</td>
-                <td>{{ user.email }}</td>
-                <td><a href="{% url 'edit-user' user.id %}" class="btn btn-primary">Edit</a></td>
-                <td><a href="{% url 'block-user' user.id %}" class="btn btn-danger">{% if user.is_active %}Block{% else %}Unblock{% endif %}</a></td>
+                <th scope="col">USERNAME</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">NAME</th>
+                <th scope="col">EMAIL
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+{#            {% for user in user %}#}
+                {% for profile in profile %}
+                <tr>
+                    <td>{{ profile.user.username }}</td>
+                    <td><img style="width: 3em" src="{{ profile.image_url }}"></td>
+                    <td>{{ profile.user.first_name }} {{ profile.user.last_name }}</td>
+                    <td>{{ profile.user.email }}</td>
+                    <td><a href="{% url 'edit-user' user.id %}" class="btn btn-primary">Edit</a></td>
+                    <td><a href="{% url 'block-user' user.id %}" class="btn btn-danger">{% if profile.user.is_active %}
+                        Block{% else %}Unblock{% endif %}</a></td>
+                </tr>{% endfor %}
+{#            {% endfor %}#}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

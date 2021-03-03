@@ -1,60 +1,60 @@
 {% extends 'user/index.html' %}
 {% block content %}
-    <div class="row" xmlns="http://www.w3.org/1999/html">
-        <h6>Please select your address:</h6>
-        <div class="col-md-8">
-            <div style="height: 7em;" class="card shadow p-2">
-             <form method="POST">{% csrf_token %}
-                <div class="row">
+    <div class="row">
+    <form method="POST">{% csrf_token %}
+        <div class="row">
+            <h6>Please select your address:</h6>
+            <div class="col-md-8">
+                <div style="height: 7em;" class="card shadow p-2">
+                        <div class="row">
 
-                    {% for address in address %}
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input id="{{ address.id }}" type="radio" name="address" checked>
+                            {% for address in address %}
+                                <div class="col-md-4">
+                                    <div class="radio">
+                                        <label><input id="{{ address.id }}" type="radio" name="address" checked>
 
-                                {{ address.house_name }}<br>
-                                    {{ address.town }},
-                                    {{ address.district }}<br>
-                                    {{ address.state }},
-                                    {{ address.pin_code }}
-                            </label>
+                                            {{ address.house_name }}<br>
+                                            {{ address.town }},
+                                            {{ address.district }}<br>
+                                            {{ address.state }},
+                                            {{ address.pin_code }}
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="col-md-4">
+                            </div>
                         </div>
-                    </div>
-                    {% endfor %}
-                    <div class="col-md-4">
-{#                        <a href="{% url 'place-order' %}" class="btn btn-secondary">Place order</a>#}
-                    </div>
-
                 </div>
-             </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row mt-3">
+            <h6>Choose payment method:</h6>
+            <div class="col-md-6">
+                <a style="text-decoration: none; color: black" href="{% url 'place-order' %}">
+                    <div style="height: 3em;" class="card mt-2 shadow text-center">
+                        <span class="text mt-2">CASH ON DELIVERY</span>
+                    </div>
+                </a>
+                <a style="text-decoration: none; color: black;" href="">
+                    <div style="height: 3em;" class="card mt-2 shadow text-center">
+                        <span class="mt-2">PAYPAL</span>
+                    </div>
+                </a>
+                <a style="text-decoration: none; color: black" href="">
+                    <div style="height: 3em;" class="card mt-2 shadow text-center">
+                        <span class="mt-2">RAZORPAY</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">
+                    <div class="card-title mt-2">Amount Details:</div>
+                    <p class="text mt-1"><strong>{{ total }}</strong> rs</p>
+                </div>
             </div>
         </div>
-        <div class="col-md-4"></div>
-    </div>
-    <div class="row mt-3">
-        <h6>Choose payment method:</h6>
-        <div class="col-md-6">
-            <a style="text-decoration: none; color: black" href="{% url 'place-order' %}">
-                <div style="height: 3em;" class="card mt-2 shadow text-center">
-                    <span class="text mt-2">CASH ON DELIVERY</span>
-                </div>
-            </a>
-            <a style="text-decoration: none; color: black;" href="">
-                <div style="height: 3em;" class="card mt-2 shadow text-center">
-                    <span class="mt-2">PAYPAL</span>
-                </div>
-            </a>
-            <a style="text-decoration: none; color: black" href="">
-                <div style="height: 3em;" class="card mt-2 shadow text-center">
-                    <span class="mt-2">RAZORPAY</span>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-6">
-            <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">
-                <div class="card-title mt-2">Amount Details:</div>
-                <p class="text mt-1">{{ total }}</p>
-            </div>
-        </div>
+    </form>
     </div>
 {% endblock %}

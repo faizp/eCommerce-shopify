@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from user.models import Profile
 from shop.models import Category
 from shop.models import Product
 from django.views.decorators.csrf import csrf_exempt
@@ -15,9 +16,12 @@ def home(request):
 
 def user_view(request):
     if request.session.has_key('password'):
-        user = User.objects.all()
+        # user = User.objects.all()
+        profile = Profile.objects.all()
+        print(profile)
         context = {
-            'user': user
+            # 'user': user,
+            'profile': profile
         }
         return render(request, 'admins/user-view.html', context)
     else:
