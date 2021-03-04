@@ -6,14 +6,14 @@
     {#            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>#}
     {#            Success! message sent successfully.#}
     {#        </div>#}
-    <div class="row text-center bg-light" style="height: 5em">
-        <h3 class="mt-3">PRODUCT DETAILS: </h3>
-    </div>
+{#    <div class="row text-center bg-light" style="height: 5em">#}
+{#        <h3 class="mt-3">PRODUCT DETAILS: </h3>#}
+{#    </div>#}
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-                <div class="col-md-12 text-center p-5">
-                    <div class="card card-pic shadow-lg" style="width: 20em; height: 20em; margin-left: 10em">
+                <div class="col-md-12 text-center">
+                    <div class="card card-pic shadow-lg" style="width: 20em; margin-left: 10em">
                         <figure class="zoom" onmousemove="zoom(event)"
                                 style="background-image: url({{ product.image1_url }});">
                             <img id="zoomImg"
@@ -22,7 +22,7 @@
                         </figure>
                     </div>
                 </div>
-                <div class="col-md-6 p-5">
+                <div class="col-md-6">
                     <div class="card shadow-lg" style="width: 10em; margin-left: 9em">
                         <figure class="zoom" onmousemove="zoom(event)"
                                 style="background-image: url({{ product.image2_url }});">
@@ -32,7 +32,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-6 p-5">
+                <div class="col-md-6">
                     <div class="card shadow-lg" style="width: 10em;">
                         <figure class="zoom" onmousemove="zoom(event)"
                                 style="background-image: url({{ product.image3_url }});">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5 style="margin-top: 5em">{{ product.name }}</h5>
+            <h5 class="mt-2">{{ product.name }}</h5>
             <p class="text-muted text-uppercase small">{{ product.sec_category }}</p>
             <p>PRICE: <span class="mr-1"><strong>{{ product.price }} rs</strong></span></p>
             <p class="pt-1"><span class="text-muted">Description:</span><br> {{ product.description }}</p>
@@ -106,15 +106,18 @@
     <div style="margin-top: 8em" class="toast-container position-absolute top-0 end-0 p-3">
 
         <!-- Then put toasts within -->
-        <div style="background-color: orangered; color: white;" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 {#                    <img src="..." class="rounded me-2" alt="...">#}
                 <strong class="me-auto">Shopify</strong>
                 <small class="text-muted">just now</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body ">
+            <div class="toast-body text-center">
                 Your Product Added to Cart Successfully
+                <a href="{% url 'cart' %}">
+              <button class="btn btn-success">  Go To Cart</button>
+                </a>
             </div>
         </div>
 

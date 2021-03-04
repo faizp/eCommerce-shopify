@@ -49,10 +49,14 @@ function addQuantity(id) {
         url: '/add_quantity/' + id,
         method: 'POST',
         success: function (data) {
-            $('#' + id + '-quantity').html(data.quantity);
-            console.log(data.total)
-            $('#' + id + '-price').html(data.item_total)
-            $('#total-amount').html(data.total)
+            if (data == 'false') {
+                $('.toast').toast('show')
+            } else {
+                $('#' + id + '-quantity').html(data.quantity);
+                console.log(data.total)
+                $('#' + id + '-price').html(data.item_total)
+                $('#total-amount').html(data.total)
+            }
         }
     })
 }
@@ -63,6 +67,9 @@ function reduceQuantity(id) {
         url: '/reduce_quantity/' + id,
         method: 'POST',
         success: function (data) {
+            if (data.quantity <= 1) {
+                window.location.reload()
+            }
             $('#' + id + '-quantity').html(data.quantity)
             $('#' + id + '-price').html(data.item_total)
             $('#total-amount').html(data.total)

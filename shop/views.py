@@ -48,8 +48,11 @@ def remove_from_cart(request, id):
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     carts = Cart.objects.filter(user=request.user)
-    cart.quantity += 1
-    cart.save()
+    if cart.quantity > 19:
+        return JsonResponse('false', safe=False)
+    else:
+        cart.quantity += 1
+        cart.save()
     item_total = cart.quantity * cart.product.price
     total = 0
     for x in carts:
@@ -65,8 +68,12 @@ def add_quantity(request, cart_id):
 @csrf_exempt
 def reduce_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
-    cart.quantity -= 1
-    cart.save()
+    print(cart.quantity)
+    if cart.quantity < 2:
+        cart.delete()
+    else:
+        cart.quantity -= 1
+        cart.save()
     item_total = cart.quantity * cart.product.price
     carts = Cart.objects.filter(user_id=request.user)
     total = 0
