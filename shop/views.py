@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from user.models import Profile
 from .models import Product, Cart, Order
 from user.models import Address
 from django.views.decorators.csrf import csrf_exempt
@@ -127,12 +128,19 @@ def kids(request):
 def place_order(request):
     user = request.user
     address = request.POST['address']
+    print(address)
+    amount_paid = request.POST['amount_paid']
+    print(amount_paid)
+    if request.POST['data'] == 'True':
+        status = True
+    else:
+        status = False
     carts = Cart.objects.filter(user=user)
     transaction_id = uuid.uuid4()
     address_id = Address.objects.get(id = address)
     for cart in carts:
         Order.objects.create(user=user, product=cart.product, quantity=cart.quantity, price=cart.product.price,
-                             size=cart.size, address=address_id, transaction_id=transaction_id)
+                             size=cart.size,payment_status = status,amount_paid=amount_paid, address=address_id, transaction_id=transaction_id)
     carts.delete()
     return JsonResponse('true', safe=False)
 
@@ -140,15 +148,19 @@ def place_order(request):
 @csrf_exempt
 def payment_page(request):
     user = request.user
+    profile = Profile.objects.get(user=user)
     address = Address.objects.filter(user=user)
     cart = Cart.objects.filter(user=user)
     total = 0
     for cart in cart:
         total = total + cart.product.price * cart.quantity
-
+    paypal_total = "%.2f" % (total / 70)
+    razorpay_total = int(total * 100)
     context = {
         'address': address,
-        'total': total
+        'total': total,
+        'paypal_total': paypal_total,
+        'razorpay_total': razorpay_total
     }
     return render(request, 'user/payment-page.html', context)
 

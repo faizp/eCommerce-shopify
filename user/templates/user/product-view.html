@@ -56,15 +56,15 @@
                         <td>{{ product.category }}</td>
                     </tr>
                     <tr>
-                        <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-                        <td>Blue</td>
+                        <th class="pl-0 w-25" scope="row"><strong>Gender</strong></th>
+                        <td>{{ product.sec_category                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              }}</td>
                     </tr>
                     <tr>
                         <th class="pl-0 w-25" scope="row"><strong>Availability</strong></th>
                         <td>{% if product.availability %}
-                            <span style="color: green">Availabale</span>
+                            <span style="color: green">Available</span>
                         {% else %}
-                            <span style="color: red">Not available</span>
+                            <span style="color: red">Not Available</span>
                         {% endif %}</td>
                     </tr>
                     </tbody>

@@ -67,6 +67,7 @@ class Order(models.Model):
     price = models.CharField(max_length=7, default=0.0)
     size = models.CharField(max_length=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    amount_paid = models.FloatField(max_length=6, default=0.00)
     payment_status = models.BooleanField(default=False)
     order_status = models.BooleanField(default=True)
     transaction_id = models.CharField(max_length=256)
