@@ -1,0 +1,73 @@
+{% extends 'user/index.html' %}
+{% block content %}
+    <div class="row bg-light" xmlns="http://www.w3.org/1999/html">
+        <h5 style="height: 3em;margin-top: 2em" class="text-center">My Orders</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div style="padding: 1em" class="card shadow mt-3 bg-light">
+                {% for order in orders %}
+                    <div style="padding: 1em" class="card mt-3 float-left">
+                        <div>
+                            {% if order.order_status == 'pending' %}
+                            <span style="color: orange">ORDER PENDING</span>
+                            {% elif order.order_status == 'cancelled' %}
+                            <span style="color: red">CANCELLED</span>{% else %}
+                            <span style="color: green">CONFIRMED</span>{% endif %}
+                            <span class="ml-2" style="color: grey">{{ order.order_date }}</span>
+
+                        </div>
+
+                        <div class="card-horizontal shadow-xs bg-light">
+                            <div class="img-square-wrapper border">
+                                <a href="{% url 'product-view' order.product.id %}">
+                                    <img class="img-fluid zoom" style="width: 7em; height: 8em;"
+                                         src="{{ order.product.image1_url }}" alt="Card image cap">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mt-1">
+                                        <a style="text-decoration: none; color: black"
+                                           href="{% url 'product-view' order.product.id %}"><h6
+                                                class="card-title mt-1">{{ order.product.name }}</h6>
+                                        </a>
+                                        <h6 class="card-title text-muted mt-1">
+                                            CATEGORY: {{ order.product.category }} </h6>
+                                        <h6 class="card-title text-muted text-uppercase mt-1">
+                                            SIZE: {{ order.size }}</h6>
+                                    </div>
+                                    <div class="col-md-3">PRICE: {{ order.product.price }}
+                                        <br>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="small muted text-center">QTY:<span id=""
+                                                                                     class="mt-1 card-title text-success">{{ order.quantity }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                        {% if order.order_status == 'cancelled' %}
+                        {% else %}
+                            <div id="cancel-button" class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    <a href="{% url 'cancel-order' order.id %}">
+                                        <button type="button" style="background-color: orangered; width: 10em"
+                                            class="btn mt-1 text-white">CANCEL</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock %}

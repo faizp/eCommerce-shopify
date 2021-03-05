@@ -137,10 +137,11 @@ def place_order(request):
         status = False
     carts = Cart.objects.filter(user=user)
     transaction_id = uuid.uuid4()
-    address_id = Address.objects.get(id = address)
+    address_id = Address.objects.get(id=address)
     for cart in carts:
-        Order.objects.create(user=user, product=cart.product, quantity=cart.quantity, price=cart.product.price,
-                             size=cart.size,payment_status = status,amount_paid=amount_paid, address=address_id, transaction_id=transaction_id)
+        Order.objects.create(user=user, product=cart.product, quantity=cart.quantity,
+                             size=cart.size, payment_status=status, amount_paid=amount_paid, address=address_id,
+                             transaction_id=transaction_id)
     carts.delete()
     return JsonResponse('true', safe=False)
 
@@ -148,7 +149,6 @@ def place_order(request):
 @csrf_exempt
 def payment_page(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
     address = Address.objects.filter(user=user)
     cart = Cart.objects.filter(user=user)
     total = 0
@@ -167,3 +167,11 @@ def payment_page(request):
 
 def order_confirm(request):
     return render(request, 'user/order-confirmed.html')
+
+
+@csrf_exempt
+def cancel_order(request,id):
+    order = Order.objects.get(id=id)
+    order.order_status = 'cancelled'
+    order.save()
+    return redirect('my-orders')

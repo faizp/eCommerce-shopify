@@ -26,5 +26,7 @@ urlpatterns = [
     path('place-order/', shop_view.place_order, name='place-order'),
     path('payment-page/', shop_view.payment_page, name='payment-page'),
     path('register/', views.register_user, name = 'register-user'),
-    path('order-confirm/', shop_view.order_confirm, name='order-confirm')
+    path('order-confirm/', shop_view.order_confirm, name='order-confirm'),
+    path('my-orders/', views.my_orders, name='my-orders'),
+    path('cancel-order/<int:id>', shop_view.cancel_order, name='cancel-order')
 ]

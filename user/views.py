@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
 import requests, json
-from shop.models import Product
+from shop.models import Product, Order
 from django.contrib.auth import login, authenticate, logout
 
 
@@ -185,3 +185,11 @@ def otp_login(request):
     #     phone = request.session['phone_signup']
     #     context = {'phone': phone}
     #     return render(request, 'user/otp-login.html', context)
+
+
+def my_orders(request):
+    orders = Order.objects.filter(user = request.user)
+    context = {
+        'orders': orders
+    }
+    return render(request, 'user/my-orders.html', context)
