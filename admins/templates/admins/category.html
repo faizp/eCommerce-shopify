@@ -1,11 +1,8 @@
-{% extends 'admins/base.html' %}
+{% extends 'admins/index.html' %}
 {% block content %}
     {% load static %}
-    <div class="row mt-2">
-        <div class="col-md-10"></div>
-        <div class="col-md-2 text-success text-center"><a style="text-decoration: none; color: green;" href="{% url 'add-category' %}">+ Add Category</a></div>
-    </div>
-    <div class="row">
+    <div class="row main-content">
+        <div class="container-fluid content-top-gap">
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -26,5 +23,6 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
     </div>
 {% endblock %}

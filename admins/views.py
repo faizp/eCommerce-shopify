@@ -2,14 +2,13 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
-from shop.models import Category
-from shop.models import Product
+from shop.models import Category, Product, Order
 from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
     if request.session.has_key('password'):
-        return render(request, 'admins/home.html')
+        return render(request, 'admins/dashboard.html')
     else:
         return redirect('admin-login')
 
@@ -194,4 +193,8 @@ def edit_category(request, id):
 
 
 def orders(request):
-    return render(request, 'admins/order.html')
+    order = Order.objects.all()
+    context = {
+        'order': order
+    }
+    return render(request, 'admins/order.html', context)

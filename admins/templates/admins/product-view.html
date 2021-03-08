@@ -1,36 +1,39 @@
-{% extends 'admins/base.html' %}
+{% extends 'admins/index.html' %}
 {% block content %}
     {% load static %}
-    <div class="row mt-2">
-        <div class="col-md-10"></div>
-        <div class="col-md-2 text-success text-center"><a style="color: green; text-decoration: none" href="{% url 'add-product' %}">+ Add Product</a></div>
-    </div>
     <div class="row">
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">PRODUCT ID</th>
-                <th scope="col">IMAGE</th>
-                <th scope="col">NAME</th>
-                <th scope="col">CATEGORY</th>
-                <th scope="col">AMOUNT</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for product in products %}
+        <div class="col-md-10"></div>
+        <div class="col-md-2 text-success text-center"><a style="color: green; text-decoration: none"
+                                                          href="{% url 'add-product' %}">+ Add Product</a></div>
+    </div>
+    <div class="row main-content">
+        <div class="container-fluid content-top-gap">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>{{ product.id }}</td>
-                    <td><img style="width: 2em; height: auto" src="{{ product.image1_url }}"></td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.price }}</td>
-                    <td><a href="{% url 'edit-product' product.id %}" class="btn btn-primary">Edit</a></td>
-                    <td><a href="{% url 'delete-product' product.id %}" class="btn btn-danger">Delete</a></td>
+                    <th scope="col">PRODUCT ID</th>
+                    <th scope="col">IMAGE</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">CATEGORY</th>
+                    <th scope="col">AMOUNT</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td><img style="width: 2em; height: auto" src="{{ product.image1_url }}"></td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.price }}</td>
+                        <td><a href="{% url 'edit-product' product.id %}" class="btn btn-primary">Edit</a></td>
+                        <td><a href="{% url 'delete-product' product.id %}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
