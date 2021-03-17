@@ -11,10 +11,14 @@
                     <div style="padding: 1em" class="card mt-3 float-left">
                         <div>
                             {% if order.order_status == 'pending' %}
-                            <span style="color: orange">ORDER PENDING</span>
+                                <span style="color: orange">ORDER PENDING</span>
                             {% elif order.order_status == 'cancelled' %}
-                            <span style="color: red">CANCELLED</span>{% else %}
-                            <span style="color: green">CONFIRMED</span>{% endif %}
+                                <span style="color: red">CANCELLED</span>
+                            {% elif order.order_status == 'delivered' %}
+                                <span style="color: green">DELIVERED</span>
+                                {% else %}
+                                <span style="color: green">CONFIRMED</span>
+                            {% endif %}
                             <span class="ml-2" style="color: grey">{{ order.order_date }}</span>
 
                         </div>
@@ -51,14 +55,15 @@
                                 <p class="card-text"></p>
                             </div>
                         </div>
-                        {% if order.order_status == 'cancelled' %}
+                        {% if order.order_status == 'cancelled' or order.order_status == 'delivered' %}
                         {% else %}
                             <div id="cancel-button" class="row">
                                 <div class="col-md-9"></div>
                                 <div class="col-md-3">
                                     <a href="{% url 'cancel-order' order.id %}">
                                         <button type="button" style="background-color: orangered; width: 10em"
-                                            class="btn mt-1 text-white">CANCEL</button>
+                                                class="btn mt-1 text-white">CANCEL
+                                        </button>
                                     </a>
                                 </div>
                             </div>

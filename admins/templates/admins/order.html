@@ -50,9 +50,21 @@
                         <td>{{ order.product.price }}</td>
                         <td>{{ order.order_status }}</td>
                         <td>{{ order.payment_status }}</td>
-                        <td><a href="" class="btn btn-success">CONFIRM</a></td>
-                        <td><a href="" class="btn btn-danger">CANCEL</a></td>
-                        <td><a href="" class="btn btn-primary">DELIVER</a></td>
+                        {% if order.order_status == 'pending' %}
+                            <td><a href="{% url 'confirm-order' order.id %}" class="btn btn-success">CONFIRM</a></td>
+                            <td><a href="{% url 'cancel-order-admin' order.id %}" class="btn btn-danger">CANCEL</a></td>
+                            <td><a href="{% url 'deliver-order' order.id %}" class="btn btn-primary">DELIVER</a></td>
+                        {% elif order.order_status == 'confirmed' %}
+                            <td></td>
+                            <td><a href="{% url 'cancel-order-admin' order.id %}" class="btn btn-danger">CANCEL</a></td>
+                            <td><a href="{% url 'deliver-order' order.id %}" class="btn btn-primary">DELIVER</a></td>
+                        {% elif order.order_status == 'cancelled' or order.order_status == 'delivered' %}
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            {% else %}
+
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

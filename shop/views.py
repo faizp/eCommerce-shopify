@@ -10,6 +10,13 @@ from django.core import serializers
 import uuid
 
 
+def products(request):
+    product = Product.objects.all()
+    context = {
+        'product': product
+    }
+    return render(request, 'user/product.html', context)
+
 @login_required
 def cart(request):
     user = request.user.id
@@ -22,7 +29,7 @@ def cart(request):
         'carts': carts,
         'total': total
     }
-    return render(request, 'user/cart.html', context)
+    return render(request, 'user/shoping-cart.html', context)
 
 
 @csrf_exempt
@@ -94,7 +101,15 @@ def product_view(request, id):
     context = {
         'product': product
     }
-    return render(request, 'user/product-view.html', context)
+    return render(request, 'user/product-detail.html', context)
+
+
+def product_quick_view(request, id):
+    product = Product.objects.filter(id=id)
+    data = {
+        'product1': serializers.serialize('json', product)
+    }
+    return JsonResponse(data)
 
 
 def men(request):
@@ -103,7 +118,7 @@ def men(request):
     context = {
         'products': products
     }
-    return render(request, 'user/men.html', context)
+    return render(request, 'user/index1.html', context)
 
 
 def women(request):
@@ -128,9 +143,6 @@ def kids(request):
 def place_order(request):
     user = request.user
     address = request.POST['address']
-    print(address)
-    amount_paid = request.POST['amount_paid']
-    print(amount_paid)
     if request.POST['data'] == 'True':
         status = True
     else:
@@ -139,9 +151,11 @@ def place_order(request):
     transaction_id = uuid.uuid4()
     address_id = Address.objects.get(id=address)
     for cart in carts:
+        amount_paid = cart.product.price * cart.quantity
         Order.objects.create(user=user, product=cart.product, quantity=cart.quantity,
                              size=cart.size, payment_status=status, amount_paid=amount_paid, address=address_id,
                              transaction_id=transaction_id)
+        amount_paid = 0
     carts.delete()
     return JsonResponse('true', safe=False)
 
@@ -166,7 +180,7 @@ def payment_page(request):
 
 
 def order_confirm(request):
-    return render(request, 'user/order-confirmed.html')
+    return render(request, 'user/order-enconfirmed.html')
 
 
 @csrf_exempt
@@ -175,3 +189,25 @@ def cancel_order(request,id):
     order.order_status = 'cancelled'
     order.save()
     return redirect('my-orders')
+
+
+def confirm_order(request, id):
+    order = Order.objects.get(id = id)
+    order.order_status = 'confirmed'
+    order.save()
+    return redirect('orders')
+
+
+def deliver_order(request, id):
+    order = Order.objects.get(id = id)
+    order.order_status = 'delivered'
+    order.payment_status = True
+    order.save()
+    return redirect('orders')
+
+
+def cancel_order_admin(request,id):
+    order = Order.objects.get(id=id)
+    order.order_status = 'cancelled'
+    order.save()
+    return redirect('orders')

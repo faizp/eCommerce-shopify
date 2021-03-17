@@ -1,14 +1,28 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
 from shop.models import Category, Product, Order
+from datetime import date
 from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
     if request.session.has_key('password'):
-        return render(request, 'admins/dashboard.html')
+        users = len(User.objects.all())
+        orders = Order.objects.all()
+        total = 0
+        print(date.today())
+        orders_today = Order.objects.filter(order_date__date = date.today()).count()
+        for order in orders:
+            total = total + order.product.price
+        context = {
+            'users': users,
+            'order_len': len(orders),
+            'total': total,
+            'order_today': orders_today
+        }
+        return render(request, 'admins/dashboard.html', context)
     else:
         return redirect('admin-login')
 
@@ -38,7 +52,7 @@ def admin_login(request):
                 request.session['password'] = password
                 return JsonResponse('true', safe=False)
             else:
-                return JsonResponse('false', safe = False)
+                return JsonResponse('false', safe=False)
         else:
             return render(request, 'admins/login.html')
 
@@ -70,18 +84,19 @@ def add_product(request):
             sub_category = request.POST.get('product-main-category')
             description = request.POST.get('product-description')
             categry = Category.objects.get(pk=p_category)
-            product = Product.objects.create(category=categry,name=name,price=price,image1=image1,image2=image2,image3=image3,description=description,sec_category=sub_category)
+            product = Product.objects.create(category=categry, name=name, price=price, image1=image1, image2=image2,
+                                             image3=image3, description=description, sec_category=sub_category)
             product.save()
             return redirect('admin-home')
         else:
             category = Category.objects.all()
-            return render(request, 'admins/add-product.html', {'category':category})
+            return render(request, 'admins/add-product.html', {'category': category})
     else:
         return redirect('admin-login')
 
 
-def block_user(request,id):
-    user = User.objects.get(id = id)
+def block_user(request, id):
+    user = User.objects.get(id=id)
     if user.is_active:
         user.is_active = False
     else:
@@ -90,16 +105,16 @@ def block_user(request,id):
     return redirect('user-view')
 
 
-def delete_product(request,id):
-    product = Product.objects.get(id = id)
+def delete_product(request, id):
+    product = Product.objects.get(id=id)
     product.delete()
     return redirect('product-view')
 
 
-def edit_user(request,id):
+def edit_user(request, id):
     if request.session.has_key('password'):
         if request.method == 'POST':
-            user = User.objects.get(id = id)
+            user = User.objects.get(id=id)
             user.username = request.POST.get('username')
             user.email = request.POST.get('email')
             user.first_name = request.POST.get('first-name')
@@ -107,16 +122,16 @@ def edit_user(request,id):
             user.save()
             return redirect(user_view)
         else:
-            user = User.objects.get(id = id)
-            return render(request, 'admins/edit.html', {'user':user})
+            user = User.objects.get(id=id)
+            return render(request, 'admins/edit.html', {'user': user})
     else:
         return redirect('admin-login')
 
 
-def edit_product(request,id):
+def edit_product(request, id):
     if request.session.has_key('password'):
         if request.method == 'POST':
-            product = Product.objects.get(id = id)
+            product = Product.objects.get(id=id)
             p_category = request.POST.get('product-category')
             categry = Category.objects.get(pk=p_category)
             product.category = categry
@@ -132,7 +147,7 @@ def edit_product(request,id):
 
         else:
             category = Category.objects.all()
-            product = Product.objects.get(id = id)
+            product = Product.objects.get(id=id)
             context = {
                 'product': product,
                 'category': category
@@ -158,7 +173,7 @@ def add_category(request):
     if request.session.has_key('password'):
         if request.method == 'POST':
             name = request.POST['category']
-            if Category.objects.filter(name = name).exists():
+            if Category.objects.filter(name=name).exists():
                 return JsonResponse('false', safe=False)
             else:
                 Category.objects.create(name=name)
@@ -167,7 +182,6 @@ def add_category(request):
             return render(request, 'admins/add-category.html')
     else:
         return redirect('admin-login')
-
 
 
 def delete_category(request, id):
@@ -198,3 +212,5 @@ def orders(request):
         'order': order
     }
     return render(request, 'admins/order.html', context)
+
+

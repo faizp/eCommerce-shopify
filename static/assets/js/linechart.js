@@ -1,19 +1,19 @@
 new Chart(document.getElementById("linechart"), {
 	type: 'line',
 	data: {
-		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 		datasets: [{
 			label: 'My First dataset',
 			backgroundColor: window.chartColors.navy,
 			borderColor: window.chartColors.navy,
-			data: [30,10,70,15,60,20,70,80],
+			data: [2,3,4,4,4,4,4,4],
 			fill: false,
 		}, {
 			label: 'My Second dataset',
 			fill: false,
 			backgroundColor: window.chartColors.purple,
 			borderColor: window.chartColors.purple,
-			data: [10,40,20,35,25,50,10,70],
+			data: [12,3,43,43,5,4,2,4],
 		}]
 	},
 	options: {

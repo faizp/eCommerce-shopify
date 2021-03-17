@@ -11,7 +11,7 @@ from django.contrib.auth import login, authenticate, logout
 
 def index(request):
     products = Product.objects.all()
-    return render(request, 'user/home.html', {'product': products})
+    return render(request, 'user/user-home.html', {'product': products})
 
 
 def register(request):
@@ -105,9 +105,7 @@ def register_user(request):
         if request.method == 'POST':
             user = request.user
             image = request.FILES.get('image')
-            print(image)
             phone = request.POST.get('phone')
-            print(phone)
             Profile.objects.create(user = user, image = image, phone_num = phone)
             return redirect('index')
         else:

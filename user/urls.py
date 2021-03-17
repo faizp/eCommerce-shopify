@@ -4,6 +4,7 @@ from shop import views as shop_view
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('products/', shop_view.products, name='products'),
     path('signup/', views.register, name='signup'),
     path('login/', views.login_user, name='signin'),
     path('logout/', views.logout_user, name='logout'),
@@ -28,5 +29,6 @@ urlpatterns = [
     path('register/', views.register_user, name = 'register-user'),
     path('order-confirm/', shop_view.order_confirm, name='order-confirm'),
     path('my-orders/', views.my_orders, name='my-orders'),
-    path('cancel-order/<int:id>', shop_view.cancel_order, name='cancel-order')
+    path('cancel-order/<int:id>', shop_view.cancel_order, name='cancel-order'),
+    path('quick-view/<int:id>', shop_view.product_quick_view, name='product-quick-view')
 ]
