@@ -11,7 +11,8 @@ from django.contrib.auth import login, authenticate, logout
 
 def index(request):
     products = Product.objects.all()
-    return render(request, 'user/user-home.html', {'product': products})
+    context = {'product': products}
+    return render(request, 'user/user-home.html', context)
 
 
 def register(request):

@@ -17,6 +17,17 @@ def products(request):
     }
     return render(request, 'user/product.html', context)
 
+
+def products_by_category(request):
+    category = request.GET['category']
+    print(category)
+    products = Product.objects.filter(sec_category=category)
+    print(products)
+    context = {
+        'products': serializers.serialize('json', products)
+    }
+    return JsonResponse(context)
+
 @login_required
 def cart(request):
     user = request.user.id

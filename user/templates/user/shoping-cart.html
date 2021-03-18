@@ -41,7 +41,7 @@
                                         </div>
                                     </td>
                                     <td class="column-2">{{ cart.product.name }}</td>
-                                    <td class="column-3">$ {{ cart.product.price }}</td>
+                                    <td class="column-3"><span class="font-weight-bold">₹</span>{{ cart.product.price }}</td>
                                     <td class="column-4">
                                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
                                             <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="column-5"></td>
+                                    <td class="column-5"><span class="font-weight-bold">₹ </span>{{ cart.total }}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -176,41 +176,41 @@
     </div>
 
     <!--===============================================================================================-->
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+{#    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>#}
+{#    <!--===============================================================================================-->#}
+{#    <script src="vendor/animsition/js/animsition.min.js"></script>#}
+{#    <!--===============================================================================================-->#}
+{#    <script src="vendor/bootstrap/js/popper.js"></script>#}
+{#    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>#}
+{#    <!--===============================================================================================-->#}
+{#    <script src="vendor/select2/select2.min.js"></script>#}
+{#    <script>#}
+{#        $(".js-select2").each(function () {#}
+{#            $(this).select2({#}
+{#                minimumResultsForSearch: 20,#}
+{#                dropdownParent: $(this).next('.dropDownSelect2')#}
+{#            });#}
+{#        })#}
+{#    </script>#}
     <!--===============================================================================================-->
-    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <script src="{% static 'vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
     <!--===============================================================================================-->
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+{#    <script>#}
+{#        $('.js-pscroll').each(function () {#}
+{#            $(this).css('position', 'relative');#}
+{#            $(this).css('overflow', 'hidden');#}
+{#            var ps = new PerfectScrollbar(this, {#}
+{#                wheelSpeed: 1,#}
+{#                scrollingThreshold: 1000,#}
+{#                wheelPropagation: false,#}
+{#            });#}
+{##}
+{#            $(window).on('resize', function () {#}
+{#                ps.update();#}
+{#            })#}
+{#        });#}
+{#    </script>#}
     <!--===============================================================================================-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script>
-        $(".js-select2").each(function () {
-            $(this).select2({
-                minimumResultsForSearch: 20,
-                dropdownParent: $(this).next('.dropDownSelect2')
-            });
-        })
-    </script>
-    <!--===============================================================================================-->
-    <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script>
-        $('.js-pscroll').each(function () {
-            $(this).css('position', 'relative');
-            $(this).css('overflow', 'hidden');
-            var ps = new PerfectScrollbar(this, {
-                wheelSpeed: 1,
-                scrollingThreshold: 1000,
-                wheelPropagation: false,
-            });
-
-            $(window).on('resize', function () {
-                ps.update();
-            })
-        });
-    </script>
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
+{#    <script src="js/main.js"></script>#}
 {% endblock %}
