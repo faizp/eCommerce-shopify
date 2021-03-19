@@ -160,7 +160,7 @@ def payment_page(request):
 
 
 def order_confirm(request):
-    return render(request, 'user/order-enconfirmed.html')
+    return render(request, 'user/order-confirmed.html')
 
 
 @csrf_exempt
