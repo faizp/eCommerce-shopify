@@ -1,71 +1,103 @@
-{% extends 'user/index.html' %}
+{% extends 'user/index1.html' %}
 {% block content %}
-    <div class="row bg-light" xmlns="http://www.w3.org/1999/html">
-        <h5 style="height: 3em;margin-top: 2em" class="text-center">Addresses</h5>
-    </div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <div class="card p-2 mt-1">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h6>Saved Addresses</h6>
+    <section style="margin-top: 8em ;height: 75vh;overflow-x: hidden">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card p-2 mt-1">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>Saved Addresses</h6>
+                        </div>
+                        <div class="col-md-4">
+                            {#modal code#}
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                + ADD NEW ADDRESS
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        {#modal code#}
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-success" data-toggle="modal"
-                                data-target="#exampleModalCenter">
-                            + ADD NEW ADDRESS
-                        </button>
+                    {% for address in address %}
+                        <div class="card p-2 mt-1">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <p>{{ address.house_name }}<br>
+                                        {{ address.town }},
+                                        {{ address.district }}<br>
+                                        {{ address.state }},
+                                        {{ address.pin_code }}</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="border text-center rounded-circle"><span
+                                            class="small text-muted">{{ address.type }}</span></p>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-md-6 border-top"><a style="text-decoration: none"
+                                                                    href="{% url 'edit-address' address.id %}"
+                                        type="button" data-toggle="modal" data-target="#editAddressModal"
+                                        style="color: blue;">EDIT</a></div>
+                                <div class="col-md-6 border-top"><a style="text-decoration: none"
+                                                                    href="{% url 'delete-address' address.id %}"><span
+                                        style="color: red;">DELETE</span></a></div>
 
+                                <!-- Button trigger modal -->
+                            </div>
+                        </div>
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                        <div class="modal fade m-t-80" id="editAddressModal" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW ADDRESS</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="POST" action="{% url 'add-new-address' %}">{% csrf_token %}
+                                    <form method="POST"
+                                          action="{% url 'edit-address' address.id %}">{% csrf_token %}
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="house-name">House Name</label>
                                                 <input type="text" class="form-control" id="house-name"
-                                                       name="house-name"
+                                                       name="house-name" value="{{ address.house_name }}"
                                                        placeholder="House name or House Number" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="town">Town</label>
                                                 <input type="text" class="form-control" id="town" name="town"
+                                                       value="{{ address.town }}"
                                                        placeholder="Town" required>
                                             </div>
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
                                                     <label for="district">City or District</label>
                                                     <input type="text" class="form-control" name="district"
+                                                           value="{{ address.district }}"
                                                            id="district"
                                                            placeholder="City or District" required>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="state">State</label>
-                                                    <input type="text" class="form-control" name="state" id="state"
+                                                    <input type="text" class="form-control" name="state"
+                                                           id="state" value="{{ address.state }}"
                                                            placeholder="State" required>
 
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="pin-code">Pin Code</label>
                                                     <input type="text" class="form-control" id="pin-code"
+                                                           value="{{ address.pin_code }}"
                                                            name="pin-code"
                                                            placeholder="eg: 662233" required>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="address-type">Type of Address</label>
-                                                    <select id="address-type" name="address-type" class="form-control"
-                                                            required>
+                                                    <select id="address-type" name="address-type"
+                                                            class="form-control" required>
                                                         <option>Home</option>
                                                         <option>Office</option>
                                                     </select>
@@ -73,7 +105,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                Close
                                             </button>
                                             <button type="submit" class="btn btn-primary">Add Address</button>
                                         </div>
@@ -81,108 +115,78 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% for address in address %}
-                    <div class="card p-2 mt-1">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <p>{{ address.house_name }}<br>
-                                    {{ address.town }},
-                                    {{ address.district }}<br>
-                                    {{ address.state }},
-                                    {{ address.pin_code }}</p>
+            </div>
+            <div class="col-md-3">
+                <div style="width: 13em;margin-top: 2em" class="card text-center p-4 rounded shadow">
+                    <a style="text-decoration: none; color: black;" href="{% url 'user-profile' %}">Profile</a>
+                    <a style="text-decoration: none; color: black" href="{% url 'user-addresses' %}">Addresses</a>
+                    <a style="text-decoration: none; color: black;" href="{% url 'my-orders' %}">My Orders</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade m-t-80" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW ADDRESS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'add-new-address' %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="house-name">House Name</label>
+                            <input type="text" class="form-control" id="house-name"
+                                   name="house-name"
+                                   placeholder="House name or House Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="town">Town</label>
+                            <input type="text" class="form-control" id="town" name="town"
+                                   placeholder="Town" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="district">City or District</label>
+                                <input type="text" class="form-control" name="district"
+                                       id="district"
+                                       placeholder="City or District" required>
                             </div>
-                            <div class="col-md-2">
-                                <p class="border text-center rounded-circle"><span
-                                        class="small text-muted">{{ address.type }}</span></p>
+                            <div class="form-group col-md-4">
+                                <label for="state">State</label>
+                                <input type="text" class="form-control" name="state" id="state"
+                                       placeholder="State" required>
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="pin-code">Pin Code</label>
+                                <input type="text" class="form-control" id="pin-code"
+                                       name="pin-code"
+                                       placeholder="eg: 662233" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="address-type">Type of Address</label>
+                                <select id="address-type" name="address-type" class="form-control"
+                                        required>
+                                    <option>Home</option>
+                                    <option>Office</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row text-center">
-                            <div class="col-md-6 border-top"><a style="text-decoration: none"
-                                                                href="{% url 'edit-address' address.id %}"><a type="button" data-toggle="modal" data-target="#editAddressModal" style="color: blue;">EDIT</a></a></div>
-                            <div class="col-md-6 border-top"><a style="text-decoration: none"
-                                                                href="{% url 'delete-address' address.id %}"><span
-                                    style="color: red;">DELETE</span></a></div>
-
-                            <!-- Button trigger modal -->
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW ADDRESS</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form method="POST" action="{% url 'edit-address' address.id %}">{% csrf_token %}
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="house-name">House Name</label>
-                                                    <input type="text" class="form-control" id="house-name"
-                                                           name="house-name" value="{{ address.house_name }}"
-                                                           placeholder="House name or House Number" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="town">Town</label>
-                                                    <input type="text" class="form-control" id="town" name="town" value="{{ address.town }}"
-                                                           placeholder="Town" required>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="district">City or District</label>
-                                                        <input type="text" class="form-control" name="district" value="{{ address.district }}"
-                                                               id="district"
-                                                               placeholder="City or District" required>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="state">State</label>
-                                                        <input type="text" class="form-control" name="state" id="state" value="{{ address.state }}"
-                                                               placeholder="State" required>
-
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="pin-code">Pin Code</label>
-                                                        <input type="text" class="form-control" id="pin-code" value="{{ address.pin_code }}"
-                                                               name="pin-code"
-                                                               placeholder="eg: 662233" required>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="address-type">Type of Address</label>
-                                                        <select id="address-type" name="address-type"
-                                                                class="form-control" required>
-                                                            <option>Home</option>
-                                                            <option>Office</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <button type="submit" class="btn btn-primary">Add Address</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                        </div>
-
-
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Add Address</button>
                     </div>
-                {% endfor %}
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div style="width: 13em;margin-top: 2em" class="card text-center p-4 rounded shadow">
-            <a style="text-decoration: none; color: black;" href="{% url 'user-profile' %}">Profile</a>
-            <a style="text-decoration: none; color: black" href="{% url 'user-addresses' %}">Addresses</a>
-            <a style="text-decoration: none; color: black;" href="{% url 'my-orders' %}">My Orders</a>
-        </div>
-    </div>
     </div>
 {% endblock %}

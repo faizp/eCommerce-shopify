@@ -60,11 +60,18 @@ class Cart(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
 
+class Size(models.Model):
+    size = models.CharField(max_length=16)
+
+    def __str__(self):
+        return self.size
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
     quantity = models.IntegerField(default=1)
-    size = models.CharField(max_length=10)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     amount_paid = models.FloatField(max_length=6, default=0.00)
     payment_status = models.BooleanField(default=False)

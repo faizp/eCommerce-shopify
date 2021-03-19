@@ -1,39 +1,41 @@
-{% extends 'user/index.html' %}
+{% extends 'user/index1.html' %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 text-center">
-            <h3 class="text mt-2">Please upload a profile picture</h3>
-            {#        <form action="">#}
-            {#        <div class="form-group">#}
-            {#                <label for="image1">Select images of product</label><br>#}
-            {#                <input type="file" name="image1" class="form-control-file" id="image1" required>#}
-            {#        </div>#}
-            {#        </form>#}
-            <form method="POST" enctype="multipart/form-data" class="md-form">{% csrf_token %}
-                <div class="file-field">
-                    <div class="mb-4">
-                        <img style="width: 150px" id="img1"
-                             src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
-                             class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar">
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="btn btn-mdb-color btn-rounded float-left">
-                            <span>Add photo</span>
-                            <input type="file" name="image" onchange="loadFile(event)" required>
+    <section style="margin-top: 7em; height: 75vh;">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-center">
+                <h3 class="text mt-2">Please upload a profile picture</h3>
+                {#        <form action="">#}
+                {#        <div class="form-group">#}
+                {#                <label for="image1">Select images of product</label><br>#}
+                {#                <input type="file" name="image1" class="form-control-file" id="image1" required>#}
+                {#        </div>#}
+                {#        </form>#}
+                <form method="POST" enctype="multipart/form-data" class="md-form">{% csrf_token %}
+                    <div class="file-field">
+                        <div class="mb-4">
+                            <img style="width: 150px" id="img1"
+                                 src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+                                 class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="btn btn-mdb-color btn-rounded float-left">
+                                <span>Add photo</span>
+                                <input type="file" name="image" onchange="loadFile(event)" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-outline mt-3">
-                    <input type="text" id="typeText" name="phone" class="form-control" required/>
-                    <label class="form-label" for="typeText">Phone number</label>
-                </div>
-                <button class="btn btn-success mt-2" type="submit">Save</button>
-            </form>
-        </div>
+                    <div class="form-outline mt-3">
+                        <input type="text" id="typeText" name="phone" class="form-control" required/>
+                        <label class="form-label" for="typeText">Phone number</label>
+                    </div>
+                    <button class="btn btn-success mt-2" type="submit">Save</button>
+                </form>
+            </div>
 
-        <div class="col-md-4"></div>
-    </div>
+            <div class="col-md-4"></div>
+        </div>
+    </section>
 
     <script>
         var loadFile = function (event) {

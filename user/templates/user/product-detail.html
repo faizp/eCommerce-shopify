@@ -85,11 +85,10 @@
 								<div class="size-204 respon6-next">
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time">
-											<option>Choose an option</option>
-											<option>Size S</option>
-											<option>Size M</option>
-											<option>Size L</option>
-											<option>Size XL</option>
+											<option class="text-uppercase">Choose an option</option>
+                                            {% for size in size %}
+											<option class="text-uppercase" value="{{ size.id }}">{{ size.size }}</option>
+                                            {% endfor %}
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -685,34 +684,33 @@
 										<div class="rs1-select2 bor8 bg0">
 											<select class="js-select2" name="time">
 												<option>Choose an option</option>
-												<option>Size S</option>
-												<option>Size M</option>
-												<option>Size L</option>
-												<option>Size XL</option>
+                                                {% for size in size %}
+												<option value="{{ size.id}}">{{ size.size }}</option>
+                                                {% endfor %}
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
 									</div>
 								</div>
 
-								<div class="flex-w flex-r-m p-b-10">
-									<div class="size-203 flex-c-m respon6">
-										Color
-									</div>
-
-									<div class="size-204 respon6-next">
-										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												<option>Choose an option</option>
-												<option>Red</option>
-												<option>Blue</option>
-												<option>White</option>
-												<option>Grey</option>
-											</select>
-											<div class="dropDownSelect2"></div>
-										</div>
-									</div>
-								</div>
+{#								<div class="flex-w flex-r-m p-b-10">#}
+{#									<div class="size-203 flex-c-m respon6">#}
+{#										Color#}
+{#									</div>#}
+{##}
+{#									<div class="size-204 respon6-next">#}
+{#										<div class="rs1-select2 bor8 bg0">#}
+{#											<select class="js-select2" name="time">#}
+{#												<option>Choose an option</option>#}
+{#												<option>Red</option>#}
+{#												<option>Blue</option>#}
+{#												<option>White</option>#}
+{#												<option>Grey</option>#}
+{#											</select>#}
+{#											<div class="dropDownSelect2"></div>#}
+{#										</div>#}
+{#									</div>#}
+{#								</div>#}
 
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-204 flex-w flex-m respon6-next">

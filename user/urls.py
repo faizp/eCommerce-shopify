@@ -5,7 +5,6 @@ from shop import views as shop_view
 urlpatterns = [
     path('', views.index, name='index'),
     path('products/', shop_view.products, name='products'),
-    path('product-category/', shop_view.products_by_category, name='product-category'),
     path('signup/', views.register, name='signup'),
     path('login/', views.login_user, name='signin'),
     path('logout/', views.logout_user, name='logout'),
@@ -15,9 +14,6 @@ urlpatterns = [
     path('reduce_quantity/<int:cart_id>', shop_view.reduce_quantity, name='reduce-quantity'),
     path('remove_from_cart/<int:id>', shop_view.remove_from_cart, name='remove-from-cart'),
     path('product/<int:id>', shop_view.product_view, name='product-view'),
-    path('men/', shop_view.men, name='men-category'),
-    path('women/', shop_view.women, name='women-category'),
-    path('kids/', shop_view.kids, name='kids-category'),
     path('profile/', views.profile, name='user-profile'),
     path('address/', views.addresses, name='user-addresses'),
     path('add_new_address/', views.add_new_address, name='add-new-address'),

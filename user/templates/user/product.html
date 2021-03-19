@@ -252,41 +252,39 @@
 
             <div class="row isotope-grid">
                 {% for product in product %}
-                        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {% if product.sec_category == 'Female' %}women{% elif product.sec_category == 'Male' %}men{% else %}kids{% endif %}">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="{{ product.image1_url }}" alt="IMG-PRODUCT">
-
-                                    <a onclick="quickView('{{ product.id }}')"
-                                       class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
+                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {% if product.sec_category == 'Female' %}women{% elif product.sec_category == 'Male' %}men{% else %}kids{% endif %}">
+                        <!-- Block2 -->
+                        <div class="block2">
+                            <div class="block2-pic hov-img0">
+                                <img src="{{ product.image1_url }}" alt="IMG-PRODUCT">
+                                <button onclick="quickView('{{ product.id }}')"
+                                   class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a href="{% url 'product-view' product.id %}"
+                                       class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        {{ product.name }}
                                     </a>
-                                </div>
 
-                                <div class="block2-txt flex-w flex-t p-t-14">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="{% url 'product-view' product.id %}"
-                                           class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            {{ product.name }}
-                                        </a>
-
-                                        <span class="stext-105 cl3">
+                                    <span class="stext-105 cl3">
 									{{ product.price }} rs
 								</span>
-                                    </div>
+                                </div>
 
-                                    <div class="block2-txt-child2 flex-r p-t-3">
-                                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                            <img class="icon-heart1 dis-block trans-04"
-                                                 src="{% static 'images/icons/icon-heart-01.png' %}" alt="ICON">
-                                            <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                                 src="{% static 'images/icons/icon-heart-02.png' %}" alt="ICON">
-                                        </a>
-                                    </div>
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04"
+                                             src="{% static 'images/icons/icon-heart-01.png' %}" alt="ICON">
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                             src="{% static 'images/icons/icon-heart-02.png' %}" alt="ICON">
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 {% endfor %}
             </div>
 
@@ -306,7 +304,7 @@
     </div>
 
     <!-- Modal1 -->
-    <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+    <div id="product-modal" class="wrap-modal1 js-modal1 p-t-60 p-b-20">
         <div class="overlay-modal1 js-hide-modal1"></div>
 
         <div class="container">
@@ -323,34 +321,40 @@
                                 <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                                 <div class="slick3 gallery-lb">
-                                    <div class="item-slick3" data-thumb="{% static 'images/product-detail-01.jpg' %}">
+                                    <div id="data-thumb-image1" class="item-slick3" data-thumb="">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="{% static 'images/product-detail-01.jpg' %}" alt="IMG-PRODUCT">
+                                            <img id="product-image1" src="" alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="images/product-detail-01.jpg">
+                                               id="zoomImg1"
+                                               href="">
                                                 <i class="fa fa-expand"></i>
                                             </a>
                                         </div>
                                     </div>
 
-                                    <div class="item-slick3" data-thumb="{% static 'images/product-detail-02.jpg' %}">
+                                    <div class="item-slick3" id="data-thumb-image2"
+                                         data-thumb="">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="{% static 'images/product-detail-02.jpg' %}" alt="IMG-PRODUCT">
+                                            <img id="product-image2" src=""
+                                                 alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="images/product-detail-02.jpg">
+                                               id="zoomImg2"
+                                               href="">
                                                 <i class="fa fa-expand"></i>
                                             </a>
                                         </div>
                                     </div>
 
-                                    <div class="item-slick3" data-thumb="{% static 'images/product-detail-03.jpg' %}">
+                                    <div class="item-slick3" id="data-thumb-image3"
+                                         data-thumb="">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="{% static 'images/product-detail-03.jpg' %}" alt="IMG-PRODUCT">
+                                            <img id="product-image3" src="" alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="images/product-detail-03.jpg">
+                                               id="zoomImg3"
+                                               href="">
                                                 <i class="fa fa-expand"></i>
                                             </a>
                                         </div>
@@ -362,18 +366,11 @@
 
                     <div class="col-md-6 col-lg-5 p-b-30">
                         <div class="p-r-50 p-t-5 p-lr-0-lg">
-                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
-                            </h4>
+                            <h4 id="product-name" class="mtext-105 cl2 js-name-detail p-b-14"></h4>
+                            <span class="font-weight-bold mtext-106 cl2">₹</span>
+                            <span id="product-price" class="mtext-106 cl2"></span>
 
-                            <span class="mtext-106 cl2">
-								$58.79
-							</span>
-
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat
-                                ornare feugiat.
-                            </p>
+                            <p id="product-description" class="stext-102 cl3 p-t-23"></p>
 
                             <!--  -->
                             <div class="p-t-33">
@@ -396,39 +393,40 @@
                                     </div>
                                 </div>
 
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Color
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>White</option>
-                                                <option>Grey</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{#                                <div class="flex-w flex-r-m p-b-10">#}
+{#                                    <div class="size-203 flex-c-m respon6">#}
+{#                                        Color#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="size-204 respon6-next">#}
+{#                                        <div class="rs1-select2 bor8 bg0">#}
+{#                                            <select class="js-select2" name="time">#}
+{#                                                <option>Choose an option</option>#}
+{#                                                <option>Red</option>#}
+{#                                                <option>Blue</option>#}
+{#                                                <option>White</option>#}
+{#                                                <option>Grey</option>#}
+{#                                            </select>#}
+{#                                            <div class="dropDownSelect2"></div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
 
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                   name="num-product" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
+{#                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">#}
+{#                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">#}
+{#                                                <i class="fs-16 zmdi zmdi-minus"></i>#}
+{#                                            </div>#}
+{##}
+{#                                            <input class="mtext-104 cl3 txt-center num-product"#}
+{#                                                   type="number"#}
+{#                                                   name="num-product" value="1">#}
+{##}
+{#                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">#}
+{#                                                <i class="fs-16 zmdi zmdi-plus"></i>#}
+{#                                            </div>#}
+{#                                        </div>#}
 
                                         <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                             Add to cart
@@ -447,17 +445,20 @@
                                     </a>
                                 </div>
 
-                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                <a href="#"
+                                   class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
                                    data-tooltip="Facebook">
                                     <i class="fa fa-facebook"></i>
                                 </a>
 
-                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                <a href="#"
+                                   class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
                                    data-tooltip="Twitter">
                                     <i class="fa fa-twitter"></i>
                                 </a>
 
-                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                <a href="#"
+                                   class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
                                    data-tooltip="Google Plus">
                                     <i class="fa fa-google-plus"></i>
                                 </a>
@@ -551,21 +552,21 @@
     {##}
     {#    </script>#}
     <!--===============================================================================================-->
-{#    <script>#}
-{#        function showByCategory(category) {#}
-{#            var category = category;#}
-{#            console.log(category);#}
-{#            $.ajax({#}
-{#                url: '/product-category/',#}
-{#                method: 'GET',#}
-{#                data: {'category': category},#}
-{#                dataType: 'json',#}
-{#                success: function (data) {#}
-{#                    console.log(data)#}
-{#                }#}
-{#            })#}
-{#        }#}
-{#    </script>#}
+    {#    <script>#}
+    {#        function showByCategory(category) {#}
+    {#            var category = category;#}
+    {#            console.log(category);#}
+    {#            $.ajax({#}
+    {#                url: '/product-category/',#}
+    {#                method: 'GET',#}
+    {#                data: {'category': category},#}
+    {#                dataType: 'json',#}
+    {#                success: function (data) {#}
+    {#                    console.log(data)#}
+    {#                }#}
+    {#            })#}
+    {#        }#}
+    {#    </script>#}
 
     <!--===============================================================================================-->
     {#    <script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>#}
@@ -586,5 +587,29 @@
     {#    </script>#}
     {#    <!--===============================================================================================-->#}
     {#    <script src="{% static 'js/main.js' %}"></script>#}
+    <script>
+        function quickView(id) {
+            $.ajax({
+                url: '/quick-view/' + id,
+                success: function (data) {
+                    console.log(id);
+                    data1 = JSON.parse(data.product1);
+                    console.log(data1[0].fields);
+                    $("#product-name").html(data1[0].fields.name);
+                    $("#product-price").html(data1[0].fields.price);
+                    $("#product-description").html(data1[0].fields.description);
+                    $("#product-image1").prop('src', '/media/' + data1[0].fields.image1);
+                    $("#product-image2").prop('src', '/media/' + data1[0].fields.image2);
+                    $("#product-image3").prop('src', '/media/' + data1[0].fields.image3);
+                    $("#data-thumb-image1").prop('data-thumb', '/media/' + data1[0].fields.image1);
+                    $("#data-thumb-image2").prop('data-thumb', '/media/' + data1[0].fields.image2);
+                    $("#data-thumb-image3").prop('data-thumb', '/media/' + data1[0].fields.image3);
+                    $("#zoomImg1").prop('href', '/media/' + data1[0].fields.image1);
+                    $("#zoomImg2").prop('href', '/media/' + data1[0].fields.image2);
+                    $("#zoomImg3").prop('href', '/media/' + data1[0].fields.image3);
+                }
+            })
+        }
+    </script>
 
 {% endblock %}

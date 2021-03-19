@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
-from .models import Product, Cart, Order
+from .models import Product, Cart, Order, Size
 from user.models import Address
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -17,16 +17,6 @@ def products(request):
     }
     return render(request, 'user/product.html', context)
 
-
-def products_by_category(request):
-    category = request.GET['category']
-    print(category)
-    products = Product.objects.filter(sec_category=category)
-    print(products)
-    context = {
-        'products': serializers.serialize('json', products)
-    }
-    return JsonResponse(context)
 
 @login_required
 def cart(request):
@@ -109,8 +99,10 @@ def reduce_quantity(request, cart_id):
 
 def product_view(request, id):
     product = Product.objects.get(id=id)
+    size = Size.objects.all()
     context = {
-        'product': product
+        'product': product,
+        'size': size
     }
     return render(request, 'user/product-detail.html', context)
 
@@ -121,33 +113,6 @@ def product_quick_view(request, id):
         'product1': serializers.serialize('json', product)
     }
     return JsonResponse(data)
-
-
-def men(request):
-    products = Product.objects.filter(sec_category='Male')
-    print(products)
-    context = {
-        'products': products
-    }
-    return render(request, 'user/index1.html', context)
-
-
-def women(request):
-    products = Product.objects.filter(sec_category='Female')
-    print(products)
-    context = {
-        'products': products
-    }
-    return render(request, 'user/men.html', context)
-
-
-def kids(request):
-    products = Product.objects.filter(sec_category='Kids')
-    print(products)
-    context = {
-        'products': products
-    }
-    return render(request, 'user/men.html', context)
 
 
 @csrf_exempt

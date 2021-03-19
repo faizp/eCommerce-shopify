@@ -1,69 +1,63 @@
 {% extends 'user/index1.html' %}
 {% block content %}
-    <div class="row">
-        <div class="row">
-            <h6>Please select your address:</h6>
-            <div class="col-md-8">
-                <div style="height: 7em;" class="card shadow p-2">
-                    <div class="row">
-                        {% for address in address %}
-                            <div class="col-md-4">
-                                <div class="radio">
-                                    <input id="{{ address.id }}" type="radio" name="address" value="{{ address.id }}"
-                                           checked>
-                                    <label>
-                                        {{ address.house_name }}<br>
-                                        {{ address.town }},
-                                        {{ address.district }}<br>
-                                        {{ address.state }},
-                                        {{ address.pin_code }}
-                                    </label>
+    <section style="height: 75vh; margin-top: 6em">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h6>Please select your address:</h6>
+                    <div style="height: 7em;" class="card shadow p-2 mt-2">
+                        <div class="row">
+                            {% for address in address %}
+                                <div class="col-md-4">
+                                    <div class="radio">
+                                        <input id="{{ address.id }}" type="radio" name="address"
+                                               value="{{ address.id }}"
+                                               checked>
+                                        <label>
+                                            {{ address.house_name }}<br>
+                                            {{ address.town }},
+                                            {{ address.district }}<br>
+                                            {{ address.state }},
+                                            {{ address.pin_code }}
+                                        </label>
+                                    </div>
                                 </div>
+                            {% endfor %}
+                            <div class="col-md-4">
                             </div>
-                        {% endfor %}
-                        <div class="col-md-4">
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4"></div>
             </div>
-            <div class="col-md-4"></div>
-        </div>
-        <div class="row mt-3">
-            <h6>Choose payment method:</h6>
-            <div class="col-md-6">
-                <a style="text-decoration: none">
-                    <button onclick="placeOrder('False')" style="height: 4em; width: 100%"
-                            class="btn mt-2 shadow text-center">
-                        <span>CASH ON DELIVERY</span>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>Choose payment method:</h6>
+                    <a style="text-decoration: none">
+                        <button onclick="placeOrder('False')" style="height: 2.5em;width: 100%"
+                                class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3">
+                            <span>CASH ON DELIVERY</span>
+                        </button>
+                    </a>
+                    <div id="razor" class="razor"></div>
+                    <button onclick="razorpay()" style="height: 2.5em; width: 100%"
+                            class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3">
+                        <span>RAZORPAY</span>
                     </button>
-                </a>
-                {#                <a style="text-decoration: none color: black;">#}
-                {#                    <div style="height: 3em;" class="card mt-2 shadow text-center" onclick="placeOrder()">#}
-                {#                        <span class="mt-2">CASH ON DELIVERY</span>#}
-                {#                    </div>#}
-                {#                </a>#}
-                {#                <a style="text-decoration: none; color: black;">#}
-                {#                    <button style="height: 4em; width: 100%" class="btn mt-2 shadow text-center">#}
-                {#                        <span>PAYPAL</span>#}
-                {#                    </button>#}
-                {#                </a>#}
-                <div id="razor" class="razor"></div>
-                    <button onclick="razorpay()" style="height: 4em; width: 100%" class="btn mt-1 shadow text-center">
-                        <span class="mt-2">RAZORPAY</span>
-                    </button>
-                <div style="margin-top: 1em; height: 4em">
-                    <div id="paypal-button-container"></div>
-                </div>
+                    <div style="margin-top: 1em; height: 4em">
+                        <div id="paypal-button-container"></div>
+                    </div>
 
-            </div>
-            <div class="col-md-6">
-                <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">
-                    <div class="card-title mt-2">Amount Details:</div>
-                    <p class="text mt-1"><span id="total">{{ total }}</span> rs</p>
+                </div>
+                <div class="col-md-6">
+                    <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">
+                        <div class="card-title mt-2">Amount Details:</div>
+                        <p class="text mt-1"><span id="total">{{ total }}</span> rs</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     <script src="https://www.paypal.com/sdk/js?client-id=AUB9ANO3-Jo_CMtyFvzT9HMi6cFOdcIsGYY8PTT7DNZCIkeuLAeNOO3nNIRrX0k8-7xdiXBJx6bcQ-QK&currency=USD"></script>
     <script>
         console.log({{ total }})
@@ -126,7 +120,7 @@
     </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-    function razorpay(){
+        function razorpay() {
             var payment_status = 'razorpay'
             var options = {
                 "key": "rzp_test_0CJlFTJsvWeMla", // Enter the Key ID generated from the Dashboard
@@ -137,26 +131,26 @@
                 "image": "https://scontent.fccj5-1.fna.fbcdn.net/v/t1.0-9/36188448_1052411454924666_1413556518313263104_o.jpg?_nc_cat=107&ccb=3&_nc_sid=cdbe9c&_nc_ohc=T8iGhfQtGsEAX_TvqcX&_nc_ht=scontent.fccj5-1.fna&oh=91a010c7d4c8d28974e3535dcfc5d50c&oe=60688149",
                 "order_id": "{{ payment.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 "handler": function (response) {
-                        alert('Transaction completed..!!!');
-                        placeOrder('True')
+                    alert('Transaction completed..!!!');
+                    placeOrder('True')
                     //successrazorpay(tid)
-                        },
-                        "prefill": {
-                            "name": "{{address.name}}",
-                            "email": "{{address.email}}",
-                            "contact": "9999999999"
-                        },
-                        "notes": {
-                            "address": "Razorpay Corporate Office"
-                        },
-                        "theme": {
-                            "color": "#F37254"
-                        }
-                    };
-                    var rzp1 = new Razorpay(options);
-
-                        rzp1.open();
+                },
+                "prefill": {
+                    "name": "{{address.name}}",
+                    "email": "{{address.email}}",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#F37254"
                 }
+            };
+            var rzp1 = new Razorpay(options);
+
+            rzp1.open();
+        }
     </script>
 
 {% endblock %}
