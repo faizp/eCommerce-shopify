@@ -12,8 +12,10 @@ import uuid
 
 def products(request):
     product = Product.objects.all()
+    size = Size.objects.all()
     context = {
-        'product': product
+        'product': product,
+        'size': size
     }
     return render(request, 'user/product.html', context)
 

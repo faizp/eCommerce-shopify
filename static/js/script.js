@@ -49,6 +49,26 @@ function addToCart(id) {
 }
 
 
+function addProduct() {
+        var id = $('#product-id').val()
+        var size = $('#product-size').val();
+    $.ajax({
+        url: '/add_cart/' + id,
+        method: 'POST',
+        data: {'size': size},
+        dataType: 'json',
+        success: function () {
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
+        }
+    })
+    }
+
+
 function removeFromCart(id) {
     $.ajax({
         url: '/remove_from_cart/' + id,

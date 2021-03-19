@@ -5,13 +5,17 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
 import requests, json
-from shop.models import Product, Order
+from shop.models import Product, Order, Size
 from django.contrib.auth import login, authenticate, logout
 
 
 def index(request):
     products = Product.objects.all()
-    context = {'product': products}
+    size = Size.objects.all()
+    context = {
+        'product': products,
+        'size': size
+    }
     return render(request, 'user/user-home.html', context)
 
 
