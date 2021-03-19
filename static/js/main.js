@@ -219,10 +219,10 @@
         if(numProduct > 0) $(this).next().val(numProduct - 1);
     });
 
-    $('.btn-num-product-up').on('click', function(){
-        var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
-    });
+    // $('.btn-num-product-up').on('click', function(){
+    //     var numProduct = Number($(this).prev().val());
+    //     $(this).prev().val(numProduct + 1);
+    // });
 
     /*==================================================================
     [ Rating ]*/

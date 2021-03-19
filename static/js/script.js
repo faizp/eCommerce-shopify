@@ -30,17 +30,36 @@ $('#btn').click(function () {
 
 
 function addToCart(id) {
-    var size = $('input[name="gender"]:checked').val();
-    console.log(size)
+    console.log(id)
+    var size = $('#size').val();
     $.ajax({
         url: '/add_cart/' + id,
         method: 'POST',
         data: {'size': size},
         dataType: 'json',
         success: function () {
-            $('.toast').toast('show')
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
         }
     })
+}
+
+
+function removeFromCart(id) {
+    $.ajax({
+        url: '/remove_from_cart/' + id,
+        method: 'POST',
+        success: function (data) {
+            if (data == 'true') {
+                $('#' + id + '-cart').remove()
+            }
+        }
+    })
+
 }
 
 
@@ -50,9 +69,13 @@ function addQuantity(id) {
         method: 'POST',
         success: function (data) {
             if (data == 'false') {
-                $('.toast').toast('show')
+                $('.js-addcart-detail').each(function () {
+                    $(this).on('click', function () {
+                        swal("is added to cart !", "success");
+                    });
+                });
             } else {
-                $('#' + id + '-quantity').html(data.quantity);
+                $('#' + id + '-quantity').val(data.quantity);
                 console.log(data.total)
                 $('#' + id + '-price').html(data.item_total)
                 $('#total-amount').html(data.total)

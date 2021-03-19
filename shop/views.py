@@ -37,9 +37,10 @@ def cart(request):
 @login_required
 def add_to_cart(request, p_id):
     user = request.user
-    size = request.POST['size']
-    if Cart.objects.filter(user=user, product_id=p_id).exists():
-        cart = Cart.objects.get(user=user, product_id=p_id)
+    picked_size = request.POST['size']
+    size = Size.objects.get(pk=picked_size)
+    if Cart.objects.filter(user=user, product_id=p_id, size=size).exists():
+        cart = Cart.objects.get(user=user, product_id=p_id, size=size)
         cart.quantity += 1
         cart.save()
     else:
@@ -47,10 +48,11 @@ def add_to_cart(request, p_id):
     return JsonResponse('true', safe=False)
 
 
+@csrf_exempt
 def remove_from_cart(request, id):
     product = Cart.objects.get(id=id)
     product.delete()
-    return redirect('cart')
+    return JsonResponse('true', safe=False)
 
 
 @csrf_exempt
