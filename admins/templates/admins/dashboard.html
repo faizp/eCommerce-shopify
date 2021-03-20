@@ -1,105 +1,164 @@
 {% extends 'admins/index.html' %}
+{% load static %}
 {% block content %}
-    <!-- main content start -->
-    <div class="main-content">
-        <!-- content -->
-        <div class="container-fluid content-top-gap">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb my-breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </nav>
-            <div class="welcome-msg pt-3 pb-4">
-                <h1>Hi <span class="text-primary">John</span>, Welcome back</h1>
-                <p>Very detailed & featured admin.</p>
-            </div>
-
-            <!-- statistics data -->
-            <div class="statistics">
-                <div class="row">
-                    <div class="col-xl-6 pr-xl-2">
-                        <div class="row">
-                            <div class="col-sm-6 pr-sm-2 statistics-grid">
-                                <div class="card card_border border-primary-top p-4">
-                                    <i class="lnr lnr-users"> </i>
-                                    <h3 class="text-primary number">{{ users }}</h3>
-                                    <p class="stat-text">Total Users</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 pl-sm-2 statistics-grid">
-                                <div class="card card_border border-primary-top p-4">
-                                    <i class="lnr lnr-eye"> </i>
-                                    <h3 class="text-secondary number">{{ order_today }}</h3>
-                                    <p class="stat-text">Today's orders</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 pl-xl-2">
-                        <div class="row">
-                            <div class="col-sm-6 pr-sm-2 statistics-grid">
-                                <div class="card card_border border-primary-top p-4">
-                                    <i class="lnr lnr-cloud-download"> </i>
-                                    <h3 class="text-success number">{{ total }}</h3>
-                                    <p class="stat-text">Amount</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 pl-sm-2 statistics-grid">
-                                <div class="card card_border border-primary-top p-4">
-                                    <i class="lnr lnr-cart"> </i>
-                                    <h3 class="text-danger number">{{ order_len }}</h3>
-                                    <p class="stat-text">Purchased</p>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Material Able</p>
                     </div>
                 </div>
-            </div>
-            <!-- //statistics data -->
-
-            <!-- charts -->
-            <div class="chart">
-                <div class="row">
-                    <div class="col-lg-6 pr-lg-2 chart-grid">
-                        <div class="card text-center card_border">
-                            <div class="card-header chart-grid__header">
-                                Bar Chart
-                            </div>
-                            <div class="card-body">
-                                <!-- bar chart -->
-                                <div id="container">
-                                    <canvas id="barchart"></canvas>
-                                </div>
-                                <!-- //bar chart -->
-                            </div>
-                            <div class="card-footer text-muted chart-grid__footer">
-                                Updated 2 hours ago
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 pl-lg-2 chart-grid">
-                        <div class="card text-center card_border">
-                            <div class="card-header chart-grid__header">
-                                Line Chart
-                            </div>
-                            <div class="card-body">
-                                <!-- line chart -->
-                                <div id="container">
-                                    <canvas id="linechart"></canvas>
-                                </div>
-                                <!-- //line chart -->
-                            </div>
-                            <div class="card-footer text-muted chart-grid__footer">
-                                Updated just now
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'admin-home' %}">Dashboard</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!-- //charts -->
         </div>
-        <!-- //content -->
     </div>
-    <!-- main content end-->
+    <!-- Page-header end -->
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-12">
+                            <div class="row">
+                                <!-- sale card start -->
+
+                                <div class="col-md-6">
+                                    <div class="card text-center order-visitor-card">
+                                        <div class="card-block">
+                                            <h6 class="m-b-0">Total Subscription</h6>
+                                            <h4 class="m-t-15 m-b-15"><i class="fa fa-arrow-down m-r-15 text-c-red"></i>7652
+                                            </h4>
+                                            <p class="m-b-0">48% From Last 24 Hours</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card text-center order-visitor-card">
+                                        <div class="card-block">
+                                            <h6 class="m-b-0">Order Status</h6>
+                                            <h4 class="m-t-15 m-b-15"><i class="fa fa-arrow-up m-r-15 text-c-green"></i>6325
+                                            </h4>
+                                            <p class="m-b-0">36% From Last 6 Months</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card bg-c-red total-card">
+                                        <div class="card-block">
+                                            <div class="text-left">
+                                                <h4>489</h4>
+                                                <p class="m-0">Total Comment</p>
+                                            </div>
+                                            <span class="label bg-c-red value-badges">15%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card bg-c-green total-card">
+                                        <div class="card-block">
+                                            <div class="text-left">
+                                                <h4>$5782</h4>
+                                                <p class="m-0">Income Status</p>
+                                            </div>
+                                            <span class="label bg-c-green value-badges">20%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- sale card end -->
+                            </div>
+                        </div>
+                        <!--  sale analytics end -->
+                        <!-- Material statustic card start -->
+                        <div class="col-xl-4 col-md-12">
+                            <div class="card mat-clr-stat-card text-white green ">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-3 text-center bg-c-green">
+                                            <i class="fas fa-star mat-icon f-24"></i>
+                                        </div>
+                                        <div class="col-9 cst-cont">
+                                            <h5>4000+</h5>
+                                            <p class="m-b-0">Ratings Received</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mat-clr-stat-card text-white blue">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-3 text-center bg-c-blue">
+                                            <i class="fas fa-trophy mat-icon f-24"></i>
+                                        </div>
+                                        <div class="col-9 cst-cont">
+                                            <h5>17</h5>
+                                            <p class="m-b-0">Achievements</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Material statustic card end -->
+
+                        <!-- Project statustic start -->
+                        <div class="col-xl-12">
+                            <div class="card proj-progress-card">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-md-6">
+                                            <h6>Published Project</h6>
+                                            <h5 class="m-b-30 f-w-700">532<span
+                                                    class="text-c-green m-l-10">+1.69%</span></h5>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-c-red" style="width:25%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <h6>Completed Task</h6>
+                                            <h5 class="m-b-30 f-w-700">4,569<span class="text-c-red m-l-10">-0.5%</span>
+                                            </h5>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-c-blue" style="width:65%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <h6>Successfull Task</h6>
+                                            <h5 class="m-b-30 f-w-700">89%<span
+                                                    class="text-c-green m-l-10">+0.99%</span></h5>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-c-green" style="width:85%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-md-6">
+                                            <h6>Ongoing Project</h6>
+                                            <h5 class="m-b-30 f-w-700">365<span
+                                                    class="text-c-green m-l-10">+0.35%</span></h5>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-c-yellow" style="width:45%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project statustic end -->
+                    </div>
+                </div>
+                <!-- Page-body end -->
+            </div>
+            <div id="styleSelector"></div>
+        </div>
+    </div>
 {% endblock %}

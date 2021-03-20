@@ -1,211 +1,407 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Required meta tags -->
+    <title>Shopify Admin</title>
+    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 10]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <!-- Meta -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <title>Title</title>
-
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{% static 'assets/css/style-starter.css' %}">
-
-    <!-- google fonts -->
-    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <meta name="keywords"
+          content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive"/>
+    <meta name="author" content="Codedthemes"/>
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.ico" type="image/x-icon' %}">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <!-- waves.css -->
+    <link rel="stylesheet" href="{% static 'assets/pages/waves/css/waves.min.css' %}" type="text/css" media="all">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap/css/bootstrap.min.css' %}">
+    <!-- waves.css -->
+    <link rel="stylesheet" href="{% static 'assets/pages/waves/css/waves.min.css' %}" type="text/css" media="all">
+    <!-- themify icon -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/themify-icons/themify-icons.css' %}">
+    <!-- font-awesome-n -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome-n.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.min.css' %}">
+    <!-- scrollbar.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.mCustomScrollbar.css' %}">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
 </head>
 
-<body class="sidebar-menu-collapsed">
-<div class="se-pre-con"></div>
-<section>
-    <!-- sidebar menu start -->
-    <div class="sidebar-menu sticky-sidebar-menu">
+<body>
+<!-- Pre-loader start -->
+<div class="theme-loader">
+    <div class="loader-track">
+        <div class="preloader-wrapper">
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
 
-        <!-- logo start -->
-        <div class="logo">
-            <h1><a>SHOPIFY</a></h1>
-        </div>
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
 
-        <!-- if logo is image enable this -->
-        <!-- image logo --
-        <div class="logo">
-          <a href="index.html">
-            <img src="image-path" alt="Your logo" title="Your logo" class="img-fluid" style="height:35px;" />
-          </a>
-        </div>
-        <!-- //image logo -->
-        <div class="logo-icon text-center">
-            <a title="logo"><img src="{% static 'assets/images/logo.png' %}" alt="logo-icon"> </a>
-        </div>
-        <!-- //logo end -->
-        <div class="sidebar-menu-inner">
-            <!-- sidebar nav start -->
-            <ul class="nav nav-pills nav-stacked custom-nav">
-                <li class="active"><a href="{% url 'admin-home' %}"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
-                </li>
-                <li class="menu-list">
-                    <a href="{% url 'user-view' %}"><i class="fa fa-users"></i>
-                        <span>Users <i class="lnr lnr-chevron-right"></i></span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="{% url 'user-view' %}">View Users</a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="{% url 'orders' %}"><i class="fa fa-shopping-cart"></i><span> Orders</span></a>
-                </li>
-                <li class="menu-list">
-                    <a href="{% url 'product-view' %}"><i class="fa fa-product-hunt"></i>
-                        <span>Products <i class="lnr lnr-chevron-right"></i></span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="{% url 'product-view' %}">View Products</a></li>
-                        <li><a href="{% url 'add-product' %}">Add Product</a></li>
-                    </ul>
-                </li>
-                <li class="menu-list">
-                    <a href="{% url 'categories' %}"><i class="fa fa-shirtsinbulk"></i>
-                        <span>Category <i class="lnr lnr-chevron-right"></i></span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="{% url 'categories' %}">View Category</a></li>
-                        <li><a href="{% url 'add-category' %}">Add Category</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- //sidebar nav end -->
-            <!-- toggle button start -->
-            <a class="toggle-btn">
-                <i class="fa fa-angle-double-left menu-collapsed__left"><span>Collapse Sidebar</span></i>
-                <i class="fa fa-angle-double-right menu-collapsed__right"></i>
-            </a>
-            <!-- //toggle button end -->
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- //sidebar menu end -->
-    <!-- header-starts -->
-    <div class="header sticky-header">
-
-        <!-- notification menu start -->
-        <div class="menu-right">
-            <div class="navbar user-panel-top">
-                <div class="user-dropdown-details d-flex">
-                    <div class="profile_details">
-                        <ul>
-                            <li class="dropdown profile_details_drop">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <div class="profile_img">
-                                        <img src="{% static 'assets/images/profileimg.jpg' %}" class="rounded-circle"
-                                             alt=""/>
-                                        <div class="user-active">
-                                            <span></span>
+</div>
+<!-- Pre-loader end -->
+<div id="pcoded" class="pcoded">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper">
+        <nav class="navbar header-navbar pcoded-header">
+            <div class="navbar-wrapper">
+                <div class="navbar-logo">
+                    <a class="mobile-menu waves-effect waves-light" id="mobile-collapse">
+                        <i class="ti-menu"></i>
+                    </a>
+                    <div class="mobile-search waves-effect waves-light">
+                        <div class="header-search">
+                            <div class="main-search morphsearch-search">
+                                <div class="input-group">
+                                    <span class="input-group-prepend search-close"><i
+                                            class="ti-close input-group-text"></i></span>
+                                    <input type="text" class="form-control" placeholder="Enter Keyword">
+                                    <span class="input-group-append search-btn"><i
+                                            class="ti-search input-group-text"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'admin-home' %}" class="text-center">
+                        <img src="{% static 'assets/images/auth/Logo-small-bottom.png' %}" alt="small-logo.png">
+                    </a>
+                    <a class="mobile-options waves-effect waves-light">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+                <div class="navbar-container container-fluid">
+                    <ul class="nav-left">
+                        <li>
+                            <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                        </li>
+                        <li>
+                            <a onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                                <i class="ti-fullscreen"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav-right">
+                        <li class="header-notification">
+                            <a class="waves-effect waves-light">
+                                <i class="ti-bell"></i>
+                                <span class="badge bg-c-red"></span>
+                            </a>
+                            <ul class="show-notification">
+                                <li>
+                                    <h6>Notifications</h6>
+                                    <label class="label label-danger">New</label>
+                                </li>
+                                <li class="waves-effect waves-light">
+                                    <div class="media">
+                                        <img class="d-flex align-self-center img-radius"
+                                             src="{% static 'assets/images/avatar-4.jpg' %}"
+                                             alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <h5 class="notification-user">Joseph William</h5>
+                                            <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
+                                                elit.</p>
+                                            <span class="notification-time">30 minutes ago</span>
                                         </div>
                                     </div>
+                                </li>
+                                <li class="waves-effect waves-light">
+                                    <div class="media">
+                                        <img class="d-flex align-self-center img-radius"
+                                             src="{% static 'assets/images/avatar-3.jpg' %}"
+                                             alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <h5 class="notification-user">Sara Soudein</h5>
+                                            <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
+                                                elit.</p>
+                                            <span class="notification-time">30 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="user-profile header-notification">
+                            <a href="#!" class="waves-effect waves-light">
+                                <img src="{% static 'assets/images/avatar-4.jpg' %}" class="img-radius"
+                                     alt="User-Profile-Image">
+                                <span>John Doe</span>
+                                <i class="ti-angle-down"></i>
+                            </a>
+                            <ul class="show-notification profile-notification">
+                                <li class="waves-effect waves-light">
+                                    <a href="{% url 'admin-logout' %}">
+                                        <i class="ti-layout-sidebar-left"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <nav class="pcoded-navbar">
+                    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                    <div class="pcoded-inner-navbar main-menu">
+                        <div class="">
+                            <div class="main-menu-header">
+                                <img class="img-80 img-radius" src="{% static 'assets/images/avatar-4.jpg' %}"
+                                     alt="User-Profile-Image">
+                                <div class="user-details">
+                                    <span id="more-details">John Doe</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcoded-navigation-label">Navigation</div>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="active">
+                                <a href="{% url 'admin-home' %}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                    <span class="pcoded-mtext">Dashboard</span>
+                                    <span class="pcoded-mcaret"></span>
                                 </a>
-                                <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
-                                    <li class="user-info">
-                                        <h5 class="user-name">John Deo</h5>
-                                        <span class="status ml-2">Available</span>
+                            </li>
+                        </ul>
+                        <div class="pcoded-navigation-label">E-commerce</div>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="far fa-user text-c-purple"></i></span>
+                                    <span class="pcoded-mtext">Users</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'user-view' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">View Users</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
                                     </li>
-                                    <li class="logout"><a href="{% url 'admin-logout' %}"><i class="fa fa-power-off"></i>
-                                        Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="fa fa-product-hunt text-black"></i><b>BC</b></span>
+                                    <span class="pcoded-mtext">Products</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'product-view' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="fa fa-product-hunt text-c-blue"></i></span>
+                                            <span class="pcoded-mtext">View Products</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="{% url 'add-product' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">Add Products</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="fa fa-shopping-cart text-c-lite-green"></i><b>BC</b></span>
+                                    <span class="pcoded-mtext">Orders</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'orders' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">View Orders</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="fa fa-percent"></i><b>BC</b></span>
+                                    <span class="pcoded-mtext">Offers</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">View Offers</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">Add Offers</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="fa fa-percent"></i><b>BC</b></span>
+                                    <span class="pcoded-mtext">Category</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'categories' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">View Categories</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="{% url 'add-category' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext">Add Categories</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
+                </nav>
+                <div class="pcoded-content">
+                    {% block content %}
+                    {% endblock %}
                 </div>
             </div>
         </div>
-        <!--notification menu end -->
     </div>
-    <!-- //header-ends -->
-    {% block content %}
-    {% endblock %}
-</section>
-<!--footer section start-->
-<footer class="dashboard">
-    <p>&copy 2020 Collective. All Rights Reserved | SHOPIFY
-</footer>
-<!--footer section end-->
-<!-- move top -->
-<button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
-    <span class="fa fa-angle-up"></span>
-</button>
-<script>
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function () {
-        scrollFunction()
-    };
+</div>
+<!-- Warning Section Starts -->
+<!-- Older IE warning message -->
+<!--[if lt IE 10]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+    <div class="iew-container">
+        <ul class="iew-download">
+            <li>
+                <a href="http://www.google.com/chrome/">
+                    <img src="assets/images/browser/chrome.png" alt="Chrome">
+                    <div>Chrome</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.mozilla.org/en-US/firefox/new/">
+                    <img src="assets/images/browser/firefox.png" alt="Firefox">
+                    <div>Firefox</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.opera.com">
+                    <img src="assets/images/browser/opera.png" alt="Opera">
+                    <div>Opera</div>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.apple.com/safari/">
+                    <img src="assets/images/browser/safari.png" alt="Safari">
+                    <div>Safari</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                    <img src="assets/images/browser/ie.png" alt="">
+                    <div>IE (9 & above)</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+<!-- Warning Section Ends -->
 
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("movetop").style.display = "block";
-        } else {
-            document.getElementById("movetop").style.display = "none";
-        }
-    }
+<!-- Required Jquery -->
+<script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery-ui/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/popper.js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- waves js -->
+<script src="{% static 'assets/pages/waves/js/waves.min.js' %}"></script>
+<!-- jquery slimscroll js -->
+<script type="text/javascript" src="{% static 'assets/js/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
 
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-</script>
-<!-- /move top -->
+<!-- slimscroll js -->
+<script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
 
+<!-- menu js -->
+<script src="{% static 'assets/js/pcoded.min.js' %}"></script>
+<script src="{% static 'assets/js/vertical/vertical-layout.min.js' %}"></script>
 
-<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
-<script src="{% static 'assets/js/jquery-1.10.2.min.js' %}"></script>
-
-<!-- chart js -->
-<script src="{% static 'assets/js/Chart.min.js' %}"></script>
-<script src="{% static 'assets/js/utils.js' %}"></script>
-<!-- //chart js -->
-
-<!-- Different scripts of charts.  Ex.Barchart, Linechart -->
-<script src="{% static 'assets/js/bar.js' %}"></script>
-<script src="{% static 'assets/js/linechart.js' %}"></script>
-<!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
-
-
-<script src="{% static 'assets/js/jquery.nicescroll.js' %}"></script>
-<script src="{% static 'assets/js/scripts.js' %}"></script>
-
-<!-- close script -->
-<script>
-    var closebtns = document.getElementsByClassName("close-grid");
-    var i;
-
-    for (i = 0; i < closebtns.length; i++) {
-        closebtns[i].addEventListener("click", function () {
-            this.parentElement.style.display = 'none';
-        });
-    }
-</script>
-<!-- //close script -->
-
-<!-- disable body scroll when navbar is in active -->
-<script>
-    $(function () {
-        $('.sidebar-menu-collapsed').click(function () {
-            $('body').toggleClass('noscroll');
-        })
-    });
-</script>
-<!-- disable body scroll when navbar is in active -->
-
-<!-- loading-gif Js -->
-<script src="{% static 'assets/js/modernizr.js' %}"></script>
-<script>
-    $(window).load(function () {
-        // Animate loader off screen
-        $(".se-pre-con").fadeOut("slow");
-        ;
-    });
-</script>
-<!--// loading-gif Js -->
-
-<!-- Bootstrap Core JavaScript -->
-<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'assets/js/script.js' %}"></script>
 </body>
+
 </html>
-  
