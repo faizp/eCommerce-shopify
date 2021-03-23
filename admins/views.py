@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
-from shop.models import Category, Product, Order
+from shop.models import Category, Product, Order, Offer
 from datetime import date, datetime
 from django.views.decorators.csrf import csrf_exempt
 import base64
@@ -14,16 +14,16 @@ def home(request):
     if request.session.has_key('password'):
         # users
         users = User.objects.all().count()
-        new_users = User.objects.filter(date_joined__month = datetime.now().month).count()
-        active_users = User.objects.filter(is_active = True).count()
-        blocked_users = User.objects.filter(is_active = False).count()
+        new_users = User.objects.filter(date_joined__month=datetime.now().month).count()
+        active_users = User.objects.filter(is_active=True).count()
+        blocked_users = User.objects.filter(is_active=False).count()
         # orders
         orders = Order.objects.all()
         orders_today = Order.objects.filter(order_date__date=date.today()).count()
-        delivered_orders = Order.objects.filter(order_status = 'delivered').count()
-        cancelled_orders = Order.objects.filter(order_status = 'cancelled').count()
-        pending_orders = Order.objects.filter(order_status = 'pending').count()
-        orders_month = Order.objects.filter(order_date__month = datetime.now().month)
+        delivered_orders = Order.objects.filter(order_status='delivered').count()
+        cancelled_orders = Order.objects.filter(order_status='cancelled').count()
+        pending_orders = Order.objects.filter(order_status='pending').count()
+        orders_month = Order.objects.filter(order_date__month=datetime.now().month)
         total = 0
         for order in orders:
             total = total + order.product.price
@@ -38,7 +38,7 @@ def home(request):
         m4 = m3 - 2
         m5 = m4 - 1
         print(calendar.month_name[-1])
-        print(m4,m5,m2,m3,m1)
+        print(m4, m5, m2, m3, m1)
         month1 = Order.objects.filter(order_date__month=m1).count()
         month2 = Order.objects.filter(order_date__month=m2).count()
         month3 = Order.objects.filter(order_date__month=m3).count()
@@ -69,9 +69,12 @@ def home(request):
             'cancelled_orders': cancelled_orders,
             'pending_orders': pending_orders,
             'products': products,
-            'm1':month1, 'm2':month2, 'm3':month3, 'm4':month4, 'm5':month5,
-            'first_month': calendar.month_name[m1], 'second_month': calendar.month_name[m2], 'third_month': calendar.month_name[m3], 'fourth_month': calendar.month_name[m4], 'fifth_month': calendar.month_name[m5],
-            'y1':year1, 'y2':year2, 'y3':year3, 'y4':year4, 'y5':year5, 'y01': y1, 'y02': y2, 'y03': y3, 'y04': y4, 'y05': y5
+            'm1': month1, 'm2': month2, 'm3': month3, 'm4': month4, 'm5': month5,
+            'first_month': calendar.month_name[m1], 'second_month': calendar.month_name[m2],
+            'third_month': calendar.month_name[m3], 'fourth_month': calendar.month_name[m4],
+            'fifth_month': calendar.month_name[m5],
+            'y1': year1, 'y2': year2, 'y3': year3, 'y4': year4, 'y5': year5, 'y01': y1, 'y02': y2, 'y03': y3, 'y04': y4,
+            'y05': y5
         }
         return render(request, 'admins/dashboard.html', context)
     else:
@@ -155,7 +158,8 @@ def add_product(request):
             sub_category = request.POST.get('product-main-category')
             description = request.POST.get('product-description')
             categry = Category.objects.get(pk=p_category)
-            product = Product.objects.create(category=categry, name=name, price=price, image1=img_data1, image2=img_data2,
+            product = Product.objects.create(category=categry, name=name, price=price, image1=img_data1,
+                                             image2=img_data2,
                                              image3=img_data3, description=description, sec_category=sub_category)
             product.save()
             return redirect('admin-home')
@@ -284,4 +288,36 @@ def orders(request):
     }
     return render(request, 'admins/order.html', context)
 
+
+def offers(request):
+    offer = Offer.objects.all()
+    context = {
+        'offers': offer
+    }
+    return render(request, 'admins/offer.html', context)
+
+
+def add_offer(request):
+    if request.method == 'POST':
+        category_id = request.POST.get('category')
+        name = request.POST.get('offer-name')
+        discount = request.POST.get('discount')
+        start_date = request.POST.get('start-date')
+        print(start_date)
+        end_date = request.POST.get('end-date')
+        category = Category.objects.filter(pk = category_id).first()
+        Offer.objects.create(category = category, name = name, discount = discount, start_date = start_date, end_date = end_date)
+        return redirect('offers')
+    else:
+        category = Category.objects.all()
+        context = {
+            'category': category
+        }
+        return render(request, 'admins/add-offer.html', context)
+
+
+def delete_offer(request, id):
+    offer =  Offer.objects.get(id = id)
+    offer.delete()
+    return JsonResponse('true', safe=False)
 

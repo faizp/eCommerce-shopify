@@ -50,8 +50,8 @@ function addToCart(id) {
 
 
 function addProduct() {
-        var id = $('#product-id').val()
-        var size = $('#product-size').val();
+    var id = $('#product-id').val()
+    var size = $('#product-size').val();
     $.ajax({
         url: '/add_cart/' + id,
         method: 'POST',
@@ -66,7 +66,7 @@ function addProduct() {
             });
         }
     })
-    }
+}
 
 
 function removeFromCart(id) {
@@ -119,5 +119,4 @@ function reduceQuantity(id) {
         }
     })
 }
-
 

@@ -6,16 +6,16 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="page-header-title">
-                        <h5 class="m-b-10">Dashboard</h5>
-                        <p class="m-b-0">Welcome to Material Able</p>
+                        <h5 class="m-b-10">Users</h5>
+                        <p class="m-b-0">Manage Your users here</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.html"> <i class="fa fa-home"></i> </a>
+                            <a href="{% url 'admin-home' %}"> <i class="fa fa-home"></i> </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="#!">Users</a>
                         </li>
                     </ul>
                 </div>
@@ -33,7 +33,6 @@
                     <th scope="col">NAME</th>
                     <th scope="col">EMAIL
                     <th scope="col"></th>
-                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +42,6 @@
                         <td><img style="width: 3em" src="{{ profile.image_url }}"></td>
                         <td>{{ profile.user.first_name }} {{ profile.user.last_name }}</td>
                         <td>{{ profile.user.email }}</td>
-                        <td><a href="{% url 'edit-user' profile.user.id %}" class="btn btn-primary">Edit</a></td>
                         <td><a href="{% url 'block-user' profile.user.id %}" class="btn btn-danger">
                             {% if profile.user.is_active %}
                                 Block{% else %}Unblock{% endif %}</a></td>

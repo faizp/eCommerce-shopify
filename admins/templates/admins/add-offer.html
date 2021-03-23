@@ -1,0 +1,94 @@
+{% extends 'admins/index.html' %}
+{% block content %}
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Offer</h5>
+                        <p class="m-b-0">Add new Offer</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Add offer</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page-header end -->
+    <div class="row main-content">
+        <div class="container-fluid content-top-gap">
+            <div class="col-md-4">
+                <span style="width: 100%;" class=" alert-danger text-center" id="form-error"></span>
+                <form style="width: 20em" method="post">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="product-catergory">Select category</label>
+                        <select class="form-control" name="category" id="product-catergory" required>
+                            {% for catergory in category %}
+                                <option value="{{ catergory.id }}">{{ catergory.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category-name">Name:</label>
+                        <input type="text" name="offer-name" class="form-control" id="offer-name"
+                               placeholder="Offer Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category-name">Discount: </label>
+                        <input type="number" min="1" max="100" name="discount" class="form-control" id="discount"
+                               placeholder="Discount in %" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="start-date" class="col-12 col-form-label">Start Date:</label>
+                        <div class="col-10">
+                            <input class="form-control" name="start-date" type="date" id="start-date" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date" class="col-12 col-form-label">End Date:</label>
+                        <div class="col-10">
+                            <input class="form-control" name="end-date" type="date" id="end-date" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success rounded" id="add-offer">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{#    <script>#}
+{#        function addCategory() {#}
+{#            var category = $('#product-catergory').val();#}
+{#            var name = $('#offer-name').val();#}
+{#            var discount = $('#discount').val();#}
+{#            var startDate = $('#start-date').val();#}
+{#            var endDate = $('#end-date').val();#}
+{#            var data = {#}
+{#                'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#                'category': category,#}
+{#                'name': name,#}
+{#                'discount': discount,#}
+{#                'startDate': startDate,#}
+{#                'endDate': endDate#}
+{#            };#}
+{#            $.ajax({#}
+{#                url: '/admin/add-offer/',#}
+{#                method: 'POST',#}
+{#                data: data,#}
+{#                dataType: 'json',#}
+{#                success: function (data) {#}
+{#                    if (data == 'true') {#}
+{#                        window.location.replace('/admin/offers/')#}
+{#                    }#}
+{#                }#}
+{#            })#}
+{#        }#}
+{#    </script>#}
+{% endblock %}

@@ -7,15 +7,20 @@ from .models import Profile, Address
 import requests, json
 from shop.models import Product, Order, Size, Offer
 from django.contrib.auth import login, authenticate, logout
+from datetime import date
 
 
 def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category)
+        offer = Offer.objects.filter(category=product.category, valid=True)
         if offer.exists():
-            product.offerPrice = product.price - offer[0].discount/100
+            if offer[0].start_date <= date.today() <= offer[0].end_date:
+                offer[0].valid = True
+                product.offerPrice = product.price - (product.price*offer[0].discount)/100
+            else:
+                offer[0].valid = False
         else:
             product.offerPrice = product.price
     context = {
