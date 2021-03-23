@@ -24,75 +24,201 @@
     </div>
     <!-- Page-header end -->
     <div class="row main-content">
-        <div class="container-fluid content-top-gap">
-        <h3>Add Product</h3>
-        <form style="width: 35em" enctype="multipart/form-data" method="POST">
-            <div class="form-group">
-                <label for="product-catergory">Select category</label>
-                <select class="form-control" name="product-category" id="product-catergory" required>
-                    {% for catergory in category %}
-                    <option value="{{ catergory.id }}">{{ catergory.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="product-name">Name of the product</label>
-                <input type="text" name="product-name" class="form-control" id="product-name"
-                       placeholder="Please enter the product name..." required>
-            </div>
-            <div class="form-group">
-                <label for="product-price">Price</label>
-                <input type="text" name="product-price" class="form-control" id="product-price"
-                       placeholder="Please enter the product price..." required>
-            </div>
-            <div class="form-group">
-                <label for="image1">Select images of product</label><br>
-                <input type="file" name="image1" class="form-control-file" id="image1" onchange="loadFile(event)" required>
-                <img style="width: 6em; height: 100%" id="img1"/>
-                <input type="file" name="image2" class="form-control-file"  id="image2" onchange="loadFile1(event)" required>
-                <img style="width: 6em; height: 100%" id="img2"/>
-                <input type="file" name="image3" class="form-control-file" id="image3" onchange="loadFile2(event)" required>
-                <img style="width: 6em; height: 100%" id="img3"/>
-            </div>
-            <div class="form-group">
-                <label for="product-main-category">Select main category</label>
-                <select class="form-control" name="product-main-category" id="product-main-catergory" required>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Kids</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="product-description">Description</label>
-                <textarea class="form-control" name="product-description" id="product-description" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2">Add product</button>
-        </form>
-    </div>
+        <div class="container-fluid ml-3">
+            <form style="width: 100vh" enctype="multipart/form-data" method="POST">
+                <div class="form-group">
+                    <label for="product-catergory">Select category</label>
+                    <select class="form-control" name="product-category" id="product-catergory" required>
+                        {% for catergory in category %}
+                            <option value="{{ catergory.id }}">{{ catergory.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-name">Name of the product</label>
+                    <input type="text" name="product-name" class="form-control" id="product-name"
+                           placeholder="Please enter the product name..." required>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Price</label>
+                    <input type="text" name="product-price" class="form-control" id="product-price"
+                           placeholder="Please enter the product price..." required>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="image1">Select images of product</label><br>
+                            <input type="file" name="image1" id="image1" onchange="readURL1(this);"/>
+                            <div id="image1_container1" class="image1_container"
+                                 style="max-width: 324px; max-height: 324px;">
+                                <img id="blah1" src="#" alt="your image"/>
+                            </div>
+                            <div>
+                                <!-- // Cropped image to display (only if u want) -->
+                                <div id="cropped">
+                                    <img style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result1"/>
+                                </div>
+
+                                <!-- // Will trigger crop event -->
+                                <button id="crop_button1">Crop</button>
+                            </div>
+                            <textarea style="display: none" id="image164" name="image164"></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="image2">Select images of product</label><br>
+                            <input type="file" name="image2" id="image2" onchange="readURL2(this);"/>
+                            <div id="image_container2" class="image_container"
+                                 style="max-width: 324px; max-height: 324px;">
+                                <img id="blah2" src="#" alt="your image"/>
+                            </div>
+                            <div>
+                                <!-- // Cropped image to display (only if u want) -->
+                                <div id="cropped2">
+                                    <img style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result2"/>
+                                </div>
+
+                                <!-- // Will trigger crop event -->
+                                <button id="crop_button2">Crop</button>
+                            </div>
+                            <textarea style="display: none;" id="image264" name="image264"></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="image3">Select images of product</label><br>
+                            <input type="file" name="image3" id="image3" onchange="readURL3(this);"/>
+                            <div id="image_container3" class="image_container"
+                                 style="max-width: 324px; max-height: 324px;">
+                                <img id="blah3" src="#" alt="your image"/>
+                            </div>
+                            <div>
+                                <!-- // Cropped image to display (only if u want) -->
+                                <div id="cropped3">
+                                    <img class="border shadow" style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result3"/>
+                                </div>
+
+                                <!-- // Will trigger crop event -->
+                                <button id="crop_button3">Crop</button>
+                            </div>
+                            <textarea style="display: none" id="image364" name="image364"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-main-category">Select main category</label>
+                    <select class="form-control" name="product-main-category" id="product-main-catergory" required>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Kids</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea class="form-control" name="product-description" id="product-description" rows="3"
+                              required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Add product</button>
+            </form>
+        </div>
     </div>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.0.0/cropper.min.js"></script>
     <script>
-  var loadFile = function(event) {
-    var output = document.getElementById('img1');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-    var loadFile1 = function(event) {
-    var output = document.getElementById('img2');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-      var loadFile2 = function(event) {
-    var output = document.getElementById('img3');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-</script>
+        function readURL1(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#blah1").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+                setTimeout(initCropper, 1000);
+            }
+        }
+        function initCropper() {
+            console.log("Came here");
+            var image1 = document.getElementById("blah1");
+            var cropper = new Cropper(image1, {
+                aspectRatio: 3 / 4,
+                crop: function (e) {
+                    console.log(e.detail.x);
+                    console.log(e.detail.y);
+                }
+            });
+
+            // On crop button clicked
+            document.getElementById("crop_button1").addEventListener("click", function () {
+                var imgurl1 = cropper.getCroppedCanvas().toDataURL();
+                var img1 = document.getElementById("cropped_result1");
+                img1.src = imgurl1;
+                document.getElementById("image164").value = imgurl1;
+            });
+        }
+
+    </script>
+    <script>
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#blah2").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+                setTimeout(initCropper2, 1000);
+            }
+        }
+        function initCropper2() {
+            console.log("Came here");
+            var image2 = document.getElementById("blah2");
+            console.log(image2)
+            var cropper = new Cropper(image2, {
+                aspectRatio: 3 / 4,
+                crop: function (e) {
+                    console.log(e.detail.x);
+                    console.log(e.detail.y);
+                }
+            });
+
+            // On crop button clicked
+            document.getElementById("crop_button2").addEventListener("click", function () {
+                var imgurl2 = cropper.getCroppedCanvas().toDataURL();
+                var img2 = document.getElementById("cropped_result2");
+                img2.src = imgurl2;
+                document.getElementById("image264").value = imgurl2;
+            });
+        }
+
+    </script>
+    <script>
+        function readURL3(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#blah3").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+                setTimeout(initCropper3, 1000);
+            }
+        }
+        function initCropper3() {
+            console.log("Came here");
+            var image3 = document.getElementById("blah3");
+            var cropper = new Cropper(image3, {
+                aspectRatio: 3 / 4,
+                crop: function (e) {
+                    console.log(e.detail.x);
+                    console.log(e.detail.y);
+                }
+            });
+
+            // On crop button clicked
+            document.getElementById("crop_button3").addEventListener("click", function () {
+                var imgurl3 = cropper.getCroppedCanvas().toDataURL();
+                var img3 = document.getElementById("cropped_result3");
+                img3.src = imgurl3;
+                document.getElementById("image364").value = imgurl3;
+            });
+        }
+
+    </script>
+
 {% endblock %}

@@ -5,13 +5,19 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
 import requests, json
-from shop.models import Product, Order, Size
+from shop.models import Product, Order, Size, Offer
 from django.contrib.auth import login, authenticate, logout
 
 
 def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
+    for product in products:
+        offer = Offer.objects.filter(category=product.category)
+        if offer.exists():
+            product.offerPrice = product.price - offer[0].discount/100
+        else:
+            product.offerPrice = product.price
     context = {
         'product': products,
         'size': size

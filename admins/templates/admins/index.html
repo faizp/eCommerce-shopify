@@ -37,6 +37,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.mCustomScrollbar.css' %}">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.0.0/cropper.min.css"
+          integrity="sha256-FeDcPwV8ZgxG1MU5L/b2i8clOmqZJKK0eyDHqrQaXxY=" crossorigin="anonymous"/>
 </head>
 
 <body>
@@ -239,14 +241,16 @@
                         <ul class="pcoded-item pcoded-left-item">
                             <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="fa fa-product-hunt text-black"></i><b>BC</b></span>
+                                    <span class="pcoded-micon"><i
+                                            class="fa fa-product-hunt text-black"></i><b>BC</b></span>
                                     <span class="pcoded-mtext">Products</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class=" ">
                                         <a href="{% url 'product-view' %}" class="waves-effect waves-dark">
-                                            <span class="pcoded-micon"><i class="fa fa-product-hunt text-c-blue"></i></span>
+                                            <span class="pcoded-micon"><i
+                                                    class="fa fa-product-hunt text-c-blue"></i></span>
                                             <span class="pcoded-mtext">View Products</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
@@ -400,6 +404,7 @@
 <!-- menu js -->
 <script src="{% static 'assets/js/pcoded.min.js' %}"></script>
 <script src="{% static 'assets/js/vertical/vertical-layout.min.js' %}"></script>
+
 
 <script type="text/javascript" src="{% static 'assets/js/script.js' %}"></script>
 </body>

@@ -80,3 +80,15 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
 
 
+class Offer(models.Model):
+    category = models.OneToOneField(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=32)
+    discount = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    valid = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
