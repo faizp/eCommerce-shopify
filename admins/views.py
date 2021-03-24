@@ -131,7 +131,7 @@ def add_product(request):
             p_category = request.POST.get('product-category')
             name = request.POST.get('product-name')
             price = request.POST.get('product-price')
-            image1 = request.POST.get('image264')
+            image1 = request.POST.get('image164')
             # format, img1 = image1.split(';base64,')
             # with open(name+'1.jpg', "wb") as fh1:
             #     fh1.write(base64.b64decode(img1))
@@ -320,4 +320,3 @@ def delete_offer(request, id):
     offer =  Offer.objects.get(id = id)
     offer.delete()
     return JsonResponse('true', safe=False)
-

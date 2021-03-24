@@ -27,7 +27,7 @@
         <div class="container-fluid ml-3">
             <form style="width: 100vh" enctype="multipart/form-data" method="POST">
                 <div class="form-group">
-                    <label for="product-catergory">Select category</label>
+                    <label for="product-category">Select category</label>
                     <select class="form-control" name="product-category" id="product-catergory" required>
                         {% for catergory in category %}
                             <option value="{{ catergory.id }}">{{ catergory.name }}</option>
@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="image1">Select images of product</label><br>
-                            <input type="file" name="image1" id="image1" onchange="readURL1(this);"/>
+                            <input type="file" accept="image/*" name="image1" id="image1" onchange="readURL1(this);"/>
                             <div id="image1_container1" class="image1_container"
                                  style="max-width: 324px; max-height: 324px;">
                                 <img id="blah1" src="#" alt="your image"/>
@@ -60,13 +60,13 @@
                                 </div>
 
                                 <!-- // Will trigger crop event -->
-                                <button id="crop_button1">Crop</button>
+                                <button type="button" id="crop_button1">Crop</button>
                             </div>
                             <textarea style="display: none" id="image164" name="image164"></textarea>
                         </div>
                         <div class="col-md-4">
                             <label for="image2">Select images of product</label><br>
-                            <input type="file" name="image2" id="image2" onchange="readURL2(this);"/>
+                            <input type="file" accept="image/*" name="image2" id="image2" onchange="readURL2(this);"/>
                             <div id="image_container2" class="image_container"
                                  style="max-width: 324px; max-height: 324px;">
                                 <img id="blah2" src="#" alt="your image"/>
@@ -78,13 +78,13 @@
                                 </div>
 
                                 <!-- // Will trigger crop event -->
-                                <button id="crop_button2">Crop</button>
+                                <button type="button" id="crop_button2">Crop</button>
                             </div>
                             <textarea style="display: none;" id="image264" name="image264"></textarea>
                         </div>
                         <div class="col-md-4">
                             <label for="image3">Select images of product</label><br>
-                            <input type="file" name="image3" id="image3" onchange="readURL3(this);"/>
+                            <input type="file" accept="image/*" name="image3" id="image3" onchange="readURL3(this);"/>
                             <div id="image_container3" class="image_container"
                                  style="max-width: 324px; max-height: 324px;">
                                 <img id="blah3" src="#" alt="your image"/>
@@ -96,7 +96,7 @@
                                 </div>
 
                                 <!-- // Will trigger crop event -->
-                                <button id="crop_button3">Crop</button>
+                                <button type="button" id="crop_button3">Crop</button>
                             </div>
                             <textarea style="display: none" id="image364" name="image364"></textarea>
                         </div>
@@ -139,6 +139,7 @@
             var image1 = document.getElementById("blah1");
             var cropper = new Cropper(image1, {
                 aspectRatio: 3 / 4,
+                viewMode: 2,
                 crop: function (e) {
                     console.log(e.detail.x);
                     console.log(e.detail.y);
@@ -169,9 +170,10 @@
         function initCropper2() {
             console.log("Came here");
             var image2 = document.getElementById("blah2");
-            console.log(image2)
+            console.log(image2);
             var cropper = new Cropper(image2, {
                 aspectRatio: 3 / 4,
+                viewMode: 3,
                 crop: function (e) {
                     console.log(e.detail.x);
                     console.log(e.detail.y);
@@ -204,6 +206,7 @@
             var image3 = document.getElementById("blah3");
             var cropper = new Cropper(image3, {
                 aspectRatio: 3 / 4,
+                viewMode: 3,
                 crop: function (e) {
                     console.log(e.detail.x);
                     console.log(e.detail.y);

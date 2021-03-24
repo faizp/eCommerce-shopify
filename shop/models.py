@@ -67,6 +67,15 @@ class Cart(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
 
+class Coupon(models.Model):
+    code = models.CharField(unique=True, max_length=16)
+    discount = models.IntegerField()
+    valid = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
@@ -78,10 +87,11 @@ class Order(models.Model):
     order_status = models.CharField(default='pending', max_length=16)
     transaction_id = models.CharField(max_length=256)
     order_date = models.DateTimeField(auto_now_add=True)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
 
 
 class Offer(models.Model):
-    category = models.OneToOneField(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     discount = models.IntegerField()
     start_date = models.DateField()
@@ -90,5 +100,10 @@ class Offer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class UsedOffer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE)
 
 

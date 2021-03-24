@@ -3,24 +3,31 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
-from .models import Product, Cart, Order, Size
+from .models import Product, Cart, Order, Size, Offer
 from user.models import Address
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import uuid
+from datetime import date
 
 
 def products(request):
-    product = Product.objects.all()
+    products = Product.objects.all()
+    for product in products:
+        offer = Offer.objects.filter(category=product.category, start_date__lt=date.today(), end_date__gt=date.today()).first()
+        if offer is not None:
+            product.offerPrice = product.price - (product.price*offer.discount)/100
+        else:
+            product.offerPrice = product.price
     size = Size.objects.all()
     context = {
-        'product': product,
+        'product': products,
         'size': size
     }
     return render(request, 'user/product.html', context)
 
 
-@login_required
+@login_required(login_url='signin')
 def cart(request):
     user = request.user.id
     carts = Cart.objects.filter(user_id=user)
@@ -28,6 +35,12 @@ def cart(request):
     for cart in carts:
         total = total + cart.product.price * cart.quantity
         cart.total = cart.product.price * cart.quantity
+        offer = Offer.objects.filter(category=cart.product.category, start_date__lt=date.today(),
+                                     end_date__gt=date.today()).first()
+        if offer is not None:
+            cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
+        else:
+            cart.product.offerPrice = cart.product.price
     context = {
         'carts': carts,
         'total': total
@@ -36,7 +49,7 @@ def cart(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='signin')
 def add_to_cart(request, p_id):
     user = request.user
     picked_size = request.POST['size']
@@ -58,6 +71,7 @@ def remove_from_cart(request, id):
 
 
 @csrf_exempt
+@login_required(login_url='signin')
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     carts = Cart.objects.filter(user=request.user)
@@ -79,6 +93,7 @@ def add_quantity(request, cart_id):
 
 
 @csrf_exempt
+@login_required(login_url='signin')
 def reduce_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     print(cart.quantity)
@@ -120,6 +135,7 @@ def product_quick_view(request, id):
 
 
 @csrf_exempt
+@login_required(login_url='signin')
 def place_order(request):
     user = request.user
     address = request.POST['address']
@@ -141,6 +157,7 @@ def place_order(request):
 
 
 @csrf_exempt
+@login_required(login_url='signin')
 def payment_page(request):
     user = request.user
     address = Address.objects.filter(user=user)
@@ -159,11 +176,13 @@ def payment_page(request):
     return render(request, 'user/payment-page.html', context)
 
 
+@login_required(login_url='signin')
 def order_confirm(request):
     return render(request, 'user/order-confirmed.html')
 
 
 @csrf_exempt
+@login_required(login_url='signin')
 def cancel_order(request,id):
     order = Order.objects.get(id=id)
     order.order_status = 'cancelled'

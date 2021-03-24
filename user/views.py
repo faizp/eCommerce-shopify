@@ -8,19 +8,16 @@ import requests, json
 from shop.models import Product, Order, Size, Offer
 from django.contrib.auth import login, authenticate, logout
 from datetime import date
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, valid=True)
-        if offer.exists():
-            if offer[0].start_date <= date.today() <= offer[0].end_date:
-                offer[0].valid = True
-                product.offerPrice = product.price - (product.price*offer[0].discount)/100
-            else:
-                offer[0].valid = False
+        offer = Offer.objects.filter(category=product.category, start_date__lt=date.today(), end_date__gt=date.today()).first()
+        if offer is not None:
+            product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:
             product.offerPrice = product.price
     context = {
@@ -64,6 +61,7 @@ def login_user(request):
         return redirect(index)
 
 
+@login_required(login_url='signin')
 def addresses(request):
     user = request.user
     address = Address.objects.filter(user=user)
@@ -73,6 +71,7 @@ def addresses(request):
     return render(request, 'user/addresses.html', context)
 
 
+@login_required(login_url='signin')
 def add_new_address(request):
     user = request.user
     if request.method == 'POST':
@@ -87,6 +86,7 @@ def add_new_address(request):
         return redirect('user-addresses')
 
 
+@login_required(login_url='signin')
 def edit_address(request, id):
     address = Address.objects.get(id=id)
     address.house_name = request.POST.get('house-name')
@@ -99,12 +99,15 @@ def edit_address(request, id):
     return redirect('user-addresses')
 
 
+@login_required(login_url='signin')
 def delete_address(request, id):
     address = Address.objects.get(id=id)
     address.delete()
     return redirect('user-addresses')
 
 
+
+@login_required(login_url='signin')
 def profile(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -122,7 +125,7 @@ def register_user(request):
             user = request.user
             image = request.FILES.get('image')
             phone = request.POST.get('phone')
-            Profile.objects.create(user = user, image = image, phone_num = phone)
+            Profile.objects.create(user=user, image=image, phone_num=phone)
             return redirect('index')
         else:
             return render(request, 'user/register_user.html')
@@ -195,14 +198,15 @@ def otp_login(request):
             return redirect('otp-login')
     else:
         return redirect('index')
-    # if request.session.has_key('otp_id_signup'):
-    #     phone = request.session['phone_signup']
-    #     context = {'phone': phone}
-    #     return render(request, 'user/otp-login.html', context)
+        # if request.session.has_key('otp_id_signup'):
+        #     phone = request.session['phone_signup']
+        #     context = {'phone': phone}
+        #     return render(request, 'user/otp-login.html', context)
 
 
+@login_required(login_url='signin')
 def my_orders(request):
-    orders = Order.objects.filter(user = request.user)
+    orders = Order.objects.filter(user=request.user)
     context = {
         'orders': orders
     }
