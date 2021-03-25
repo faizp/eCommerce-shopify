@@ -37,7 +37,9 @@ function addToCart(id) {
         method: 'POST',
         data: {'size': size},
         dataType: 'json',
-        success: function () {
+        success: function (data) {
+            console.log(data.count)
+            $('#cart-icon').attr('data-notify', data.count);
             $('.js-addcart-detail').each(function () {
                 var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
                 $(this).on('click', function () {
@@ -57,7 +59,11 @@ function addProduct() {
         method: 'POST',
         data: {'size': size},
         dataType: 'json',
-        success: function () {
+        success: function (data) {
+            console.log(data.count)
+            $('#cart-icon').attr('data-notify', data.count);
+            var a = $('#cart-icon').attr('data-notify');
+            console.log(a)
             $('.js-addcart-detail').each(function () {
                 var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
                 $(this).on('click', function () {

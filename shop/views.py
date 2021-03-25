@@ -14,7 +14,7 @@ from datetime import date
 def products(request):
     products = Product.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lt=date.today(), end_date__gt=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
         if offer is not None:
             product.offerPrice = product.price - (product.price*offer.discount)/100
         else:
@@ -35,8 +35,7 @@ def cart(request):
     for cart in carts:
         total = total + cart.product.price * cart.quantity
         cart.total = cart.product.price * cart.quantity
-        offer = Offer.objects.filter(category=cart.product.category, start_date__lt=date.today(),
-                                     end_date__gt=date.today()).first()
+        offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
         if offer is not None:
             cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
         else:
@@ -54,13 +53,16 @@ def add_to_cart(request, p_id):
     user = request.user
     picked_size = request.POST['size']
     size = Size.objects.get(pk=picked_size)
+    cart_count = Cart.objects.filter(user = user).count()
     if Cart.objects.filter(user=user, product_id=p_id, size=size).exists():
         cart = Cart.objects.get(user=user, product_id=p_id, size=size)
         cart.quantity += 1
         cart.save()
     else:
         Cart.objects.create(user=user, product_id=p_id, size=size)
-    return JsonResponse('true', safe=False)
+
+    data = {'count': cart_count}
+    return JsonResponse(data)
 
 
 @csrf_exempt

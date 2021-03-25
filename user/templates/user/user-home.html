@@ -1043,6 +1043,7 @@
                                         </div>
                                     </div>
 
+
                                     <div class="item-slick3" id="data-thumb-image2"
                                          data-thumb="">
                                         <div class="wrap-pic-w pos-relative">
@@ -1160,9 +1161,13 @@
                     $("#product-image1").prop('src', '/media/' + data1[0].fields.image1);
                     $("#product-image2").prop('src', '/media/' + data1[0].fields.image2);
                     $("#product-image3").prop('src', '/media/' + data1[0].fields.image3);
-                    $("#data-thumb-image1").prop('data-thumb', '/media/' + data1[0].fields.image1);
-                    $("#data-thumb-image2").prop('data-thumb', '/media/' + data1[0].fields.image2);
-                    $("#data-thumb-image3").prop('data-thumb', '/media/' + data1[0].fields.image3);
+                    $("#data-thumb-image").prop('src', '/media/' + data1[0].fields.image3);
+{#                    $("#data-thumb-image1").attr('data-thumb', '/media/' + data1[0].fields.image1);#}
+{#                    $("#data-thumb-image2").attr('data-thumb', '/media/' + data1[0].fields.image2);#}
+{#                    $("#data-thumb-image3").attr('data-thumb', '/media/' + data1[0].fields.image3);#}
+{#                    var a = $('#data-thumb-image1').attr('data-thumb');#}
+{#                    console.log(a)#}
+{#                    $('#cart-icon').attr('data-notify', data.count);#}
                     $("#zoomImg1").prop('href', '/media/' + data1[0].fields.image1);
                     $("#zoomImg2").prop('href', '/media/' + data1[0].fields.image2);
                     $("#zoomImg3").prop('href', '/media/' + data1[0].fields.image3);

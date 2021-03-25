@@ -15,7 +15,7 @@ def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lt=date.today(), end_date__gt=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
         if offer is not None:
             product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:

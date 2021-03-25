@@ -8,7 +8,8 @@ def add_variable_to_context(request):
             total = total + cart.product.price * cart.quantity
         return {
             'carts': carts,
-            'total': total
+            'total': total,
+            'count': carts.count(),
         }
     else:
         return {
