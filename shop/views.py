@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.contrib.auth.models import User
-from user.models import Profile
 from .models import Product, Cart, Order, Size, Offer
 from user.models import Address
 from django.views.decorators.csrf import csrf_exempt

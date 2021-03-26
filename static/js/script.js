@@ -147,3 +147,44 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function addOffer() {
+    var isvalid = $('#form_id').valid();
+    if (isvalid) {
+        var category = $('#category').val();
+        console.log(category)
+        var name = $('#offer-name').val();
+        var discount = $('#discount').val();
+        var startDate = $('#start-date').val();
+        console.log(startDate)
+        var endDate = $('#end-date').val();
+        console.log(endDate)
+        var data = {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'category': category,
+            'name': name,
+            'discount': discount,
+            'startDate': startDate,
+            'endDate': endDate
+        };
+        $.ajax({
+            url: '/admin/add-offer/',
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if (data == 'true') {
+                    window.location.replace('/admin/offers/')
+                }
+                if (data == 'false') {
+                    console.log('wrong')
+                    window.alert('An offer for this category is active right now,  Please choose different category')
+                }
+                if (data == 'dateError') {
+                    window.alert('You have selected invalid Dates')
+                }
+            }
+        })
+    }
+}

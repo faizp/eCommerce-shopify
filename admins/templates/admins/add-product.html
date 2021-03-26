@@ -1,4 +1,5 @@
 {% extends 'admins/index.html' %}
+{% load static %}
 {% block content %}
     <!-- Page-header start -->
     <div class="page-header">
@@ -69,7 +70,7 @@
                             <input type="file" accept="image/*" name="image2" id="image2" onchange="readURL2(this);"/>
                             <div id="image_container2" class="image_container"
                                  style="max-width: 324px; max-height: 324px;">
-                                <img id="blah2" src="#" alt="your image"/>
+                                <img id="blah2" style="width: 200px;" src="" alt="your image"/>
                             </div>
                             <div>
                                 <!-- // Cropped image to display (only if u want) -->
@@ -92,7 +93,8 @@
                             <div>
                                 <!-- // Cropped image to display (only if u want) -->
                                 <div id="cropped3">
-                                    <img class="border shadow" style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result3"/>
+                                    <img class="border shadow" style="width: 13em; height: 100%; margin-top: 2em"
+                                         id="cropped_result3"/>
                                 </div>
 
                                 <!-- // Will trigger crop event -->
@@ -170,7 +172,6 @@
         function initCropper2() {
             console.log("Came here");
             var image2 = document.getElementById("blah2");
-            console.log(image2);
             var cropper = new Cropper(image2, {
                 aspectRatio: 3 / 4,
                 viewMode: 3,

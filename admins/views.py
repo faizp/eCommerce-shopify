@@ -297,17 +297,24 @@ def offers(request):
     return render(request, 'admins/offer.html', context)
 
 
+@csrf_exempt
 def add_offer(request):
     if request.method == 'POST':
         category_id = request.POST['category']
-        name = request.POST['offer-name']
-        discount = request.POST['discount']
-        start_date = request.POST['start-date']
-        print(start_date)
-        end_date = request.POST['end-date']
-        category = Category.objects.filter(pk = category_id).first()
-        Offer.objects.create(category = category, name = name, discount = discount, start_date = start_date, end_date = end_date)
-        return JsonResponse('true', safe=False)
+        category = Category.objects.get(pk=category_id)
+        start_date = request.POST['startDate']
+        end_date = request.POST['endDate']
+        if start_date > end_date:
+            return JsonResponse('dateError', safe=False)
+        if Offer.objects.filter(category=category, end_date__lte=end_date).exists():
+            print('exists')
+            return JsonResponse('false', safe=False)
+        else:
+            name = request.POST['name']
+            discount = request.POST['discount']
+
+            Offer.objects.create(category = category, name = name, discount = discount, start_date = start_date, end_date = end_date)
+            return JsonResponse('true', safe=False)
     else:
         category = Category.objects.all()
         context = {

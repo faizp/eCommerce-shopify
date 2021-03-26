@@ -29,12 +29,12 @@
         <div class="container-fluid content-top-gap">
             <div class="col-md-4">
                 <span style="width: 100%;" class=" alert-danger text-center" id="form-error"></span>
-                <form style="width: 20em" id="form_id" method="post">{% csrf_token %}
+                <form style="width: 50em" id="form_id">
                     <div class="form-group">
                         <label for="product-category">Select category</label>
-                        <select class="form-control" name="category" id="product-category" required>
-                            {% for catergory in category %}
-                                <option value="{{ catergory.id }}">{{ catergory.name }}</option>
+                        <select class="form-control" name="category" id="category" required>
+                            {% for category in category %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -42,13 +42,11 @@
                         <label for="offer-name">Name:</label>
                         <input type="text" name="offer-name" class="form-control" id="offer-name"
                                placeholder="Offer Name" required>
-                        <span id="name-error" style="color: red"></span>
                     </div>
                     <div class="form-group">
                         <label for="discount">Discount: </label>
                         <input type="number" min="1" max="80" name="discount" class="form-control" id="discount"
                                placeholder="Discount in %" required>
-                        <span id="discount-error" style="color: red"></span>
                     </div>
                     <div class="form-group">
                         <label for="start-date" class="col-12 col-form-label">Start Date:</label>
@@ -62,40 +60,10 @@
                             <input class="form-control" name="end-date" type="date" id="end-date" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success rounded" id="add-offer">Submit
+                    <button type="button" onclick="addOffer()" class="btn btn-success rounded" id="add-offer">Submit
                     </button>
                 </form>
             </div>
         </div>
     </div>
-        <script>
-            function addOffer() {
-                var category = $('#product-catergory').val();
-                var name = $('#offer-name').val();
-                var discount = $('#discount').val();
-                var startDate = $('#start-date').val();
-                console.log(startDate)
-                var endDate = $('#end-date').val();
-                console.log(endDate)
-                var data = {
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    'category': category,
-                    'name': name,
-                    'discount': discount,
-                    'startDate': startDate,
-                    'endDate': endDate
-                };
-                    $.ajax({
-                        url: '/admin/add-offer/',
-                        method: 'POST',
-                        data: data,
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data == 'true') {
-                                window.location.replace('/admin/offers/')
-                            }
-                        }
-                    })
-            }
-        </script>
 {% endblock %}
