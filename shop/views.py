@@ -69,7 +69,7 @@ def add_to_cart(request, p_id):
 def remove_from_cart(request, id):
     product = Cart.objects.get(id=id)
     product.delete()
-    return JsonResponse('true', safe=False)
+    return redirect('cart')
 
 
 @csrf_exempt

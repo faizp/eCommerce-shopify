@@ -37,9 +37,11 @@
                                     {% for cart in carts %}
                                         <tr id="{{ cart.id }}-cart" class="table_row">
                                             <td class="column-1">
-                                                <div onclick="removeFromCart('{{ cart.id }}')" class="how-itemcart1">
+                                                <a href="{% url 'remove-from-cart' cart.id %}">
+                                                <div class="how-itemcart1">
                                                     <img src="{{ cart.product.image1_url }}" alt="IMG">
                                                 </div>
+                                                </a>
                                             </td>
                                             <td class="column-2">{{ cart.product.name }}<br>
                                                 <span style="font-size: 0.8em"
@@ -54,8 +56,7 @@
                                                         <i class="fs-16 zmdi zmdi-minus"></i>
                                                     </div>
 
-                                                    <input id="{{ cart.id }}-quantity"
-                                                           class="mtext-104 cl3 txt-center num-product" type="number"
+                                                    <input id="{{ cart.id }}-quantity" class="mtext-104 cl3 txt-center num-product" type="number"
                                                            name="num-product1" value="{{ cart.quantity }}">
 
                                                     <div onclick="addQuantity('{{ cart.id }}')" id="addQuantity"

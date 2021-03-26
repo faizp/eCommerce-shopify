@@ -3,6 +3,11 @@
     width: 4em;
 
 }
+
+.errors{
+    color: red;
+    font-family: cursive;
+}
 figure .zoom {
   background-position: 50% 50%;
   position: relative;

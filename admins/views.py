@@ -299,15 +299,15 @@ def offers(request):
 
 def add_offer(request):
     if request.method == 'POST':
-        category_id = request.POST.get('category')
-        name = request.POST.get('offer-name')
-        discount = request.POST.get('discount')
-        start_date = request.POST.get('start-date')
+        category_id = request.POST['category']
+        name = request.POST['offer-name']
+        discount = request.POST['discount']
+        start_date = request.POST['start-date']
         print(start_date)
-        end_date = request.POST.get('end-date')
+        end_date = request.POST['end-date']
         category = Category.objects.filter(pk = category_id).first()
         Offer.objects.create(category = category, name = name, discount = discount, start_date = start_date, end_date = end_date)
-        return redirect('offers')
+        return JsonResponse('true', safe=False)
     else:
         category = Category.objects.all()
         context = {
@@ -320,3 +320,7 @@ def delete_offer(request, id):
     offer =  Offer.objects.get(id = id)
     offer.delete()
     return JsonResponse('true', safe=False)
+
+
+def report(request):
+    return render(request, 'admins/report.html')

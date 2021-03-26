@@ -75,18 +75,24 @@ function addProduct() {
 }
 
 
-function removeFromCart(id) {
-    $.ajax({
-        url: '/remove_from_cart/' + id,
-        method: 'POST',
-        success: function (data) {
-            if (data == 'true') {
-                $('#' + id + '-cart').remove()
-            }
-        }
-    })
-
-}
+// function removeFromCart(id) {
+//     $.ajax({
+//         url: '/remove_from_cart/' + id,
+//         method: 'POST',
+//         success: function (data) {
+//             console.log(data)
+//             if (data == 'true') {
+//                 $('#' + id + '-cart').remove()
+//             }
+//             if (data == 'false') {
+//                 console.log('hello')
+//                 $('#' + id + '-cart').remove()
+//                 window.location.reload()
+//             }
+//         }
+//     })
+//
+// }
 
 
 function addQuantity(id) {
@@ -126,3 +132,18 @@ function reduceQuantity(id) {
     })
 }
 
+$(document).ready(function () {
+    $("#form_id").validate({
+        errorClass: 'errors',
+        rules: {
+            discount: {
+                required: true
+            }
+        },
+        messages: {
+            discount: {
+                required: "Please type in a discount",
+            }
+        }
+    });
+});
