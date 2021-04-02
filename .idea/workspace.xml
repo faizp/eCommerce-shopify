@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43405c33-4f37-41b4-87a0-180fce48711f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/templates/admins/add-product.html" afterPath="$PROJECT_DIR$/admins/templates/admins/add-product.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/templates/admins/category.html" afterPath="$PROJECT_DIR$/admins/templates/admins/category.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/templates/admins/edit-product.html" afterPath="$PROJECT_DIR$/admins/templates/admins/edit-product.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/templates/admins/product-view.html" afterPath="$PROJECT_DIR$/admins/templates/admins/product-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/templates/admins/report.html" afterPath="$PROJECT_DIR$/admins/templates/admins/report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/urls.py" afterPath="$PROJECT_DIR$/admins/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admins/views.py" afterPath="$PROJECT_DIR$/admins/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shop/models.py" afterPath="$PROJECT_DIR$/shop/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shop/views.py" afterPath="$PROJECT_DIR$/shop/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/script.js" afterPath="$PROJECT_DIR$/static/js/script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/addresses.html" afterPath="$PROJECT_DIR$/user/templates/user/addresses.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/about.html" afterPath="$PROJECT_DIR$/user/templates/user/about.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/contact.html" afterPath="$PROJECT_DIR$/user/templates/user/contact.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/index1.html" afterPath="$PROJECT_DIR$/user/templates/user/index1.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/my-orders.html" afterPath="$PROJECT_DIR$/user/templates/user/my-orders.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/product-detail.html" afterPath="$PROJECT_DIR$/user/templates/user/product-detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/product-view.html" afterPath="$PROJECT_DIR$/user/templates/user/product-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/product.html" afterPath="$PROJECT_DIR$/user/templates/user/product.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/templates/user/user-home.html" afterPath="$PROJECT_DIR$/user/templates/user/user-home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/urls.py" afterPath="$PROJECT_DIR$/user/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/views.py" afterPath="$PROJECT_DIR$/user/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,11 +30,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="product.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user/templates/user/product.html">
+      <file leaf-file-name="index1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user/templates/user/index1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10025">
-              <caret line="401" column="71" lean-forward="false" selection-start-line="401" selection-start-column="71" selection-end-line="401" selection-end-column="71" />
+            <state relative-caret-position="905">
+              <caret line="98" column="52" lean-forward="false" selection-start-line="98" selection-start-column="52" selection-end-line="98" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -68,8 +53,18 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2000">
-              <caret line="90" column="12" lean-forward="false" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
+            <state relative-caret-position="568">
+              <caret line="220" column="47" lean-forward="false" selection-start-line="220" selection-start-column="47" selection-end-line="220" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="530">
+              <caret line="31" column="52" lean-forward="false" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -79,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/user/templates/user/addresses.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2843">
-              <caret line="213" column="19" lean-forward="true" selection-start-line="213" selection-start-column="19" selection-end-line="213" selection-end-column="19" />
+              <caret line="213" column="19" lean-forward="false" selection-start-line="213" selection-start-column="19" selection-end-line="213" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -89,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/admins/templates/admins/product-view.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="947">
-              <caret line="80" column="19" lean-forward="true" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="19" />
+              <caret line="80" column="19" lean-forward="false" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -108,8 +103,8 @@
       <file leaf-file-name="contact.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/templates/user/contact.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="175">
+              <caret line="7" column="84" lean-forward="false" selection-start-line="7" selection-start-column="81" selection-end-line="7" selection-end-column="84" />
               <folding />
             </state>
           </provider>
@@ -118,9 +113,11 @@
       <file leaf-file-name="about.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user/templates/user/about.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="25">
+              <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+              <folding>
+                <element signature="e#184#247#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,17 +126,7 @@
         <entry file="file://$PROJECT_DIR$/admins/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+              <caret line="12" column="10" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -157,10 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>data-not</find>
-      <find>js-addcart-detail</find>
-      <find>quick view</find>
-      <find>data-thumb</find>
       <find>data-thumb-</find>
       <find>data-thumb-image</find>
       <find>car</find>
@@ -187,6 +170,10 @@
       <find>add_to</find>
       <find>edit_a</find>
       <find>edit-address</find>
+      <find>.js-pscroll</find>
+      <find>foot</find>
+      <find>src</find>
+      <find>url</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -199,8 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/admins/templates/admins/cards.html" />
-        <option value="$PROJECT_DIR$/admins/templates/admins/login.html" />
         <option value="$PROJECT_DIR$/static/assets/js/bar.js" />
         <option value="$PROJECT_DIR$/static/assets/js/linechart.js" />
         <option value="$PROJECT_DIR$/user/templates/user/index.html" />
@@ -230,7 +215,6 @@
         <option value="$PROJECT_DIR$/admins/templates/admins/index.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/user/templates/user/shoping-cart.html" />
-        <option value="$PROJECT_DIR$/user/urls.py" />
         <option value="$PROJECT_DIR$/admins/templates/admins/add-offer.html" />
         <option value="$PROJECT_DIR$/shop/models.py" />
         <option value="$PROJECT_DIR$/admins/templates/admins/add-product.html" />
@@ -241,15 +225,18 @@
         <option value="$PROJECT_DIR$/admins/views.py" />
         <option value="$PROJECT_DIR$/admins/templates/admins/report.html" />
         <option value="$PROJECT_DIR$/shop/views.py" />
-        <option value="$PROJECT_DIR$/user/templates/user/index1.html" />
         <option value="$PROJECT_DIR$/user/templates/user/product-view.html" />
         <option value="$PROJECT_DIR$/user/templates/user/product.html" />
         <option value="$PROJECT_DIR$/user/templates/user/user-home.html" />
         <option value="$PROJECT_DIR$/static/js/script.js" />
-        <option value="$PROJECT_DIR$/user/views.py" />
         <option value="$PROJECT_DIR$/user/templates/user/addresses.html" />
         <option value="$PROJECT_DIR$/admins/templates/admins/product-view.html" />
         <option value="$PROJECT_DIR$/admins/templates/admins/category.html" />
+        <option value="$PROJECT_DIR$/user/urls.py" />
+        <option value="$PROJECT_DIR$/user/views.py" />
+        <option value="$PROJECT_DIR$/user/templates/user/index1.html" />
+        <option value="$PROJECT_DIR$/user/templates/user/contact.html" />
+        <option value="$PROJECT_DIR$/user/templates/user/about.html" />
       </list>
     </option>
   </component>
@@ -936,13 +923,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="15" column="74" lean-forward="false" selection-start-line="15" selection-start-column="74" selection-end-line="15" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/user/templates/user/product-detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2875">
@@ -1013,14 +993,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/templates/user/index1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2725">
-          <caret line="109" column="63" lean-forward="false" selection-start-line="109" selection-start-column="63" selection-end-line="109" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/user/templates/user/product-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3125">
@@ -1053,16 +1025,8 @@
         <state relative-caret-position="1025">
           <caret line="49" column="10" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="10" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#0#45#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="90" column="12" lean-forward="false" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1085,7 +1049,7 @@
     <entry file="file://$PROJECT_DIR$/user/templates/user/addresses.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2843">
-          <caret line="213" column="19" lean-forward="true" selection-start-line="213" selection-start-column="19" selection-end-line="213" selection-end-column="19" />
+          <caret line="213" column="19" lean-forward="false" selection-start-line="213" selection-start-column="19" selection-end-line="213" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1093,7 +1057,7 @@
     <entry file="file://$PROJECT_DIR$/admins/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="24" />
+          <caret line="12" column="10" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1101,7 +1065,7 @@
     <entry file="file://$PROJECT_DIR$/admins/templates/admins/product-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="947">
-          <caret line="80" column="19" lean-forward="true" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="19" />
+          <caret line="80" column="19" lean-forward="false" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1122,19 +1086,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/user/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="530">
+          <caret line="31" column="52" lean-forward="false" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="220" column="47" lean-forward="false" selection-start-line="220" selection-start-column="47" selection-end-line="220" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/templates/user/index1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="905">
+          <caret line="98" column="52" lean-forward="false" selection-start-line="98" selection-start-column="52" selection-end-line="98" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/user/templates/user/contact.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="175">
+          <caret line="7" column="84" lean-forward="false" selection-start-line="7" selection-start-column="81" selection-end-line="7" selection-end-column="84" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/user/templates/user/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="25">
+          <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+          <folding>
+            <element signature="e#184#247#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

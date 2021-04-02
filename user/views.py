@@ -212,3 +212,10 @@ def my_orders(request):
         'orders': orders
     }
     return render(request, 'user/my-orders.html', context)
+
+
+def about(request):
+    return render(request, 'user/about.html')
+
+def contact(request):
+    return render(request, 'user/contact.html')

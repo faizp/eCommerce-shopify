@@ -27,5 +27,7 @@ urlpatterns = [
     path('order-confirm/', shop_view.order_confirm, name='order-confirm'),
     path('my-orders/', views.my_orders, name='my-orders'),
     path('cancel-order/<int:id>', shop_view.cancel_order, name='cancel-order'),
-    path('quick-view/<int:id>', shop_view.product_quick_view, name='product-quick-view')
+    path('quick-view/<int:id>', shop_view.product_quick_view, name='product-quick-view'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 ]
