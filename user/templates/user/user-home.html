@@ -445,13 +445,14 @@
                                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                         {{ product.name }}
                                     </a>
+                                    <span style="color: red;">{% if product.stock < 1 %}OUT OF STOCK{% endif %}</span>
 
                                     <span class="stext-105 cl3">
                                                 <span class="font-weight-bold">₹</span>
                                         {% if product.offerPrice == product.price %}
                                             {{ product.offerPrice }}
                                         {% else %}
-                                            {{ product.offerPrice }} <span class="text-muted"><del>{{ product.price }}</del></span>
+                                            {{ product.offerPrice }}<span class="text-muted"><del>{{ product.price }}</del></span>
                                         {% endif %}
                                         </span>
                                 </div>
@@ -1080,10 +1081,9 @@
                             <h4 id="product-name" class="mtext-105 cl2 js-name-detail p-b-14"></h4>
                             <span class="font-weight-bold mtext-106 cl2">₹</span>
                             <span id="product-price" class="mtext-106 cl2"></span>
-
+                            <span style="color: red" id="stock-details"></span>
                             <p id="product-description" class="stext-102 cl3 p-t-23"></p>
                             <input type="hidden" id="product-id" value="">
-
                             <!--  -->
                             <div class="p-t-33">
                                 <div class="flex-w flex-r-m p-b-10">
@@ -1104,8 +1104,8 @@
                                 </div>
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-204 flex-w flex-m respon6-next">
-                                        <button onclick="addProduct()"
-                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                        <button type="button" onclick="addProduct()" id="addProductButton"
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                                             Add to cart
                                         </button>
                                     </div>
@@ -1154,6 +1154,13 @@
                 success: function (data) {
                     console.log(id);
                     data1 = JSON.parse(data.product1);
+                    if (data1[0].fields.stock < 1) {
+                        $('#stock-details').html('OUT OF STOCK')
+                        window.alert('out of stock')
+                    }
+                    else if (data1[0].fields.stock <= 10) {
+                        $("#stock-details").html('Only ' + data1[0].fields.stock + ' Left')
+                    }
                     console.log(data1[0].fields);
                     $("#product-name").html(data1[0].fields.name);
                     $("#product-price").html(data1[0].fields.price);
@@ -1162,12 +1169,12 @@
                     $("#product-image2").prop('src', '/media/' + data1[0].fields.image2);
                     $("#product-image3").prop('src', '/media/' + data1[0].fields.image3);
                     $("#data-thumb-image").prop('src', '/media/' + data1[0].fields.image3);
-{#                    $("#data-thumb-image1").attr('data-thumb', '/media/' + data1[0].fields.image1);#}
-{#                    $("#data-thumb-image2").attr('data-thumb', '/media/' + data1[0].fields.image2);#}
-{#                    $("#data-thumb-image3").attr('data-thumb', '/media/' + data1[0].fields.image3);#}
-{#                    var a = $('#data-thumb-image1').attr('data-thumb');#}
-{#                    console.log(a)#}
-{#                    $('#cart-icon').attr('data-notify', data.count);#}
+                    {#                    $("#data-thumb-image1").attr('data-thumb', '/media/' + data1[0].fields.image1);#}
+                    {#                    $("#data-thumb-image2").attr('data-thumb', '/media/' + data1[0].fields.image2);#}
+                    {#                    $("#data-thumb-image3").attr('data-thumb', '/media/' + data1[0].fields.image3);#}
+                    {#                    var a = $('#data-thumb-image1').attr('data-thumb');#}
+                    {#                    console.log(a)#}
+                    {#                    $('#cart-icon').attr('data-notify', data.count);#}
                     $("#zoomImg1").prop('href', '/media/' + data1[0].fields.image1);
                     $("#zoomImg2").prop('href', '/media/' + data1[0].fields.image2);
                     $("#zoomImg3").prop('href', '/media/' + data1[0].fields.image3);
@@ -1175,7 +1182,6 @@
                     {#                    $('.js-show-modal1').on('click', function (e) {#}
                     {#                        e.preventDefault();#}
                     $('.js-modal1').addClass('show-modal1');
-                    {#                    });#}
                 }
             })
         }

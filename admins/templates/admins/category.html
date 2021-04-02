@@ -26,26 +26,46 @@
     <!-- Page-header end -->
     <div class="row main-content">
         <div class="container-fluid content-top-gap">
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">CATEGORY ID</th>
-                <th scope="col">CATEGORY NAME</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for category in categories %}
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>{{ category.id }}</td>
-                    <td>{{ category.name }}</td>
-                    <td><a href="{% url 'edit-category' category.id %}" class="btn btn-primary">Edit</a></td>
-                    <td><a href="{% url 'delete-category' category.id %}" class="btn btn-danger">Delete</a></td>
+                    <th scope="col">CATEGORY ID</th>
+                    <th scope="col">CATEGORY NAME</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td><a href="{% url 'edit-category' category.id %}" class="btn btn-primary">Edit</a></td>
+                        <td><button onclick="deleteCategory('{{ category.id }}')" class="btn btn-danger">Delete</button></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function deleteCategory(id) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Category!",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Category is deleted!", {
+                            icon: "success",
+                        });
+                        window.location.href = '/admin/delete-category/' + id;
+                    }
+                });
+        }
+    </script>
 {% endblock %}

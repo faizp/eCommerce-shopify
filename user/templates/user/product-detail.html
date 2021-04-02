@@ -74,6 +74,7 @@
                         <h4 class="mtext-105 cl2 js-name-detail p-b-14">
                             {{ product.name }}
                         </h4>
+                    <span style="color: red;">{% if product.stock < 1 %}OUT OF STOCK{% endif %}</span>
                         <span class="mtext-106 cl2">
 							{{ product.price }} rs
 						</span>
@@ -112,7 +113,7 @@
 {#                                            <i class="fs-16 zmdi zmdi-plus"></i>#}
 {#                                        </div>#}
 {#                                    </div>#}
-                                    <button onclick="addToCart('{{ product.id }}')" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                    <button onclick="addToCart('{{ product.id }}')" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" {% if product.stock < 1 %}disabled{% endif %}>
                                         Add to cart
                                     </button>
                                 </div>

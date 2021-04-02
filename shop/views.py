@@ -52,14 +52,25 @@ def add_to_cart(request, p_id):
     picked_size = request.POST['size']
     size = Size.objects.get(pk=picked_size)
     cart_count = Cart.objects.filter(user = user).count()
+    product = Product.objects.get(id=p_id)
     if Cart.objects.filter(user=user, product_id=p_id, size=size).exists():
+        stock = Product.objects.get(id = p_id).stock
         cart = Cart.objects.get(user=user, product_id=p_id, size=size)
-        cart.quantity += 1
-        cart.save()
+        if cart.quantity >= stock:
+            return JsonResponse('false', safe=False)
+        else:
+            cart = Cart.objects.get(user=user, product_id=p_id, size=size)
+            cart.quantity += 1
+            cart.save()
     else:
-        Cart.objects.create(user=user, product_id=p_id, size=size)
-
-    data = {'count': cart_count}
+        if Product.objects.get(id=p_id).stock < 1:
+            return JsonResponse('false', safe=False)
+        else:
+            Cart.objects.create(user=user, product_id=p_id, size=size)
+    data = {
+        'count': cart_count,
+        'name': product.name
+    }
     return JsonResponse(data)
 
 
@@ -75,8 +86,9 @@ def remove_from_cart(request, id):
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     carts = Cart.objects.filter(user=request.user)
-    if cart.quantity > 19:
-        return JsonResponse('false', safe=False)
+    stock = Product.objects.get(id = cart.product_id).stock
+    if cart.quantity >= stock:
+        return JsonResponse('true', safe=False)
     else:
         cart.quantity += 1
         cart.save()
@@ -148,6 +160,9 @@ def place_order(request):
     address_id = Address.objects.get(id=address)
     for cart in carts:
         amount_paid = cart.product.price * cart.quantity
+        product = Product.objects.get(id = cart.product.id)
+        product.stock = product.stock - cart.quantity
+        product.save()
         Order.objects.create(user=user, product=cart.product, quantity=cart.quantity,
                              size=cart.size, payment_status=status, amount_paid=amount_paid, address=address_id,
                              transaction_id=transaction_id)

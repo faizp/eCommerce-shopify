@@ -88,6 +88,7 @@ def add_new_address(request):
 
 @login_required(login_url='signin')
 def edit_address(request, id):
+    print(id)
     address = Address.objects.get(id=id)
     address.house_name = request.POST.get('house-name')
     address.town = request.POST.get('town')

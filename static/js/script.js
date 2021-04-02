@@ -38,14 +38,14 @@ function addToCart(id) {
         data: {'size': size},
         dataType: 'json',
         success: function (data) {
-            console.log(data.count)
-            $('#cart-icon').attr('data-notify', data.count);
-            $('.js-addcart-detail').each(function () {
-                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-                $(this).on('click', function () {
-                    swal(nameProduct, "is added to cart !", "success");
-                });
-            });
+            if (data == 'false') {
+                swal("Sorry", "Product Out of Stock", "error");
+            }
+            else {
+                console.log(data.count)
+                $('#cart-icon').attr('data-notify', data.count);
+                swal(data.name, "is added to cart !", "success");
+            }
         }
     })
 }
@@ -60,16 +60,14 @@ function addProduct() {
         data: {'size': size},
         dataType: 'json',
         success: function (data) {
-            console.log(data.count)
-            $('#cart-icon').attr('data-notify', data.count);
-            var a = $('#cart-icon').attr('data-notify');
-            console.log(a)
-            $('.js-addcart-detail').each(function () {
-                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-                $(this).on('click', function () {
-                    swal(nameProduct, "is added to cart !", "success");
-                });
-            });
+            if (data == 'false') {
+                swal("Sorry", "Product Out of Stock", "error");
+            }
+            else {
+                $('#cart-icon').attr('data-notify', data.count);
+                console.log($('#cart-icon').val());
+                swal(data.name, "is added to cart !", "success");
+            }
         }
     })
 }
@@ -106,6 +104,9 @@ function addQuantity(id) {
                         swal("is added to cart !", "success");
                     });
                 });
+            }
+            if (data == 'true') {
+                window.alert('Product out of stock')
             } else {
                 $('#' + id + '-quantity').val(data.quantity);
                 console.log(data.total)

@@ -1,4 +1,114 @@
 {% extends 'admins/index.html' %}
 {% block content %}
-    <h1>hello world</h1>
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Report</h5>
+                        <p class="m-b-0">See Your Report Here</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href=""> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page-header end -->
+    <div class="row">
+        <div class="container-fluid">
+        <h6 class="mt-2">Last Week Report:</h6>
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">USER</th>
+                        <th scope="col">PRODUCT</th>
+                        <th scope="col">QTY</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">PAYMENT STATUS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in order %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.user.username }}</td>
+                            <td>{{ order.product.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.product.price }}</td>
+                            <td>{{ order.order_status }}</td>
+                            <td>{% if order.payment_status == 'false' %} Not Paid {% else %} Paid {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-12">
+                <h6>Monthly Report:</h6>
+                <form style="margin-top: 1em" action="">
+                    <label for="month">Choose a month: </label>
+                    <input type="month" id="month" name="month">
+                    <button type="button" onclick="showMonthly()" class="btn btn-primary waves-button rounded">Submit
+                    </button>
+                </form>
+            </div>
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">USER</th>
+                        <th scope="col">PRODUCT</th>
+                        <th scope="col">QTY</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">PAYMENT STATUS</th>
+                    </tr>
+                    </thead>
+                    <tbody id="report-tab">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showMonthly() {
+            console.log('helo')
+            var date = new Date($('#month').val());
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            console.log(month);
+            $.ajax({
+                url: '/admin/show-monthly-report/',
+                method: 'post',
+                data: {
+                    'month': month,
+                    'year': year
+                },
+                dataType: 'json',
+                success: function (data) {
+                    data1 = JSON.parse(data.user_order);
+                    for (var i = 0; i < data1.length; i++) {
+                        data = data1[i].fields
+                        payment_status = data.payment_status ? "Paid" : "Not Paid"
+                        html_value = '<tr><td>' + i + '</td><td>' + data.user_name + '</td><td>' + data.product_name + '</td><td>' + data.quantity + '</td><td>' + data.amount_paid / data.quantity + '</td><td>' + data.order_status + '</td><td>' + payment_status + '</td></tr>'
+                        $('#report-tab').append(html_value)
+                    }
+                }
+            })
+        }
+    </script>
 {% endblock %}

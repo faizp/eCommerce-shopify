@@ -34,13 +34,15 @@
                                 </div>
                             </div>
                             <div class="row text-center">
-                                <div class="col-md-6 border-top"><a style="text-decoration: none"
-                                                                    href="{% url 'edit-address' address.id %}"
-                                        type="button" data-toggle="modal" data-target="#editAddressModal"
-                                        style="color: blue;">EDIT</a></div>
-                                <div class="col-md-6 border-top"><a style="text-decoration: none"
-                                                                    href="{% url 'delete-address' address.id %}"><span
-                                        style="color: red;">DELETE</span></a></div>
+                                <div class="col-md-6 border-top">
+                                    <a style="text-decoration: none"
+                                       href="{% url 'edit-address' address.id %}"
+                                       type="button" data-toggle="modal" data-target="#editAddressModal"
+                                       style="color: blue;">EDIT</a>
+                                </div>
+                                <div class="col-md-6 border-top">
+                                    <button onclick="deleteAddress('{{ address.id }}')">DELETE                                    </button>
+                                </div>
 
                                 <!-- Button trigger modal -->
                             </div>
@@ -51,7 +53,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW ADDRESS</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">EDIT ADDRESS</h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -109,7 +111,7 @@
                                                     data-dismiss="modal">
                                                 Close
                                             </button>
-                                            <button type="submit" class="btn btn-primary">Add Address</button>
+                                            <button type="submit" class="btn btn-primary">SAVE</button>
                                         </div>
                                     </form>
                                 </div>
@@ -143,30 +145,30 @@
                         <div class="form-group">
                             <label for="house-name">House Name</label>
                             <input type="text" class="form-control" id="house-name"
-                                   name="house-name"
+                                   name="house-name" maxlength="50"
                                    placeholder="House name or House Number" required>
                         </div>
                         <div class="form-group">
                             <label for="town">Town</label>
                             <input type="text" class="form-control" id="town" name="town"
-                                   placeholder="Town" required>
+                                   placeholder="Town" maxlength="20" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="district">City or District</label>
-                                <input type="text" class="form-control" name="district"
+                                <input type="text" maxlength="20" class="form-control" name="district"
                                        id="district"
                                        placeholder="City or District" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="state">State</label>
-                                <input type="text" class="form-control" name="state" id="state"
+                                <input type="text" maxlength="number" class="form-control" name="state" id="state"
                                        placeholder="State" required>
 
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="pin-code">Pin Code</label>
-                                <input type="text" class="form-control" id="pin-code"
+                                <input type="text" pattern="\d*" maxlength="6" class="form-control" id="pin-code"
                                        name="pin-code"
                                        placeholder="eg: 662233" required>
                             </div>
@@ -189,4 +191,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deleteAddress(id) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Address!",
+                icon: "warning",
+                buttons : true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your Address been deleted!", {
+                            icon: "success",
+
+                        });
+                        window.location.href = '/delete_address/' + id;
+                    } else {
+                        swal("Your Address is safe!");
+                    }
+                });
+        }
+    </script>
+
 {% endblock %}

@@ -3,11 +3,13 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
 from shop.models import Category, Product, Order, Offer
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.views.decorators.csrf import csrf_exempt
 import base64
 import calendar
+from django.core import serializers
 from django.core.files.base import ContentFile
+import json
 
 
 def home(request):
@@ -131,6 +133,7 @@ def add_product(request):
             p_category = request.POST.get('product-category')
             name = request.POST.get('product-name')
             price = request.POST.get('product-price')
+            stock = request.POST.get('product-stock')
             image1 = request.POST.get('image164')
             # format, img1 = image1.split(';base64,')
             # with open(name+'1.jpg', "wb") as fh1:
@@ -158,7 +161,8 @@ def add_product(request):
             sub_category = request.POST.get('product-main-category')
             description = request.POST.get('product-description')
             categry = Category.objects.get(pk=p_category)
-            product = Product.objects.create(category=categry, name=name, price=price, image1=img_data1,
+            product = Product.objects.create(category=categry, name=name, price=price, stock=stock,
+                                             image1=img_data1,
                                              image2=img_data2,
                                              image3=img_data3, description=description, sec_category=sub_category)
             product.save()
@@ -212,6 +216,7 @@ def edit_product(request, id):
             product.category = categry
             product.name = request.POST.get('product-name')
             product.price = request.POST.get('product-price')
+            product.stock = request.POST.get('product-stock ')
             product.image1 = request.FILES.get('image1')
             product.image2 = request.FILES.get('image2')
             product.image3 = request.FILES.get('image3')
@@ -329,5 +334,39 @@ def delete_offer(request, id):
     return JsonResponse('true', safe=False)
 
 
+@csrf_exempt
+def monthly_report(request):
+    if request.method == 'POST':
+        month = request.POST['month']
+        year = request.POST['year']
+        user_order = Order.objects.filter(order_date__month = month, order_date__year = year)
+        user_dict = {}
+        product_dict = {}
+        for x in user_order:
+            user_dict[x.user.id] = x.user.first_name
+            product_dict[x.product.id] = x.product.name
+        serialized_data = serializers.serialize('json', user_order)
+        # print(serialized_data)
+        serialized_data = json.loads(serialized_data)
+        for x in serialized_data:
+            x['fields']['user_name'] = user_dict[x['fields']['user']]
+            x['fields']['product_name'] = product_dict[x['fields']['product']]
+        context = {
+            'user_order': json.dumps(serialized_data)
+        }
+        return JsonResponse(context)
+    #     return render(request, 'admins/report.html', context)
+    # else:
+
+    #     return render(request, 'admins/report.html', {'user_order': book})
+    # return render(request, 'admins/report.html', context)
+
+
 def report(request):
-    return render(request, 'admins/report.html')
+    today = date.today()
+    week = date.today() - timedelta(days=7)
+    book = Order.objects.filter(order_date__range=(week, today))
+    context = {
+        'order': book
+    }
+    return render(request, 'admins/report.html', context)

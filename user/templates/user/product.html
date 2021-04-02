@@ -374,6 +374,7 @@
                             <h4 id="product-name" class="mtext-105 cl2 js-name-detail p-b-14"></h4>
                             <span class="font-weight-bold mtext-106 cl2">₹</span>
                             <span id="product-price" class="mtext-106 cl2"></span>
+                            <span style="color: red" id="stock-details"></span>
 
                             <p id="product-description" class="stext-102 cl3 p-t-23"></p>
                             <input type="hidden" id="product-id" value="">
@@ -398,8 +399,8 @@
                                 </div>
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-204 flex-w flex-m respon6-next">
-                                        <button onclick="addProduct()"
-                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                        <button type="button" onclick="addProduct()" id="addProductButton"
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                                             Add to cart
                                         </button>
                                     </div>
@@ -514,13 +515,13 @@
     {##}
     {#        /*---------------------------------------------*/#}
     {##}
-    {#        $('.js-addcart-detail').each(function () {#}
-    {#            var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();#}
-    {#            $(this).on('click', function () {#}
-    {#                swal(nameProduct, "is added to cart !", "success");#}
-    {#            });#}
-    {#        });#}
-    {##}
+{#            $('.js-addcart-detail').each(function () {#}
+{#                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();#}
+{#                $(this).on('click', function () {#}
+{#                    swal(nameProduct, "is added to cart !", "success");#}
+{#                });#}
+{#            });#}
+
     {#    </script>#}
     <!--===============================================================================================-->
     {#    <script>#}
@@ -564,6 +565,13 @@
                 url: '/quick-view/' + id,
                 success: function (data) {
                     data1 = JSON.parse(data.product1);
+                    if (data1[0].fields.stock < 1) {
+                        $("#addProductButton").prop('disabled', true)
+                        $('#stock-details').html('OUT OF STOCK')
+                    }
+                    if (data1[0].fields.stock <= 10) {
+                        $("#stock-details").html('Only ' + data1[0].fields.stock + ' Left')
+                    }
                     $("#product-name").html(data1[0].fields.name);
                     $("#product-price").html(data1[0].fields.price);
                     $("#product-description").html(data1[0].fields.description);
