@@ -30,4 +30,5 @@ urlpatterns = [
     path('quick-view/<int:id>', shop_view.product_quick_view, name='product-quick-view'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('change-image/', views.change_image, name='change-image')
 ]

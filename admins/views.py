@@ -309,8 +309,6 @@ def add_offer(request):
         category = Category.objects.get(pk=category_id)
         start_date = request.POST['startDate']
         end_date = request.POST['endDate']
-        if start_date > end_date:
-            return JsonResponse('dateError', safe=False)
         if Offer.objects.filter(category=category, end_date__lte=end_date).exists():
             print('exists')
             return JsonResponse('false', safe=False)

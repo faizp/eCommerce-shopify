@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <!--===============================================================================================-->
 </head>
-<body class="animsition">
+<body style="overflow-x: hidden" class="animsition">
 
 <!-- Header -->
 <header>
@@ -109,7 +109,9 @@
 
                     <div id="cart-icon" class="icon-header-item p-l-22 p-r-11 icon-header-noti"
                          data-notify="{{ count }}">
-                        <a href="{% url 'cart' %}"><i style="color: black" class="zmdi zmdi-shopping-cart"></i></a>
+                        {#                        <a href="{% url 'cart' %}">#}
+                        <i style="color: black" class="zmdi zmdi-shopping-cart"></i>
+                        {#                        </a>#}
                     </div>
 
                     <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
@@ -228,6 +230,7 @@
             </div>
         </div>
         {% if request.user.is_authenticated %}
+            {% if carts|length >= 1 %}
             <div class="header-cart-content flex-w js-pscroll">
                 <ul class="header-cart-wrapitem w-full">
                     {% for cart in carts %}
@@ -299,6 +302,12 @@
                     </div>
                 </div>
             </div>
+                {% else %}
+                <div class="text-center">
+                <img class="img-fluid m-t-80" src="{% static 'images/emptycart.png' %}" alt="">
+                <h5 class="text-muted">Cart is empty</h5>
+                </div>
+                {% endif %}
         {% else %}
             <h5>Please Login to see Your Cart</h5>
         {% endif %}
@@ -491,6 +500,11 @@
 <!--===============================================================================================-->
 <script src="{% static 'vendor/sweetalert/sweetalert.min.js' %}"></script>
 <script>
+    $('#cart-icon').on('click', function () {
+        $('.js-panel-cart').addClass('show-header-cart');
+    });
+</script>
+<script>
     $('.js-addwish-b2').on('click', function (e) {
         e.preventDefault();
     });
@@ -517,7 +531,6 @@
     });
 
     /*---------------------------------------------*/
-
 
 
 </script>

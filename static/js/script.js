@@ -123,12 +123,15 @@ function reduceQuantity(id) {
         url: '/reduce_quantity/' + id,
         method: 'POST',
         success: function (data) {
-            if (data.quantity <= 1) {
+            if (data == 'false') {
+                $('#' + id + '-cart').remove()
                 window.location.reload()
             }
-            $('#' + id + '-quantity').html(data.quantity)
-            $('#' + id + '-price').html(data.item_total)
-            $('#total-amount').html(data.total)
+            else {
+                $('#' + id + '-quantity').html(data.quantity)
+                $('#' + id + '-price').html(data.item_total)
+                $('#total-amount').html(data.total)
+            }
         }
     })
 }
@@ -147,21 +150,34 @@ $(document).ready(function () {
             }
         }
     });
+    $("#start-date").datepicker({
+        dateFormat: 'yy-mm-dd',
+        numberOfMonths: 2,
+        minDate: 0,
+        onSelect: function (selected) {
+            $("#end-date").datepicker("option", "minDate", selected);
+            // $("#end-date").datepicker("setDate", '+1y');
+        }
+    });
+    $("#end-date").datepicker({
+        dateFormat: 'yy-mm-dd',
+        numberOfMonths: 2,
+        onSelect: function (selected) {
+            $("#start-date").datepicker("option", "maxDate", selected)
+        }
+    });
 });
 
 
 function addOffer() {
-    var isvalid = $('#form_id').valid();
+    let isvalid = $('#form_id').valid();
     if (isvalid) {
-        var category = $('#category').val();
-        console.log(category)
-        var name = $('#offer-name').val();
-        var discount = $('#discount').val();
-        var startDate = $('#start-date').val();
-        console.log(startDate)
-        var endDate = $('#end-date').val();
-        console.log(endDate)
-        var data = {
+        let category = $('#category').val();
+        let name = $('#offer-name').val();
+        let discount = $('#discount').val();
+        let startDate = $('#start-date').val();
+        let endDate = $('#end-date').val();
+        let data = {
             'csrfmiddlewaretoken': '{{ csrf_token }}',
             'category': category,
             'name': name,
@@ -181,9 +197,6 @@ function addOffer() {
                 if (data == 'false') {
                     console.log('wrong')
                     window.alert('An offer for this category is active right now,  Please choose different category')
-                }
-                if (data == 'dateError') {
-                    window.alert('You have selected invalid Dates')
                 }
             }
         })

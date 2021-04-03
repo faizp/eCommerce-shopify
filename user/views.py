@@ -9,6 +9,7 @@ from shop.models import Product, Order, Size, Offer
 from django.contrib.auth import login, authenticate, logout
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index(request):
@@ -35,6 +36,7 @@ def register(request):
                 user = form.save()
                 print(user)
                 login(request, user)
+                Profile.objects.create(user = user)
                 return redirect('register-user')
         else:
             form = UserRegisterForm()
@@ -110,8 +112,8 @@ def delete_address(request, id):
 
 @login_required(login_url='signin')
 def profile(request):
-    user = request.user
-    profile = Profile.objects.get(user=user)
+    print(request)
+    profile = Profile.objects.get(user=request.user)
     return render(request, 'user/profile.html', {'profile': profile})
 
 
@@ -123,10 +125,15 @@ def logout_user(request):
 def register_user(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            user = request.user
+            profile = Profile.objects.get(user= request.user)
             image = request.FILES.get('image')
-            phone = request.POST.get('phone')
-            Profile.objects.create(user=user, image=image, phone_num=phone)
+            phone_num = request.POST.get('phone')
+            if Profile.objects.filter(phone_num = phone_num).exists():
+                messages.error(request, "This Phone number is already registered! Try using a different Phone number.")
+                return redirect('register-user')
+            profile.image = image
+            profile.phone_num = phone_num
+            profile.save()
             return redirect('index')
         else:
             return render(request, 'user/register_user.html')
@@ -138,6 +145,7 @@ def phone(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
             phone = request.POST.get('phone')
+            print(phone)
             if Profile.objects.filter(phone_num=phone).exists():
                 request.session['phone'] = phone
                 url = "https://d7networks.com/api/verifier/send"
@@ -158,6 +166,7 @@ def phone(request):
                 request.session['otp_id'] = otp_id
                 print(request.session['otp_id'])
                 print(response.text.encode('utf8'))
+                print('work avind')
                 return JsonResponse('true', safe=False)
             else:
                 return JsonResponse('false', safe=False)
@@ -219,3 +228,13 @@ def about(request):
 
 def contact(request):
     return render(request, 'user/contact.html')
+
+
+def change_image(request):
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        print(image)
+        user = Profile.objects.get(user = request.user)
+        user.image = image
+        user.save()
+    return redirect('user-profile')

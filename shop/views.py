@@ -12,9 +12,10 @@ from datetime import date
 def products(request):
     products = Product.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
+                                     end_date__gte=date.today()).first()
         if offer is not None:
-            product.offerPrice = product.price - (product.price*offer.discount)/100
+            product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:
             product.offerPrice = product.price
     size = Size.objects.all()
@@ -33,7 +34,8 @@ def cart(request):
     for cart in carts:
         total = total + cart.product.price * cart.quantity
         cart.total = cart.product.price * cart.quantity
-        offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
+        offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
+                                     end_date__gte=date.today()).first()
         if offer is not None:
             cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
         else:
@@ -51,10 +53,10 @@ def add_to_cart(request, p_id):
     user = request.user
     picked_size = request.POST['size']
     size = Size.objects.get(pk=picked_size)
-    cart_count = Cart.objects.filter(user = user).count()
+    cart_count = Cart.objects.filter(user=user).count()
     product = Product.objects.get(id=p_id)
     if Cart.objects.filter(user=user, product_id=p_id, size=size).exists():
-        stock = Product.objects.get(id = p_id).stock
+        stock = Product.objects.get(id=p_id).stock
         cart = Cart.objects.get(user=user, product_id=p_id, size=size)
         if cart.quantity >= stock:
             return JsonResponse('false', safe=False)
@@ -86,7 +88,7 @@ def remove_from_cart(request, id):
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     carts = Cart.objects.filter(user=request.user)
-    stock = Product.objects.get(id = cart.product_id).stock
+    stock = Product.objects.get(id=cart.product_id).stock
     if cart.quantity >= stock:
         return JsonResponse('true', safe=False)
     else:
@@ -109,11 +111,12 @@ def add_quantity(request, cart_id):
 def reduce_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     print(cart.quantity)
-    if cart.quantity < 2:
+    cart.quantity -= 1
+    print('after ', cart.quantity)
+    cart.save()
+    if cart.quantity < 1:
         cart.delete()
-    else:
-        cart.quantity -= 1
-        cart.save()
+        return JsonResponse('false', safe=False)
     item_total = cart.quantity * cart.product.price
     carts = Cart.objects.filter(user_id=request.user)
     total = 0
@@ -160,7 +163,7 @@ def place_order(request):
     address_id = Address.objects.get(id=address)
     for cart in carts:
         amount_paid = cart.product.price * cart.quantity
-        product = Product.objects.get(id = cart.product.id)
+        product = Product.objects.get(id=cart.product.id)
         product.stock = product.stock - cart.quantity
         product.save()
         Order.objects.create(user=user, product=cart.product, quantity=cart.quantity,
@@ -198,7 +201,7 @@ def order_confirm(request):
 
 @csrf_exempt
 @login_required(login_url='signin')
-def cancel_order(request,id):
+def cancel_order(request, id):
     order = Order.objects.get(id=id)
     order.order_status = 'cancelled'
     order.save()
@@ -206,21 +209,21 @@ def cancel_order(request,id):
 
 
 def confirm_order(request, id):
-    order = Order.objects.get(id = id)
+    order = Order.objects.get(id=id)
     order.order_status = 'confirmed'
     order.save()
     return redirect('orders')
 
 
 def deliver_order(request, id):
-    order = Order.objects.get(id = id)
+    order = Order.objects.get(id=id)
     order.order_status = 'delivered'
     order.payment_status = True
     order.save()
     return redirect('orders')
 
 
-def cancel_order_admin(request,id):
+def cancel_order_admin(request, id):
     order = Order.objects.get(id=id)
     order.order_status = 'cancelled'
     order.save()

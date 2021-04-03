@@ -41,7 +41,7 @@
                                        style="color: blue;">EDIT</a>
                                 </div>
                                 <div class="col-md-6 border-top">
-                                    <button onclick="deleteAddress('{{ address.id }}')">DELETE                                    </button>
+                                    <button onclick="deleteAddress('{{ address.id }}')">DELETE</button>
                                 </div>
 
                                 <!-- Button trigger modal -->
@@ -198,7 +198,7 @@
                 title: "Are you sure?",
                 text: "Once deleted, you will not be able to recover this Address!",
                 icon: "warning",
-                buttons : true,
+                buttons: true,
                 dangerMode: true,
             })
                 .then((willDelete) => {

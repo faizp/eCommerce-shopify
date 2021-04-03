@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4 text-center">
-                <h3 class="text mt-2">Please upload a profile picture</h3>
+                <h3 class="text mt-2">Please upload a profile picture: </h3>
                 {#        <form action="">#}
                 {#        <div class="form-group">#}
                 {#                <label for="image1">Select images of product</label><br>#}
@@ -14,7 +14,7 @@
                 <form method="POST" enctype="multipart/form-data" class="md-form">{% csrf_token %}
                     <div class="file-field">
                         <div class="mb-4">
-                            <img style="width: 150px" id="img1"
+                            <img style="width: 150px; height: 150px;" id="img1"
                                  src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
                                  class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar">
                         </div>
@@ -26,8 +26,14 @@
                         </div>
                     </div>
                     <div class="form-outline mt-3">
-                        <input type="text" id="typeText" name="phone" class="form-control" required/>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
                         <label class="form-label" for="typeText">Phone number</label>
+                        <input type="text" pattern="\d*" maxlength="10" id="typeText" name="phone" class="form-control"
+                               required/>
                     </div>
                     <button class="btn btn-success mt-2" type="submit">Save</button>
                 </form>
