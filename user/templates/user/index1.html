@@ -108,7 +108,7 @@
                     </div>
 
                     <div id="cart-icon" class="icon-header-item p-l-22 p-r-11 icon-header-noti"
-                         data-notify="{{ count }}">
+                         data-notify={% if request.user.is_authenticated %}"{{ count }}"{% else %}"0"{% endif %}>
                         {#                        <a href="{% url 'cart' %}">#}
                         <i style="color: black" class="zmdi zmdi-shopping-cart"></i>
                         {#                        </a>#}
@@ -206,7 +206,7 @@
                 <button class="flex-c-m trans-04">
                     <i class="zmdi zmdi-search"></i>
                 </button>
-                <input class="plh3" type="text" name="search" placeholder="Search...">
+                <input class="plh3" type="text" name="search" placeholder="Search by product category...">
             </form>
         </div>
     </div>

@@ -1,4 +1,7 @@
 {% extends 'user/index1.html' %}
+{% block title %}
+    Addresses
+{% endblock %}
 {% block content %}
     <section style="margin-top: 8em ;height: 75vh;overflow-x: hidden">
         <div class="row">
@@ -35,9 +38,8 @@
                             </div>
                             <div class="row text-center">
                                 <div class="col-md-6 border-top">
-                                    <a style="text-decoration: none"
-                                       href="{% url 'edit-address' address.id %}"
-                                       type="button" data-toggle="modal" data-target="#editAddressModal"
+                                    <a style="text-decoration: none" href="{% url 'edit-address' address.id %}"
+                                       type="button" data-toggle="modal" data-target="#{{ address.id }}-editAddressModal"
                                        style="color: blue;">EDIT</a>
                                 </div>
                                 <div class="col-md-6 border-top">
@@ -48,7 +50,7 @@
                             </div>
                         </div>
                         <!-- Modal -->
-                        <div class="modal fade m-t-80" id="editAddressModal" tabindex="-1" role="dialog"
+                        <div class="modal fade m-t-80" id="{{ address.id }}-editAddressModal" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -59,8 +61,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="POST"
-                                          action="{% url 'edit-address' address.id %}">{% csrf_token %}
+                                    <form method="POST" action="{% url 'edit-address' address.id %}">{% csrf_token %}
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="house-name">House Name</label>
@@ -108,9 +109,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">
-                                                Close
-                                            </button>
+                                                    data-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">SAVE</button>
                                         </div>
                                     </form>
