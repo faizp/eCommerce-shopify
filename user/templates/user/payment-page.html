@@ -1,44 +1,45 @@
 {% extends 'user/index1.html' %}
+{% block title %}
+    Payment
+{% endblock %}
 {% block content %}
-    <section style="height: 75vh; margin-top: 6em">
+    <section style=" margin-top: 6em">
         <div class="container">
+            <h6>Please select your address:</h6>
             <div class="row">
-                <div class="col-md-8">
-                    <h6>Please select your address:</h6>
-                    <div style="height: 7em;" class="card shadow p-2 mt-2">
-                        <div class="row">
-                            {% for address in address %}
-                                <div class="col-md-4">
-                                    <div class="radio">
-                                        <input id="{{ address.id }}" type="radio" name="address"
-                                               value="{{ address.id }}"
-                                               checked>
-                                        <label>
-                                            {{ address.house_name }}<br>
-                                            {{ address.town }},
-                                            {{ address.district }}<br>
-                                            {{ address.state }},
-                                            {{ address.pin_code }}
-                                        </label>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            <div class="col-md-4">
-                            </div>
+                <div class="col-md-6">
+                    <div  class="card shadow p-2 mt-2">
+                            <select class="form-control" name="address">
+                                {% for address in address %}
+                                    <option class="form-control" value="{{ address.id }}">
+                                        {{ address.house_name }}
+                                        {{ address.town }},
+                                        {{ address.district }}
+                                        {{ address.state }},
+                                        {{ address.pin_code }}
+                                    </option>
+                                {% endfor %}
+                            </select>
                         </div>
+
                     </div>
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-outline-success mt-1" data-toggle="modal"
+                            data-target="#exampleModalCenter">
+                        + ADD NEW ADDRESS
+                    </button>
+                </div>
             </div>
+        </div>
+        <div class="container">
             <div class="row mt-3">
                 <div class="col-md-6">
                     <h6>Choose payment method:</h6>
-                    <a style="text-decoration: none">
-                        <button onclick="placeOrder('False')" style="height: 2.5em;width: 100%"
-                                class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3">
-                            <span>CASH ON DELIVERY</span>
-                        </button>
-                    </a>
+                    <button onclick="placeOrder('False')" style="height: 2.5em;width: 100%"
+                            class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3">
+                        <span>CASH ON DELIVERY</span>
+                    </button>
                     <div id="razor" class="razor"></div>
                     <button onclick="razorpay()" style="height: 2.5em; width: 100%"
                             class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3">
@@ -47,46 +48,107 @@
                     <div style="margin-top: 1em; height: 4em">
                         <div id="paypal-button-container"></div>
                     </div>
-
                 </div>
-{#                <div class="col-md-6">#}
-                    {#                    <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">#}
-                    {#                        <div class="card-title mt-2">Amount Details:</div>#}
-                    {#                        <p class="text mt-1"><span id="total">{{ total }}</span> rs</p>#}
-                    {#                    </div>#}
+                {#                <div class="col-md-6">#}
+                {#                    <div style="width: 10rem;" class="card text-center rounded mt-4 shadow">#}
+                {#                        <div class="card-title mt-2">Amount Details:</div>#}
+                {#                        <p class="text mt-1"><span id="total">{{ total }}</span> rs</p>#}
+                {#                    </div>#}
+                <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                    <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                        <h4 class="mtext-109 cl2 p-b-30">
+                            Cart Totals
+                        </h4>
 
-                    <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-                        <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-                            <h4 class="mtext-109 cl2 p-b-30">
-                                Cart Totals
-                            </h4>
-
-                            <div class="flex-w flex-t bor12 p-b-13">
-                                <div class="size-208">
+                        <div class="flex-w flex-t bor12 p-b-13">
+                            <div class="size-208">
 								<span class="stext-110 cl2">
 									Subtotal:
 								</span>
-                                </div>
-
-                                <div class="size-209">
-                                    <span class="font-weight-bold">₹</span>
-                                    <span id="total-amount" class="mtext-110 cl2">{{ total }}
-								</span>
-                                </div>
                             </div>
-                            <div class="flex-w flex-m m-r-20 m-tb-5">
-                                    <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-                                           name="coupon" placeholder="Coupon Code">
 
-                                    <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                                        Apply coupon
-                                    </div>
-                                </div>
+                            <div class="size-209">
+                                <span class="font-weight-bold">₹</span>
+                                <span id="total-amount" class="mtext-110 cl2">{{ total }}
+								</span>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+                                   name="coupon" placeholder="Coupon Code">
+
+                            <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                                Apply coupon
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Modal -->
+    <div class="modal fade m-t-80" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW ADDRESS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{% url 'add-new-address-checkout' %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="house-name">House Name</label>
+                            <input type="text" class="form-control" id="house-name"
+                                   name="house-name" maxlength="50"
+                                   placeholder="House name or House Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="town">Town</label>
+                            <input type="text" class="form-control" id="town" name="town"
+                                   placeholder="Town" maxlength="20" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="district">City or District</label>
+                                <input type="text" maxlength="20" class="form-control" name="district"
+                                       id="district"
+                                       placeholder="City or District" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="state">State</label>
+                                <input type="text" maxlength="number" class="form-control" name="state" id="state"
+                                       placeholder="State" required>
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="pin-code">Pin Code</label>
+                                <input type="text" pattern="\d*" maxlength="6" class="form-control" id="pin-code"
+                                       name="pin-code"
+                                       placeholder="eg: 662233" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="address-type">Type of Address</label>
+                                <select id="address-type" name="address-type" class="form-control"
+                                        required>
+                                    <option>Home</option>
+                                    <option>Office</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Add Address</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.paypal.com/sdk/js?client-id=AUB9ANO3-Jo_CMtyFvzT9HMi6cFOdcIsGYY8PTT7DNZCIkeuLAeNOO3nNIRrX0k8-7xdiXBJx6bcQ-QK&currency=USD"></script>
     <script>
         console.log({{ total }})

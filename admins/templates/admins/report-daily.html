@@ -1,0 +1,110 @@
+{% extends 'admins/index.html' %}
+{% load static %}
+{% block content %}
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Report</h5>
+                        <p class="m-b-0">See Your Report Here</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href=""> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    {% if messages %}#}
+    {#        {% for message in messages %}#}
+    {#    <div style="width: 50%" class="alert alert-danger">{{ message }}</div>#}
+    {#        {% endfor %}#}
+    {#    {% endif %}#}
+    <!-- Page-header end -->
+    <div class="row">
+        <div class="container-fluid">
+            <h6 class="mt-2 ml-2">Report:</h6>
+            <form method="POST">{% csrf_token %}
+                <div class="form-group row ml-3">
+                    <label for="start-date">Start Date:</label>
+                    <div class="col-md-4">
+                        <input autocomplete="off" class="form-control" name="date-start" type="text" id="date-start"
+                               required>
+                    </div>
+                    <label for="end-date">End Date:</label>
+                    <div class="col-md-4">
+                        <input autocomplete="off" class="form-control" name="date-end" type="text" id="date-end"
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-success rounded" id="add-offer">Submit
+                    </button>
+                </div>
+            </form>
+            <div class="col-12">
+                {% if order|length == 0 %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger text-center">{{ message }}</div>
+                        {% endfor %}
+
+                    {% endif %}
+                {% else %}
+                    <table id="reportTable" class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">USER</th>
+                            <th scope="col">PRODUCT</th>
+                            <th scope="col">QTY</th>
+                            <th scope="col">PRICE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">PAYMENT STATUS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in order %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.user.username }}</td>
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.product.price }}</td>
+                                <td>{{ order.order_status }}</td>
+                                <td>{% if order.payment_status == 'false' %} Not Paid {% else %} Paid {% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#date-start").datepicker({
+                dateFormat: 'yy-mm-dd',
+                numberOfMonths: 2,
+                onSelect: function (selected) {
+                    $("#date-end").datepicker("option", "minDate", selected);
+                    // $("#end-date").datepicker("setDate", '+1y');
+                }
+            });
+            $("#date-end").datepicker({
+                dateFormat: 'yy-mm-dd',
+                numberOfMonths: 2,
+                onSelect: function (selected) {
+                    $("#date-start").datepicker("option", "maxDate", selected)
+                }
+            });
+        });
+    </script>
+{% endblock %}

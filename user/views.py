@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
 import requests, json
-from shop.models import Product, Order, Size, Offer
+from shop.models import Product, Order, Size, Offer, Category
 from django.contrib.auth import login, authenticate, logout
 from datetime import date
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,8 @@ def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(), end_date__gte=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
+                                     end_date__gte=date.today()).first()
         if offer is not None:
             product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:
@@ -36,7 +37,7 @@ def register(request):
                 user = form.save()
                 print(user)
                 login(request, user)
-                Profile.objects.create(user = user)
+                Profile.objects.create(user=user)
                 return redirect('register-user')
         else:
             form = UserRegisterForm()
@@ -89,6 +90,21 @@ def add_new_address(request):
 
 
 @login_required(login_url='signin')
+def add_new_address_checkout(request):
+    user = request.user
+    if request.method == 'POST':
+        house_name = request.POST.get('house-name')
+        town = request.POST.get('town')
+        district = request.POST.get('district')
+        state = request.POST.get('state')
+        pin_code = request.POST['pin-code']
+        address_type = request.POST.get('address-type')
+        Address.objects.create(user=user, house_name=house_name, town=town, district=district, state=state,
+                               pin_code=pin_code, type=address_type)
+        return redirect('payment-page')
+
+
+@login_required(login_url='signin')
 def edit_address(request, id):
     print(id)
     address = Address.objects.get(id=id)
@@ -109,7 +125,6 @@ def delete_address(request, id):
     return redirect('user-addresses')
 
 
-
 @login_required(login_url='signin')
 def profile(request):
     print(request)
@@ -125,10 +140,10 @@ def logout_user(request):
 def register_user(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            profile = Profile.objects.get(user= request.user)
+            profile = Profile.objects.get(user=request.user)
             image = request.FILES.get('image')
             phone_num = request.POST.get('phone')
-            if Profile.objects.filter(phone_num = phone_num).exists():
+            if Profile.objects.filter(phone_num=phone_num).exists():
                 messages.error(request, "This Phone number is already registered! Try using a different Phone number.")
                 return redirect('register-user')
             profile.image = image
@@ -226,6 +241,7 @@ def my_orders(request):
 def about(request):
     return render(request, 'user/about.html')
 
+
 def contact(request):
     return render(request, 'user/contact.html')
 
@@ -234,7 +250,30 @@ def change_image(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         print(image)
-        user = Profile.objects.get(user = request.user)
+        user = Profile.objects.get(user=request.user)
         user.image = image
         user.save()
     return redirect('user-profile')
+
+
+def search(request):
+    if request.method == 'POST':
+        keyword = request.POST.get('search')
+        category = Category.objects.filter(name__icontains=keyword)
+        if len(category) == 0:
+            return render(request, 'user/product.html')
+        products = Product.objects.filter(category=category[0])
+        size = Size.objects.all()
+        for product in products:
+            offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
+                                         end_date__gte=date.today()).first()
+            if offer is not None:
+                product.offerPrice = product.price - (product.price * offer.discount) / 100
+            else:
+                product.offerPrice = product.price
+        context = {
+            'product': products,
+            'size': size
+        }
+        return render(request, 'user/product.html', context)
+    return redirect('index')

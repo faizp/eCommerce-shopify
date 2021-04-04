@@ -10,6 +10,7 @@ import calendar
 from django.core import serializers
 from django.core.files.base import ContentFile
 import json
+from django.contrib import messages
 
 
 def home(request):
@@ -368,3 +369,17 @@ def report(request):
         'order': book
     }
     return render(request, 'admins/report.html', context)
+
+
+def report_date_range(request):
+    context = {}
+    if request.method == 'POST':
+        start_date = request.POST.get('date-start')
+        end_date = request.POST.get('date-end')
+        print(start_date, end_date)
+        order = Order.objects.filter(order_date__range=[start_date, end_date])
+        if len(order) < 1:
+            messages.error(request, "There is no orders in selected dates")
+            return redirect('report-date-range')
+        context = {'order': order}
+    return render(request, 'admins/report-daily.html', context)
