@@ -7,8 +7,8 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="page-header-title">
-                        <h5 class="m-b-10">Dashboard</h5>
-                        <p class="m-b-0">Welcome to Material Able</p>
+                        <h5 class="m-b-10">Product</h5>
+                        <p class="m-b-0">Add New Produts</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -16,7 +16,9 @@
                         <li class="breadcrumb-item">
                             <a href="index.html"> <i class="fa fa-home"></i> </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="#!">Products</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Add Products</a>
                         </li>
                     </ul>
                 </div>
@@ -26,7 +28,7 @@
     <!-- Page-header end -->
     <div class="row main-content">
         <div class="container-fluid ml-3">
-            <form style="width: 100vh" enctype="multipart/form-data" method="POST">
+            <form id="productForm" style="width: 100vh" enctype="multipart/form-data" method="POST">
                 <div class="form-group">
                     <label for="product-category">Select category</label>
                     <select class="form-control" name="product-category" id="product-catergory" required>
@@ -51,61 +53,99 @@
                            placeholder="Please enter the stock..." required>
                 </div>
                 <div class="form-group">
+                    <label for="image1">Select images of product</label><br>
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="image1">Select images of product</label><br>
-                            <input type="file" accept="image/*" name="image1" id="image1" onchange="readURL1(this);" required/>
-                            <div id="image1_container1" class="image1_container"
-                                 style="max-width: 324px; max-height: 324px;">
-                                <img id="blah1" src="#" alt="your image"/>
-                            </div>
-                            <div>
-                                <!-- // Cropped image to display (only if u want) -->
-                                <div id="cropped">
-                                    <img style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result1"/>
-                                </div>
-
-                                <!-- // Will trigger crop event -->
-                                <button type="button" id="crop_button1">Crop</button>
-                            </div>
-                            <textarea style="display: none" id="image164" name="image164" required></textarea>
+                            <div class="form-group col-md-6 fsix py-3">
+                                <input accept="image/*" id="fileInput1" type="file" name="productImage" required></div>
+                            <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea>
+                            <img src="" id="imageview1" style="height: auto;width: 100px;">
                         </div>
                         <div class="col-md-4">
-                            <label for="image2">Select images of product</label><br>
-                            <input type="file" accept="image/*" name="image2" id="image2" onchange="readURL2(this);" required/>
-                            <div id="image_container2" class="image_container"
-                                 style="max-width: 324px; max-height: 324px;">
-                                <img id="blah2" style="width: 200px;" src="" alt="your image"/>
-                            </div>
-                            <div>
-                                <!-- // Cropped image to display (only if u want) -->
-                                <div id="cropped2">
-                                    <img style="width: 13em; height: 100%; margin-top: 2em" id="cropped_result2"/>
-                                </div>
-
-                                <!-- // Will trigger crop event -->
-                                <button type="button" id="crop_button2">Crop</button>
-                            </div>
-                            <textarea style="display: none;" id="image264" name="image264" required></textarea>
+                            <div class="form-group col-md-6 fsix py-3">
+                                <input accept="image/*" id="fileInput2" type="file" name="productImage" required></div>
+                            <textarea name="pro_img2" id="pro_img2" style="display: none;"></textarea>
+                            <img src="" id="imageview2" style="height: auto;width: 100px;">
                         </div>
                         <div class="col-md-4">
-                            <label for="image3">Select images of product</label><br>
-                            <input type="file" accept="image/*" name="image3" id="image3" onchange="readURL3(this);" required/>
-                            <div id="image_container3" class="image_container"
-                                 style="max-width: 324px; max-height: 324px;">
-                                <img id="blah3" src="#" alt="your image"/>
-                            </div>
-                            <div>
-                                <!-- // Cropped image to display (only if u want) -->
-                                <div id="cropped3">
-                                    <img class="border shadow" style="width: 13em; height: 100%; margin-top: 2em"
-                                         id="cropped_result3"/>
+                            <div class="form-group col-md-6 fsix py-3">
+                                <input accept="image/*" id="fileInput3" type="file" name="productImage" required></div>
+                            <textarea name="pro_img3" id="pro_img3" style="display: none;"></textarea>
+                            <img src="" id="imageview3" style="height: auto;width: 100px;">
+                        </div>
+                    </div>
+                    {#                    modal#}
+                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-
-                                <!-- // Will trigger crop event -->
-                                <button type="button" id="crop_button3">Crop</button>
+                                <div class="modal-body">
+                                    <div class="result1"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" id="btnCrop1" class="btn save1 btn-primary">Save changes
+                                    </button>
+                                </div>
                             </div>
-                            <textarea style="display: none" id="image364" name="image364"></textarea>
+                        </div>
+                    </div>
+                </div>
+                {#            modal#}
+                <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="box-2">
+                                    <div style="max-width: 100%;" class="result2"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                </button>
+                                <button type="button" id="btnCrop2" class="btn save2 btn-primary">Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#            modal#}
+                {#            modal#}
+                <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="box-2">
+                                    <div style="width:10em;height: 100%" class="result3"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                </button>
+                                <button type="button" id="btnCrop3" class="btn save3 btn-primary">Save changes
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,121 +163,199 @@
                     <textarea class="form-control" name="product-description" id="product-description" rows="3"
                               required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Add product</button>
+                <button type="button" onclick="validate()" class="btn btn-primary mt-2">Add product</button>
             </form>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.0.0/cropper.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        function readURL1(input) {
-            let fileName = document.getElementById("image1").value;
-                let idxDot = fileName.lastIndexOf(".") + 1;
-                let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        let result1 = document.querySelector('.result1'),
+            save1 = document.querySelector('.save1'),
+            cropped1 = document.querySelector('.imageview1'),
+            upload1 = document.querySelector('#fileInput1'),
+            cropper1 = '';
+
+        upload1.addEventListener('change', (e) => {
+                var fileName = document.getElementById("fileInput1").value;
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
                 if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
-                    if (input.files && input.files[0]) {
-                        let reader = new FileReader();
-                        reader.onload = function (e) {
-                            $("#blah1").attr("src", e.target.result);
+                    if (e.target.files.length) {
+                        // start file reader
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            if (e.target.result) {
+                                // create new image
+                                $("#exampleModalCenter1").modal("show");
+                                let img1 = document.createElement('img');
+                                img1.id = 'image1';
+                                img1.src = e.target.result
+                                // clean result before
+                                result1.innerHTML = '';
+                                // append new image
+                                result1.appendChild(img1);
+                                // init cropper
+                                cropper1 = new Cropper(img1, {
+                                    aspectRatio: 3 / 4,
+                                    viewMode: 2,
+                                });
+                            }
                         };
-                        reader.readAsDataURL(input.files[0]);
-                        setTimeout(initCropper, 1000);
+                        reader.readAsDataURL(e.target.files[0]);
                     }
-                } else {
-                    fileName = null;
-                    window.alert("Only jpg/jpeg and png files are allowed!");
-                    console.log(fileName);
                 }
-
-        }
-        function initCropper() {
-            console.log("Came here");
-            let image1 = document.getElementById("blah1");
-            let cropper = new Cropper(image1, {
-                aspectRatio: 3 / 4,
-                viewMode: 2,
-                crop: function (e) {
-                    console.log(e.detail.x);
-                    console.log(e.detail.y);
+                else {
+                    swal("this file type is not supported", {
+                        icon: "error",
+                    })
+                    fileName = "";
+                    console.log(fileName)
                 }
-            });
+            }
+        );
 
-            // On crop button clicked
-            document.getElementById("crop_button1").addEventListener("click", function () {
-                var imgurl1 = cropper.getCroppedCanvas().toDataURL();
-                var img1 = document.getElementById("cropped_result1");
-                img1.src = imgurl1;
-                document.getElementById("image164").value = imgurl1;
-            });
-        }
-
+        save1.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc1 = cropper1.getCroppedCanvas({
+                width: 300,
+                height: 500// img disp value
+            }).toDataURL();
+            $("#exampleModalCenter1").modal("hide");
+            imageview1.src = imgSrc1;
+            $('#pro_img1').val(imgSrc1)
+        });
     </script>
     <script>
-        function readURL2(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("#blah2").attr("src", e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(initCropper2, 1000);
-            }
-        }
-        function initCropper2() {
-            console.log("Came here");
-            var image2 = document.getElementById("blah2");
-            var cropper = new Cropper(image2, {
-                aspectRatio: 3 / 4,
-                viewMode: 3,
-                crop: function (e) {
-                    console.log(e.detail.x);
-                    console.log(e.detail.y);
+        let result2 = document.querySelector('.result2'),
+            save2 = document.querySelector('.save2'),
+            cropped2 = document.querySelector('.imageview2'),
+            upload2 = document.querySelector('#fileInput2'),
+            cropper2 = '';
+
+        upload2.addEventListener('change', (e) => {
+                var fileName = document.getElementById("fileInput2").value;
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+                    if (e.target.files.length) {
+                        // start file reader
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            if (e.target.result) {
+                                // create new image
+                                $("#exampleModalCenter2").modal("show");
+                                let img2 = document.createElement('img');
+                                img2.id = 'image2';
+                                img2.src = e.target.result;
+                                // clean result before
+                                result2.innerHTML = '';
+                                // append new image
+                                result2.appendChild(img2);
+                                // init cropper
+                                cropper2 = new Cropper(img2, {
+                                    aspectRatio: 3 / 4,
+                                    viewMode: 2,
+                                });
+                            }
+                        };
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
                 }
-            });
+                else {
+                    swal("this file type is not supported", {
+                        icon: "error",
+                    })
+                    fileName = "";
+                    console.log(fileName)
+                }
+            }
+        );
 
-            // On crop button clicked
-            document.getElementById("crop_button2").addEventListener("click", function () {
-                var imgurl2 = cropper.getCroppedCanvas().toDataURL();
-                var img2 = document.getElementById("cropped_result2");
-                img2.src = imgurl2;
-                document.getElementById("image264").value = imgurl2;
-            });
-        }
-
+        save2.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc2 = cropper2.getCroppedCanvas({
+                width: 300,
+                height: 500// img disp value
+            }).toDataURL();
+            $("#exampleModalCenter2").modal("hide");
+            imageview2.src = imgSrc2;
+            $('#pro_img2').val(imgSrc2)
+        });
     </script>
     <script>
-        function readURL3(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("#blah3").attr("src", e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-                setTimeout(initCropper3, 1000);
+        let result3 = document.querySelector('.result3'),
+            save3 = document.querySelector('.save3'),
+            cropped3 = document.querySelector('.imageview3'),
+            upload3 = document.querySelector('#fileInput3'),
+            cropper3 = '';
+
+        upload3.addEventListener('change', (e) => {
+            var fileName = document.getElementById("fileInput3").value;
+            var idxDot = fileName.lastIndexOf(".") + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+            if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+                if (e.target.files.length) {
+                    // start file reader
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (e.target.result) {
+                            // create new image
+                            $("#exampleModalCenter3").modal("show");
+                            let img3 = document.createElement('img');
+                            img3.id = 'image3';
+                            img3.src = e.target.result
+                            // clean result before
+                            result3.innerHTML = '';
+                            // append new image
+                            result3.appendChild(img3);
+                            // init cropper
+                            cropper3 = new Cropper(img3, {
+                                aspectRatio: 3 / 4,
+                                viewMode: 2,
+                            });
+                        }
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            } else {
+                swal("this file type is not supported", {
+                    icon: "error",
+                })
+                fileName = "";
+                console.log(fileName)
+            }
+        });
+
+        save3.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc3 = cropper3.getCroppedCanvas({
+                width: 300,
+                height: 500// img disp value
+            }).toDataURL();
+            $("#exampleModalCenter3").modal("hide");
+            imageview3.src = imgSrc3;
+            $('#pro_img3').val(imgSrc3)
+        });
+    </script>
+    <script>
+        function validate() {
+            let image1 = document.getElementById('pro_img1').value;
+            let image2 = document.getElementById('pro_img2').value;
+            let image3 = document.getElementById('pro_img3').value;
+            if (image1 == "" || image2 == "" || image3 == "") {
+                swal("please select images to upload", {
+                    icon: "info"
+                })
+            } else {
+                document.getElementById('productForm').submit();
             }
         }
-        function initCropper3() {
-            console.log("Came here");
-            var image3 = document.getElementById("blah3");
-            var cropper = new Cropper(image3, {
-                aspectRatio: 3 / 4,
-                viewMode: 3,
-                crop: function (e) {
-                    console.log(e.detail.x);
-                    console.log(e.detail.y);
-                }
-            });
-
-            // On crop button clicked
-            document.getElementById("crop_button3").addEventListener("click", function () {
-                var imgurl3 = cropper.getCroppedCanvas().toDataURL();
-                var img3 = document.getElementById("cropped_result3");
-                img3.src = imgurl3;
-                document.getElementById("image364").value = imgurl3;
-            });
-        }
-
     </script>
-
 {% endblock %}

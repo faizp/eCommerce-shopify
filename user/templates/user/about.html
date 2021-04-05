@@ -1,81 +1,114 @@
 {% extends 'user/index1.html' %}
 {% load static %}
 {% block title %}
-About
+    About
 {% endblock %}
 {% block content %}
-	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({% static 'images/bg-01.jpg' %});">
-		<h2 class="ltext-105 cl0 txt-center">
-			About
-		</h2>
-	</section>	
+    <!-- Title page -->
+    <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({% static 'images/bg-01.jpg' %});">
+        <h2 class="ltext-105 cl0 txt-center">
+            About
+        </h2>
+    </section>
 
 
-	<!-- Content page -->
-	<section class="bg0 p-t-75 p-b-120">
-		<div class="container">
-			<div class="row p-b-148">
-				<div class="col-md-7 col-lg-8">
-					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">
-							Our Story
-						</h3>
+    <!-- Content page -->
+    <section class="bg0 p-t-75 p-b-120">
+        <div class="container">
+            <div class="row p-b-148">
+                <div class="col-md-7 col-lg-8">
+                    <div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
+                        <h3 class="mtext-111 cl2 p-b-16">
+                            Our Story
+                        </h3>
 
-						<p class="stext-113 cl6 p-b-26">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
-						</p>
+                        <p class="stext-113 cl6 p-b-26">
+                            Shopify was founded in 2004 by Tobias Lütke and Scott Lake after attempting to open
+                            Snowdevil, an online store for snowboarding equipment. Dissatisfied with the existing
+                            e-commerce products on the market, Lütke, a computer programmer by trade, instead built his
+                            own.[11][12][13] Lütke used the open source web application framework Ruby on Rails to build
+                            Snowdevil's online store, and launched it after two months of development.[14][15] The
+                            Snowdevil founders launched the platform as Shopify in June 2006.[14]
+                        </p>
 
-						<p class="stext-113 cl6 p-b-26">
-							Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula. 
-						</p>
+                        <p class="stext-113 cl6 p-b-26">
+                            In June 2009, Shopify launched an application programming interface (API) platform and App
+                            Store. The API allows developers to create applications for Shopify online stores and then
+                            sell them on the Shopify App Store.[16]
+                        </p>
 
-						<p class="stext-113 cl6 p-b-26">
-							Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
-						</p>
-					</div>
-				</div>
+                        <p class="stext-113 cl6 p-b-26">
+                            In April 2010, Shopify launched a free mobile app on the Apple App Store. The app lets
+                            Shopify store owners view and manage their stores from iOS mobile devices.[17] In 2010,
+                            Shopify started its Build-A-Business competition, in which participants create a business
+                            using its commerce platform.[18][19] The winners of the competition receive cash prizes and
+                            mentor-ship from entrepreneurs, such as Richard Branson, Eric Ries and others.[19] Shopify
+                            was named Ottawa's Fastest Growing Company by the Ottawa Business Journal in 2010.[14] The
+                            company received $7 million from an initial series A round of venture capital financing in
+                            December 2010.[20][21] Its Series B round raised $15 million in October 2011.[22]
 
-				<div class="col-11 col-md-5 col-lg-4 m-lr-auto">
-					<div class="how-bor1 ">
-						<div class="hov-img0">
-							<img src="{% static 'images/about-01.jpg' %}" alt="IMG">
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="order-md-2 col-md-7 col-lg-8 p-b-30">
-					<div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">
-							Our Mission
-						</h3>
 
-						<p class="stext-113 cl6 p-b-26">
-							Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida. Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra odio. Pellentesque ac velit egestas, luctus arcu non, laoreet mauris. Sed in ipsum tempor, consequat odio in, porttitor ante. Ut mauris ligula, volutpat in sodales in, porta non odio. Pellentesque tempor urna vitae mi vestibulum, nec venenatis nulla lobortis. Proin at gravida ante. Mauris auctor purus at lacus maximus euismod. Pellentesque vulputate massa ut nisl hendrerit, eget elementum libero iaculis.
-						</p>
+                        </p>
+                    </div>
+                </div>
 
-						<div class="bor16 p-l-29 p-b-9 m-t-22">
-							<p class="stext-114 cl6 p-r-40 p-b-11">
-								Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while.
-							</p>
+                <div class="col-11 col-md-5 col-lg-4 m-lr-auto">
+                    <div class="how-bor1 ">
+                        <div class="hov-img0">
+                            <img src="{% static 'images/about-01.jpg' %}" alt="IMG">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-							<span class="stext-111 cl8">
+            <div class="row">
+                <div class="order-md-2 col-md-7 col-lg-8 p-b-30">
+                    <div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
+                        <h3 class="mtext-111 cl2 p-b-16">
+                            Our Mission
+                        </h3>
+
+                        <p class="stext-113 cl6 p-b-26">
+                            We believe that buying glasses should be easy and fun. It should leave you happy and
+                            good-looking, with money in your pocket. We also believe that everyone has the right to see.
+
+                            Warby Parker’s mission statement reminds us of why it was founded and then reveals its aims
+                            for a better future.
+
+                            Note their core business aim: “Offer designer eyewear at a revolutionary price.”
+
+                            In the vision statement, they address the core problems consumers face when purchasing
+                            glasses: It can be annoying, boring, costly, and still leave you anxious about whether or
+                            not they look good.
+
+                            Instead, they aim to solve these problems and make buying glasses easy, fun, pleasing, and
+                            inexpensive.
+
+                            Both statements also mention Warby Parkers dedication to providing glasses to people in need
+                            around the world.</p>
+
+                        <div class="bor16 p-l-29 p-b-9 m-t-22">
+                            <p class="stext-114 cl6 p-r-40 p-b-11">
+                                Creativity is just connecting things. When you ask creative people how they did
+                                something, they feel a little guilty because they didn't really do it, they just saw
+                                something. It seemed obvious to them after a while.
+                            </p>
+
+                            <span class="stext-111 cl8">
 								- Steve Job’s 
 							</span>
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
-					<div class="how-bor2">
-						<div class="hov-img0">
-							<img src="{% static 'images/about-02.jpg' %}" alt="IMG">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>	
+                <div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
+                    <div class="how-bor2">
+                        <div class="hov-img0">
+                            <img src="{% static 'images/about-02.jpg' %}" alt="IMG">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

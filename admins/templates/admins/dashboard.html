@@ -215,8 +215,8 @@
                                     <div class="card bg-c-green total-card">
                                         <div class="card-block">
                                             <div class="text-left">
-                                                <h4></h4>
-                                                <p class="m-0">Income Status</p>
+                                                <h4>{{ stock }}</h4>
+                                                <p class="m-0">Total stock left</p>
                                             </div>
                                             <span class="label bg-c-green value-badges">20%</span>
                                         </div>
@@ -228,27 +228,30 @@
 
                         <!--  sale analytics end -->
                         <!-- SITE VISIT CHART start -->
-                        <div class="col-md-12 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Order Chart</h5>
-                                    <span>Order Status of last 5 months</span>
-                                </div>
-                                <div class="card-block">
-                                    <canvas id="myChart" width="400" height="400"></canvas>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="width: 40em; height: 40em;" class="card">
+                                    <div class="card-header">
+                                        <h5>Order Chart</h5>
+                                        <span>Order Status of last 5 months</span>
+                                    </div>
+                                    <div class="card-block">
+                                        <canvas id="myChart" style="width: 38em;height: 33em;"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- SITE VISIT CHART Ends -->
-                        <!-- EXTRA AREA CHART start -->
-                        <div class="col-md-12 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Extra Area Chart</h5>
-                                    <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                </div>
-                                <div class="card-block">
-                                    <canvas id="myBarChart" width="400" height="400"></canvas>
+                            <!-- SITE VISIT CHART Ends -->
+                            <!-- EXTRA AREA CHART start -->
+
+                            <div class="col-md-6">
+                                <div style="width: 40em; height: 40em;" class="card">
+                                    <div class="card-header">
+                                        <h5>Order Chart</h5>
+                                        <span>Order of Last five years</span>
+                                    </div>
+                                    <div class="card-block">
+                                        <canvas id="myBarChart" style="width: 38em;height: 33em;"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +310,7 @@
     </script>
     <script>
         var ctx = document.getElementById('myBarChart').getContext('2d');
-        var myBarChart  = new Chart(ctx, {
+        var myBarChart = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
                 labels: ['{{ y05 }}', '{{ y04 }}', '{{ y03 }}', '{{ y02 }}', '{{ y01 }}'],
@@ -344,5 +347,5 @@
             }
         });
 
-        </script>
+    </script>
 {% endblock %}

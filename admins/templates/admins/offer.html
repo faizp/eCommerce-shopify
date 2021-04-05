@@ -42,7 +42,7 @@
                 <tbody>
                 {% for offer in offers %}
                 <tr id="{{ offer.id }}-row">
-                        <td>{{ offer.id }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ offer.name }}</td>
                         <td>{{ offer.category }}</td>
                         <td>{{ offer.discount }}%</td>

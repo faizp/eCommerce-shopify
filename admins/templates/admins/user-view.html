@@ -28,6 +28,7 @@
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">USERNAME</th>
                     <th scope="col">IMAGE</th>
                     <th scope="col">NAME</th>
@@ -38,6 +39,7 @@
                 <tbody>
                 {% for profile in profile %}
                     <tr>
+                    <td>{{ forloop.counter }}</td>
                         <td>{{ profile.user.username }}</td>
                         <td><img style="width: 3em" src="{{ profile.image_url }}"></td>
                         <td>{{ profile.user.first_name }} {{ profile.user.last_name }}</td>

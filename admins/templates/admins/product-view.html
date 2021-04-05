@@ -7,8 +7,8 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="page-header-title">
-                        <h5 class="m-b-10">Dashboard</h5>
-                        <p class="m-b-0">Welcome to Material Able</p>
+                        <h5 class="m-b-10">Products</h5>
+                        <p class="m-b-0">Manage Your Products Here!</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item">
                             <a href="index.html"> <i class="fa fa-home"></i> </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="#!">Products</a>
                         </li>
                     </ul>
                 </div>
@@ -24,11 +24,6 @@
         </div>
     </div>
     <!-- Page-header end -->
-    <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2 text-success text-center"><a style="color: green; text-decoration: none"
-                                                          href="{% url 'add-product' %}">+ Add Product</a></div>
-    </div>
     <div class="row main-content">
         <div class="container-fluid content-top-gap">
             <table class="table">
@@ -47,7 +42,7 @@
                 <tbody>
                 {% for product in products %}
                     <tr>
-                        <td>{{ product.id }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td><img style="width: 2em; height: auto" src="{{ product.image1_url }}"></td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.category }}</td>

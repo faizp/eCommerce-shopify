@@ -6,8 +6,8 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="page-header-title">
-                        <h5 class="m-b-10">Dashboard</h5>
-                        <p class="m-b-0">Welcome to Material Able</p>
+                        <h5 class="m-b-10">Orders</h5>
+                        <p class="m-b-0">Manage Your Orders Here!</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -15,7 +15,7 @@
                         <li class="breadcrumb-item">
                             <a href="index.html"> <i class="fa fa-home"></i> </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="#!">Orders</a>
                         </li>
                     </ul>
                 </div>
@@ -66,7 +66,7 @@
                 <tbody>
                 {% for order in order %}
                     <tr>
-                        <td>{{ order.id }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ order.user.username }}</td>
                         <td>{{ order.product.name }}</td>
                         <td>{{ order.quantity }}</td>

@@ -276,3 +276,17 @@ def search(request):
         }
         return render(request, 'user/product.html', context)
     return redirect('index')
+
+
+
+def edit_profile(request, id):
+    user_profile = Profile.objects.get(id = id)
+    user = User.objects.get(id=request.user.id)
+    user.username = request.POST.get('username')
+    user.email = request.POST.get('email')
+    user.first_name = request.POST.get('first-name')
+    user.last_name = request.POST.get('last-name')
+    user_profile.phone_num = request.POST.get('phone-number')
+    user.save()
+    user_profile.save()
+    return redirect('user-profile')

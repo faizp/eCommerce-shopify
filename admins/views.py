@@ -34,21 +34,21 @@ def home(request):
         for order in orders_month:
             income_month = income_month + order.product.price
 
+        stock = 0
+        for product in Product.objects.all():
+            stock = stock + product.stock
+
         m1 = datetime.now().month
-        print(m1)
         m2 = m1 - 1
         m3 = m2 - 1
-        m4 = m3 - 2
-        m5 = m4 - 1
-        print(calendar.month_name[-1])
-        print(m4, m5, m2, m3, m1)
+        m4 = m3 - 1
+        m5 = m4 - 2
         month1 = Order.objects.filter(order_date__month=m1).count()
         month2 = Order.objects.filter(order_date__month=m2).count()
         month3 = Order.objects.filter(order_date__month=m3).count()
         month4 = Order.objects.filter(order_date__month=m4).count()
         month5 = Order.objects.filter(order_date__month=m5).count()
         y1 = datetime.now().year
-        print(y1)
         y2 = y1 - 1
         y3 = y2 - 1
         y4 = y3 - 2
@@ -77,7 +77,8 @@ def home(request):
             'third_month': calendar.month_name[m3], 'fourth_month': calendar.month_name[m4],
             'fifth_month': calendar.month_name[m5],
             'y1': year1, 'y2': year2, 'y3': year3, 'y4': year4, 'y5': year5, 'y01': y1, 'y02': y2, 'y03': y3, 'y04': y4,
-            'y05': y5
+            'y05': y5,
+            'stock': stock
         }
         return render(request, 'admins/dashboard.html', context)
     else:
@@ -86,9 +87,7 @@ def home(request):
 
 def user_view(request):
     if request.session.has_key('password'):
-        # user = User.objects.all()
         profile = Profile.objects.all()
-        print(profile)
         context = {
             'profile': profile
         }
@@ -135,21 +134,9 @@ def add_product(request):
             name = request.POST.get('product-name')
             price = request.POST.get('product-price')
             stock = request.POST.get('product-stock')
-            image1 = request.POST.get('image164')
-            # format, img1 = image1.split(';base64,')
-            # with open(name+'1.jpg', "wb") as fh1:
-            #     fh1.write(base64.b64decode(img1))
-            image2 = request.POST.get('image264')
-            # format, img2 = image2.split(';base64,')
-            # with open(name+'2.jpg', "wb") as fh2:
-            #     fh2.write(base64.b64decode(img2))
-            image3 = request.POST.get('image364')
-            # format, img3 = image3.split(';base64,')
-            # with open(name+'3.jpg', "wb") as fh3:
-            #     fh3.write(base64.b64decode(img3))
-            # ig1 = ContentFile(fh1)
-            # ig2 = ContentFile(fh2)
-            # ig3 = ContentFile(fh3)
+            image1 = request.POST.get('pro_img1')
+            image2 = request.POST.get('pro_img2')
+            image3 = request.POST.get('pro_img3')
             format, img1 = image1.split(';base64,')
             ext = format.split('/')[-1]
             img_data1 = ContentFile(base64.b64decode(img1), name=name + '1.' + ext)
@@ -217,10 +204,31 @@ def edit_product(request, id):
             product.category = categry
             product.name = request.POST.get('product-name')
             product.price = request.POST.get('product-price')
-            product.stock = request.POST.get('product-stock ')
-            product.image1 = request.FILES.get('image1')
-            product.image2 = request.FILES.get('image2')
-            product.image3 = request.FILES.get('image3')
+            product.stock = request.POST.get('product-stock')
+            image1 = request.POST.get('pro_img1')
+            if image1 != "":
+                format, img1 = image1.split(';base64,')
+                ext = format.split('/')[-1]
+                img_data1 = ContentFile(base64.b64decode(img1), name=product.name + '1.' + ext)
+            else:
+                img_data1 = product.image1
+            image2 = request.POST.get('pro_img2')
+            if image2 != "":
+                format, img2 = image2.split(';base64,')
+                ext = format.split('/')[-1]
+                img_data2 = ContentFile(base64.b64decode(img2), name=product.name + '2.' + ext)
+            else:
+                img_data2 = product.image2
+            image3 = request.POST.get('pro_img3')
+            if image3 != "":
+                format, img3 = image3.split(';base64,')
+                ext = format.split('/')[-1]
+                img_data3 = ContentFile(base64.b64decode(img3), name=product.name + '3.' + ext)
+            else:
+                img_data3 = product.image3
+            product.image1 = img_data1
+            product.image2 = img_data2
+            product.image3 = img_data3
             product.sec_category = request.POST.get('product-main-category')
             product.description = request.POST.get('description')
             product.save()
@@ -317,7 +325,8 @@ def add_offer(request):
             name = request.POST['name']
             discount = request.POST['discount']
 
-            Offer.objects.create(category = category, name = name, discount = discount, start_date = start_date, end_date = end_date)
+            Offer.objects.create(category=category, name=name, discount=discount, start_date=start_date,
+                                 end_date=end_date)
             return JsonResponse('true', safe=False)
     else:
         category = Category.objects.all()
@@ -328,7 +337,7 @@ def add_offer(request):
 
 
 def delete_offer(request, id):
-    offer =  Offer.objects.get(id = id)
+    offer = Offer.objects.get(id=id)
     offer.delete()
     return JsonResponse('true', safe=False)
 
@@ -338,7 +347,7 @@ def monthly_report(request):
     if request.method == 'POST':
         month = request.POST['month']
         year = request.POST['year']
-        user_order = Order.objects.filter(order_date__month = month, order_date__year = year)
+        user_order = Order.objects.filter(order_date__month=month, order_date__year=year)
         user_dict = {}
         product_dict = {}
         for x in user_order:
@@ -354,11 +363,11 @@ def monthly_report(request):
             'user_order': json.dumps(serialized_data)
         }
         return JsonResponse(context)
-    #     return render(request, 'admins/report.html', context)
-    # else:
+        #     return render(request, 'admins/report.html', context)
+        # else:
 
-    #     return render(request, 'admins/report.html', {'user_order': book})
-    # return render(request, 'admins/report.html', context)
+        #     return render(request, 'admins/report.html', {'user_order': book})
+        # return render(request, 'admins/report.html', context)
 
 
 def report(request):

@@ -59,13 +59,13 @@
                 <h6>Monthly Report:</h6>
                 <form style="margin-top: 1em" action="">
                     <label for="month">Choose a month: </label>
-                    <input type="month" id="month" name="month">
+                    <input type="month" id="month" name="month" required>
                     <button type="button" onclick="showMonthly()" class="btn btn-primary waves-button rounded">Submit
                     </button>
                 </form>
             </div>
             <div class="col-12">
-                <table class="table">
+                <table id="monthlyTable" style="display: none" class="table">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
@@ -88,6 +88,10 @@
         function showMonthly() {
             console.log('helo')
             var date = new Date($('#month').val());
+            console.log(date)
+            if (date == 'Invalid Date'){
+                window.alert('please chose a month')
+            }
             var month = date.getMonth() + 1;
             var year = date.getFullYear();
             console.log(month);
@@ -102,10 +106,12 @@
                 success: function (data) {
                     data1 = JSON.parse(data.user_order);
                     for (var i = 0; i < data1.length; i++) {
+                        let j = i+1;
                         data = data1[i].fields
                         payment_status = data.payment_status ? "Paid" : "Not Paid"
-                        html_value = '<tr><td>' + i + '</td><td>' + data.user_name + '</td><td>' + data.product_name + '</td><td>' + data.quantity + '</td><td>' + data.amount_paid / data.quantity + '</td><td>' + data.order_status + '</td><td>' + payment_status + '</td></tr>'
+                        html_value = '<tr><td>' + j + '</td><td>' + data.user_name + '</td><td>' + data.product_name + '</td><td>' + data.quantity + '</td><td>' + data.amount_paid / data.quantity + '</td><td>' + data.order_status + '</td><td>' + payment_status + '</td></tr>'
                         $('#report-tab').append(html_value)
+                        $('#monthlyTable').show()
                     }
                 }
             })
