@@ -38,9 +38,9 @@
                                         <tr id="{{ cart.id }}-cart" class="table_row">
                                             <td class="column-1">
                                                 <a href="{% url 'remove-from-cart' cart.id %}">
-                                                <div class="how-itemcart1">
-                                                    <img src="{{ cart.product.image1_url }}" alt="IMG">
-                                                </div>
+                                                    <div class="how-itemcart1">
+                                                        <img src="{{ cart.product.image1_url }}" alt="IMG">
+                                                    </div>
                                                 </a>
                                             </td>
                                             <td class="column-2">{{ cart.product.name }}<br>
@@ -56,7 +56,8 @@
                                                         <i class="fs-16 zmdi zmdi-minus"></i>
                                                     </div>
 
-                                                    <input id="{{ cart.id }}-quantity" class="mtext-104 cl3 txt-center num-product" type="number"
+                                                    <input id="{{ cart.id }}-quantity"
+                                                           class="mtext-104 cl3 txt-center num-product" type="number"
                                                            name="num-product1" value="{{ cart.quantity }}">
 
                                                     <div onclick="addQuantity('{{ cart.id }}')" id="addQuantity"
@@ -72,20 +73,21 @@
                                 </table>
                             </div>
 
-{#                            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">#}
-{#                                <div class="flex-w flex-m m-r-20 m-tb-5">#}
-{#                                    <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"#}
-{#                                           name="coupon" placeholder="Coupon Code">#}
-{##}
-{#                                    <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">#}
-{#                                        Apply coupon#}
-{#                                    </div>#}
-{#                                </div>#}
-{##}
-{#                                <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">#}
-{#                                    Update Cart#}
-{#                                </div>#}
-{#                            </div>#}
+                            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                                <div class="flex-w flex-m m-r-20 m-tb-5">
+                                    <input id="coupon" class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5"
+                                           type="text"
+                                           name="coupon" placeholder="Coupon Code">
+
+                                    <div onclick="applyCoupon()" class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                                        Apply coupon
+                                    </div>
+                                </div>
+
+                                <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                    Show Coupons
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -105,6 +107,44 @@
                                 <div class="size-209">
                                     <span class="font-weight-bold">₹</span>
                                     <span id="total-amount" class="mtext-110 cl2">
+									{{ total }}
+								</span>
+                                </div>
+                            </div>
+                            <div class="flex-w flex-t mt-3 p-b-13">
+                                <div class="size-208">
+								<span class="stext-110 text-muted cl2">
+									Coupon:
+								</span>
+                                </div>
+
+                                <div class="size-209">
+                                    <span id="coupon-code" class="text-success font-italic cl2">
+									No coupon applied
+								</span>
+                                </div>
+                            </div>
+                            <div class="flex-w flex-t p-b-13">
+                                <div class="size-208">
+								<span class="stext-110 text-muted cl2">
+									Discount:
+								</span>
+                                </div>
+
+                                <div class="size-209">
+                                    <span id="amount" class="cl2">0</span>
+                                </div>
+                            </div>
+                            <div class="flex-w flex-t p-b-13">
+                                <div class="size-208">
+								<span class="stext-110 text-muted cl2">
+									Total:
+								</span>
+                                </div>
+
+                                <div class="size-209">
+                                    <span class="font-weight-bold">₹</span>
+                                    <span id="total" class="mtext-110 cl2">
 									{{ total }}
 								</span>
                                 </div>
@@ -172,7 +212,8 @@
                             {#                            </div>#}
                             {#                        </div>#}
 
-                            <a href="{% url 'payment-page' %}" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                            <a href="{% url 'payment-page' %}"
+                               class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                                 Proceed to Checkout
                             </a>
                         </div>
@@ -183,22 +224,22 @@
         </form>
     {% else %}
         <section style="margin-bottom: 3em">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="card mt-5 text-center">
-                    <img src="{% static 'images/empty-cart.png' %}" alt="">
-                    <h5>Sorry there is no items in your cart</h5>
-                    <a href="{% url 'index' %}" style="margin-top: 2em">
-                        <button style="background-color: orangered; margin-bottom: 2em" class="btn text-white">
-                            Continue
-                            Shopping
-                        </button>
-                    </a>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="card mt-5 text-center">
+                        <img src="{% static 'images/empty-cart.png' %}" alt="">
+                        <h5>Sorry there is no items in your cart</h5>
+                        <a href="{% url 'index' %}" style="margin-top: 2em">
+                            <button style="background-color: orangered; margin-bottom: 2em" class="btn text-white">
+                                Continue
+                                Shopping
+                            </button>
+                        </a>
+                    </div>
                 </div>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-2"></div>
-        </div>
         </section>
     {% endif %}
     <!-- Back to top -->
@@ -207,43 +248,30 @@
 			<i class="zmdi zmdi-chevron-up"></i>
 		</span>
     </div>
+    <script>
+    function applyCoupon() {
+        let code = $('#coupon').val()
+        let data = {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'code': code
+        }
+        $.ajax({
+            'url': '/apply-coupon/',
+            'method': 'POST',
+            'data': data,
+            'dataType': 'json',
+            success: function (data) {
+                if (data == 'false'){
+                    swal('Enter a valid coupon', {
+                            icon: 'error'
+                        })
+                }
+                $('#total').html(data.total);
+                $('#coupon-code').html(data.code);
+                $('#amount').html(data.amount)
 
-    <!--===============================================================================================-->
-    {#    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>#}
-    {#    <!--===============================================================================================-->#}
-    {#    <script src="vendor/animsition/js/animsition.min.js"></script>#}
-    {#    <!--===============================================================================================-->#}
-    {#    <script src="vendor/bootstrap/js/popper.js"></script>#}
-    {#    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>#}
-    {#    <!--===============================================================================================-->#}
-    {#    <script src="vendor/select2/select2.min.js"></script>#}
-    {#    <script>#}
-    {#        $(".js-select2").each(function () {#}
-    {#            $(this).select2({#}
-    {#                minimumResultsForSearch: 20,#}
-    {#                dropdownParent: $(this).next('.dropDownSelect2')#}
-    {#            });#}
-    {#        })#}
-    {#    </script>#}
-    <!--===============================================================================================-->
-    {#    <script src="{% static 'vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>#}
-    <!--===============================================================================================-->
-    {#    <script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>#}
-    {#    <script>#}
-    {#        $('.js-pscroll').each(function () {#}
-    {#            $(this).css('position', 'relative');#}
-    {#            $(this).css('overflow', 'hidden');#}
-    {#            var ps = new PerfectScrollbar(this, {#}
-    {#                wheelSpeed: 1,#}
-    {#                scrollingThreshold: 1000,#}
-    {#                wheelPropagation: false,#}
-    {#            });#}
-    {##}
-    {#            $(window).on('resize', function () {#}
-    {#                ps.update();#}
-    {#            })#}
-    {#        });#}
-    {#    </script>#}
-    <!--===============================================================================================-->
-    {#    <script src="js/main.js"></script>#}
+            }
+        })
+    }
+    </script>
 {% endblock %}

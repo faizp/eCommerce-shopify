@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Product, Cart, Order, Size, Offer
-from user.models import Address
+from user.models import Address, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import uuid
@@ -32,14 +32,17 @@ def cart(request):
     carts = Cart.objects.filter(user_id=user)
     total = 0
     for cart in carts:
-        total = total + cart.product.price * cart.quantity
-        cart.total = cart.product.price * cart.quantity
         offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
                                      end_date__gte=date.today()).first()
         if offer is not None:
             cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
         else:
             cart.product.offerPrice = cart.product.price
+
+        cart.total = cart.product.offerPrice * cart.quantity
+        total = total + cart.product.offerPrice * cart.quantity
+
+    request.session['total'] = total
     context = {
         'carts': carts,
         'total': total
@@ -87,17 +90,21 @@ def remove_from_cart(request, id):
 @login_required(login_url='signin')
 def add_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
-    carts = Cart.objects.filter(user=request.user)
     stock = Product.objects.get(id=cart.product_id).stock
     if cart.quantity >= stock:
         return JsonResponse('true', safe=False)
     else:
         cart.quantity += 1
         cart.save()
-    item_total = cart.quantity * cart.product.price
     total = 0
-    for x in carts:
-        total = total + x.quantity * x.product.price
+    offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
+                                 end_date__gte=date.today()).first()
+    if offer is not None:
+        cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
+    else:
+        cart.product.offerPrice = cart.product.price
+    item_total = cart.product.offerPrice * cart.quantity
+    total = total + cart.product.offerPrice * cart.quantity
     data = {
         'quantity': cart.quantity,
         'item_total': item_total,
@@ -117,16 +124,20 @@ def reduce_quantity(request, cart_id):
     if cart.quantity < 1:
         cart.delete()
         return JsonResponse('false', safe=False)
-    item_total = cart.quantity * cart.product.price
-    carts = Cart.objects.filter(user_id=request.user)
     total = 0
-    for x in carts:
-        total = total + x.product.price * x.quantity
+    offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
+                                 end_date__gte=date.today()).first()
+    if offer is not None:
+        cart.product.offerPrice = cart.product.price - (cart.product.price * offer.discount) / 100
+    else:
+        cart.product.offerPrice = cart.product.price
+
+    item_total = cart.product.offerPrice * cart.quantity
+    total = total + cart.product.offerPrice * cart.quantity
     data = {
         'quantity': cart.quantity,
         'item_total': item_total,
         'total': total,
-        # 'carts': serializers.serialize('json', carts)
     }
     return JsonResponse(data)
 
@@ -153,6 +164,7 @@ def product_quick_view(request, id):
 @login_required(login_url='signin')
 def place_order(request):
     user = request.user
+    del request.session['total']
     address = request.POST['address']
     if request.POST['data'] == 'True':
         status = True
@@ -177,19 +189,17 @@ def place_order(request):
 @csrf_exempt
 @login_required(login_url='signin')
 def payment_page(request):
-    user = request.user
-    address = Address.objects.filter(user=user)
-    cart = Cart.objects.filter(user=user)
-    total = 0
-    for cart in cart:
-        total = total + cart.product.price * cart.quantity
+    profile = Profile.objects.get(user=request.user)
+    address = Address.objects.filter(user=request.user)
+    total = request.session['total']
     paypal_total = "%.2f" % (total / 70)
     razorpay_total = int(total * 100)
     context = {
         'address': address,
         'total': total,
         'paypal_total': paypal_total,
-        'razorpay_total': razorpay_total
+        'razorpay_total': razorpay_total,
+        'profile': profile
     }
     return render(request, 'user/payment-page.html', context)
 

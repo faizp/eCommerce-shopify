@@ -33,5 +33,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('change-image/', views.change_image, name='change-image'),
     path('search/', views.search, name='search'),
-    path('edit-profile/<int:id>', views.edit_profile, name='edit-profile')
+    path('edit-profile/<int:id>', views.edit_profile, name='edit-profile'),
+    path('apply-coupon/', views.apply_coupon, name='apply-coupon')
 ]

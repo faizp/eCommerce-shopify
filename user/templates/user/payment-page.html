@@ -1,4 +1,5 @@
 {% extends 'user/index1.html' %}
+{% load static %}
 {% block title %}
     Payment
 {% endblock %}
@@ -8,29 +9,29 @@
             <h6>Please select your address:</h6>
             <div class="row">
                 <div class="col-md-6">
-                    <div  class="card shadow p-2 mt-2">
-                            <select class="form-control" name="address">
-                                {% for address in address %}
-                                    <option class="form-control" value="{{ address.id }}">
-                                        {{ address.house_name }}
-                                        {{ address.town }},
-                                        {{ address.district }}
-                                        {{ address.state }},
-                                        {{ address.pin_code }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
+                    <div class="card shadow p-2 mt-2">
+                        <select id="address" class="form-control" name="address">
+                            {% for address in address %}
+                                <option class="form-control" value="{{ address.id }}">
+                                    {{ address.house_name }}
+                                    {{ address.town }},
+                                    {{ address.district }}
+                                    {{ address.state }},
+                                    {{ address.pin_code }}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-outline-success mt-1" data-toggle="modal"
-                            data-target="#exampleModalCenter">
-                        + ADD NEW ADDRESS
-                    </button>
+
                 </div>
             </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-outline-success mt-1" data-toggle="modal"
+                        data-target="#exampleModalCenter">
+                    + ADD NEW ADDRESS
+                </button>
+            </div>
+        </div>
         </div>
         <div class="container">
             <div class="row mt-3">
@@ -60,7 +61,7 @@
                             Cart Totals
                         </h4>
 
-                        <div class="flex-w flex-t bor12 p-b-13">
+                        <div class="flex-w flex-t p-b-13">
                             <div class="size-208">
 								<span class="stext-110 cl2">
 									Subtotal:
@@ -70,6 +71,32 @@
                             <div class="size-209">
                                 <span class="font-weight-bold">₹</span>
                                 <span id="total-amount" class="mtext-110 cl2">{{ total }}
+								</span>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-t p-b-13">
+                            <div class="size-208">
+								<span class="stext-110 cl2">
+									Subtotal:
+								</span>
+                            </div>
+
+                            <div class="size-100">
+                                <span class="font-weight-bold">₹</span>
+                                <span id="total-amount" class="mtext-8 cl2">{{ total }}
+								</span>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-t p-b-13">
+                            <div class="size-208">
+								<span class="stext-110 cl2">
+									Subtotal:
+								</span>
+                            </div>
+
+                            <div class="size-209">
+                                <span class="font-weight-bold">₹</span>
+                                <span id="total-amount" class="mtext-8 cl2">{{ total }}
 								</span>
                             </div>
                         </div>
@@ -187,9 +214,9 @@
     </script>
     <script>
         function placeOrder(data) {
-            var address = $('input[name="address"]:checked').val()
-            console.log(address)
-            var amount_paid = '{{ total }}'
+            var address = $('#address').val();
+            console.log(address);
+            var amount_paid = '{{ total }}';
             console.log(amount_paid)
             $.ajax({
                 url: '/place-order/',
@@ -219,7 +246,7 @@
                 "currency": "INR",
                 "name": "SHOPIFY",
                 "description": "PAY FOR PRODUCTS",
-                "image": "https://scontent.fccj5-1.fna.fbcdn.net/v/t1.0-9/36188448_1052411454924666_1413556518313263104_o.jpg?_nc_cat=107&ccb=3&_nc_sid=cdbe9c&_nc_ohc=T8iGhfQtGsEAX_TvqcX&_nc_ht=scontent.fccj5-1.fna&oh=91a010c7d4c8d28974e3535dcfc5d50c&oe=60688149",
+                "image": "{% static 'images/icons/favicon.png' %}",
                 "order_id": "{{ payment.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 "handler": function (response) {
                     alert('Transaction completed..!!!');
@@ -227,9 +254,9 @@
                     //successrazorpay(tid)
                 },
                 "prefill": {
-                    "name": "{{address.name}}",
-                    "email": "{{address.email}}",
-                    "contact": "9999999999"
+                    "name": "{{ profile.user.name }}",
+                    "email": "{{ profile.user.email }}",
+                    "contact": "{{ profile.phone_num }}"
                 },
                 "notes": {
                     "address": "Razorpay Corporate Office"
@@ -239,7 +266,6 @@
                 }
             };
             var rzp1 = new Razorpay(options);
-
             rzp1.open();
         }
     </script>

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
 import requests, json
-from shop.models import Product, Order, Size, Offer, Category
+from shop.models import Product, Order, Size, Offer, Category, Coupon
 from django.contrib.auth import login, authenticate, logout
 from datetime import date
 from django.contrib.auth.decorators import login_required
@@ -16,8 +16,7 @@ def index(request):
     products = Product.objects.all()
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
-                                     end_date__gte=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),end_date__gte=date.today()).first()
         if offer is not None:
             product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:
@@ -278,7 +277,6 @@ def search(request):
     return redirect('index')
 
 
-
 def edit_profile(request, id):
     user_profile = Profile.objects.get(id = id)
     user = User.objects.get(id=request.user.id)
@@ -290,3 +288,19 @@ def edit_profile(request, id):
     user.save()
     user_profile.save()
     return redirect('user-profile')
+
+
+def apply_coupon(request):
+    code = request.POST['code']
+    if Coupon.objects.filter(code=code).exists():
+        coupon = Coupon.objects.get(code=code)
+        total = request.session['total']
+        discount = total - (total * coupon.discount) / 100
+        amount_deducted = total - discount
+        context = {
+            'total': "%.2f" % discount,
+            'code': code,
+            'amount': "%.2f" % amount_deducted
+        }
+        return JsonResponse(context)
+    return JsonResponse('false', safe=False)
