@@ -26,5 +26,10 @@ urlpatterns = [
     path('delete-offer/<int:id>', views.delete_offer, name='delete-offer'),
     path('report/', views.report, name='report'),
     path('show-monthly-report/', views.monthly_report, name='monthly-report'),
-    path('report-date/', views.report_date_range, name='report-date-range')
+    path('report-date/', views.report_date_range, name='report-date-range'),
+    path('coupon/', views.coupon, name='coupon'),
+    path('add-coupon/', views.add_coupon, name='add-coupon'),
+    path('edit-coupon/<int:id>', views.edit_coupon, name='edit-coupon'),
+    path('delete-coupon/<int:id>', views.delete_coupon, name='delete-coupon'),
+    path('end-coupon/<int:id>', views.end_coupon, name='end-coupon'),
 ]

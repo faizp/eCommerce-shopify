@@ -1,0 +1,96 @@
+{% extends 'admins/index.html' %}
+{% block content %}
+    {% load static %}
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Coupon</h5>
+                        <p class="m-b-0">Coupon Management</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Coupon</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page-header end -->
+    <div class="row main-content">
+        <div class="container-fluid content-top-gap">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">COUPON ID</th>
+                    <th scope="col">COUPON CODE</th>
+                    <th scope="col">DISCOUNT</th>
+                    <th scope="col">VALIDITY</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for coupon in coupons %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ coupon.code }}</td>
+                        <td>{{ coupon.discount }}</td>
+                        <td>{% if coupon.valid == True %}Valid{% else %}Not Valid {% endif %}</td>
+                        <td><a href="{% url 'edit-coupon' coupon.id %}" class="btn btn-primary">Edit</a></td>
+                        <td>
+                            <button onclick="deleteCoupon('{{ coupon.id }}')" class="btn btn-danger">Delete</button>
+                        </td>
+                        <td>
+                            <button onclick="endCoupon('{{ coupon.id }}')" class="btn btn-success">{% if coupon.valid %}End Validity{% else %}Make Valid{% endif %}</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function deleteCoupon(id) {
+            swal({
+                title: "Are you sure?",
+                text: "This will delete Coupon!",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Coupon is deleted!", {
+                            icon: "success",
+                        });
+                        window.location.href = '/admin/delete-coupon/' + id;
+                    }
+                });
+        }
+    </script>
+    <script>
+        function endCoupon(id) {
+            swal({
+                title: "Are you sure?",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = '/admin/end-coupon/' + id;
+                    }
+                });
+        }
+    </script>
+{% endblock %}

@@ -296,6 +296,7 @@ def apply_coupon(request):
         coupon = Coupon.objects.get(code=code)
         total = request.session['total']
         discount = total - (total * coupon.discount) / 100
+        request.session['discount'] = discount
         amount_deducted = total - discount
         context = {
             'total': "%.2f" % discount,

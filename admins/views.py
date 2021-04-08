@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from user.models import Profile
-from shop.models import Category, Product, Order, Offer
+from shop.models import Category, Product, Order, Offer, Coupon
 from datetime import date, datetime, timedelta
 from django.views.decorators.csrf import csrf_exempt
 import base64
@@ -392,3 +392,53 @@ def report_date_range(request):
             return redirect('report-date-range')
         context = {'order': order}
     return render(request, 'admins/report-daily.html', context)
+
+
+def add_coupon(request):
+    if request.method == 'POST':
+        code = request.POST['code']
+        discount = request.POST['discount']
+        if Coupon.objects.filter(code = code).exists():
+            return JsonResponse('false', safe=False)
+        Coupon.objects.create(code=code, discount=discount)
+        return JsonResponse('true', safe=False)
+    return render(request, 'admins/add-coupon.html')
+
+def coupon(request):
+    coupons =  Coupon.objects.all()
+    context = {
+        'coupons': coupons
+    }
+    return render(request, 'admins/coupons.html', context)
+
+
+def edit_coupon(request, id):
+    if request.method == 'POST':
+        _coupon = Coupon.objects.get(id=id)
+        code = request.POST.get('coupon-code')
+        print(code)
+        if Coupon.objects.filter(code=code).exists():
+            messages.error(request, 'This coupon code already exists')
+            return redirect('/admin/edit-coupon/'+str(id))
+        _coupon.code = code
+        _coupon.discount = request.POST.get('coupon-discount')
+        _coupon.save()
+        return redirect('coupon')
+    coupon = Coupon.objects.get(id = id)
+    return render(request, 'admins/edit-coupon.html', {'coupon': coupon})
+
+
+def delete_coupon(request, id):
+    _coupon = Coupon.objects.get(id=id)
+    _coupon.delete()
+    return redirect('coupon')
+
+
+def end_coupon(request, id):
+    _coupon = Coupon.objects.get(id=id)
+    if _coupon.valid:
+        _coupon.valid = False
+    else:
+        _coupon.valid = True
+    _coupon.save()
+    return redirect('coupon')

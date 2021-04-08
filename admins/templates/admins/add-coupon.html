@@ -1,0 +1,82 @@
+{% extends 'admins/index.html' %}
+{% block content %}
+    <!-- Page-header start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Coupon</h5>
+                        <p class="m-b-0">Add new Coupon</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html"> <i class="fa fa-home"></i> </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Coupon</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">Add new Coupon</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page-header end -->
+    <div class="row main-content">
+        <div class="container-fluid content-top-gap pl-4">
+            <div class="column">
+                {#                <h1>Add Category</h1>#}
+                <form style="width: 20em">
+                    <div class="form-group">
+                        <label for="category-name">Name:</label>
+                        <input type="text" name="coupon-code" class="form-control text-uppercase" id="coupon-code"
+                               placeholder="Enter coupon code" required>
+                        <input type="number" min="1" max="90" name="coupon-discount" class="form-control mt-1 text-uppercase"
+                               id="coupon-discount"
+                               placeholder="Enter Discount for this coupon" required>
+                        <button type="button" class="btn btn-success mt-2" onclick="addCoupon()">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function addCoupon() {
+            let code = $('#coupon-code').val();
+            let discount = $('#coupon-discount').val();
+            if (code == "" || discount == ""){
+                swal('Please fill up the form',
+                    {
+                        icon: 'error'
+                    });
+                return
+            }
+            let data = {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'code': code,
+                'discount': discount
+            };
+            $.ajax({
+                url: '/admin/add-coupon/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                        window.location.replace('/admin/coupon/')
+                    }
+                    if (data == 'false') {
+                        swal('This category already exists', {
+                            icon: 'error'
+                        })
+                    }
+
+                }
+            })
+        }
+    </script>
+{% endblock %}

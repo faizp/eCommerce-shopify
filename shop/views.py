@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Product, Cart, Order, Size, Offer
+from .models import Product, Cart, Order, Size, Offer, Coupon
 from user.models import Address, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -30,6 +30,7 @@ def products(request):
 def cart(request):
     user = request.user.id
     carts = Cart.objects.filter(user_id=user)
+    coupons = Coupon.objects.all()
     total = 0
     for cart in carts:
         offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
@@ -45,7 +46,8 @@ def cart(request):
     request.session['total'] = total
     context = {
         'carts': carts,
-        'total': total
+        'total': total,
+        'coupons': coupons
     }
     return render(request, 'user/shoping-cart.html', context)
 
@@ -191,12 +193,15 @@ def place_order(request):
 def payment_page(request):
     profile = Profile.objects.get(user=request.user)
     address = Address.objects.filter(user=request.user)
-    total = request.session['total']
+    if request.session.has_key('discount'):
+        total = request.session['discount']
+    else:
+        total = request.session['total']
     paypal_total = "%.2f" % (total / 70)
     razorpay_total = int(total * 100)
     context = {
         'address': address,
-        'total': total,
+        'total': "%.2f" % total,
         'paypal_total': paypal_total,
         'razorpay_total': razorpay_total,
         'profile': profile
