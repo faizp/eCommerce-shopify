@@ -233,7 +233,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                    <p style="font-size: 12px;" class="text-muted">Click on the coupon code to apply:</p>
+                    <p style="font-size: 12px;" class="text-muted">Click on the coupon code to Select:</p>
                         {% for coupon in coupons %}
                             <p class="border p-2 mt-1"><a href="#!" data-dismiss="modal" id="{{ coupon.id }}-code-coupon" style="color: darkgreen;" onclick="placeCode('{{ coupon.id }}'); return false" class="font-weight-light">{{ coupon }}</a><span class="font-weight-normal float-right">Discount: <span class="text-danger">{{ coupon.discount }}%</span></span></p>
                         {% endfor %}

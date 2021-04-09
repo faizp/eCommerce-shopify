@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Product, Cart, Order, Size, Offer, Coupon
+from .models import Product, Cart, Order, Size, Offer, Coupon, UsedOffer
 from user.models import Address, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -30,7 +30,14 @@ def products(request):
 def cart(request):
     user = request.user.id
     carts = Cart.objects.filter(user_id=user)
-    coupons = Coupon.objects.all()
+    coupons = []
+    coup = Coupon.objects.filter(valid=True)
+    for coup in coup:
+        if UsedOffer.objects.filter(coupon=coup, user=user).exists():
+            continue
+        else:
+            coupons.append(coup)
+    print(coupons)
     total = 0
     for cart in carts:
         offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
@@ -175,6 +182,10 @@ def place_order(request):
     carts = Cart.objects.filter(user=user)
     transaction_id = uuid.uuid4()
     address_id = Address.objects.get(id=address)
+    if request.session.has_key('coupon'):
+        coupon = request.session['coupon']
+        coupon_obj = Coupon.objects.get(id=coupon)
+        UsedOffer.objects.create(user=user, coupon=coupon_obj)
     for cart in carts:
         amount_paid = cart.product.price * cart.quantity
         product = Product.objects.get(id=cart.product.id)
@@ -211,6 +222,8 @@ def payment_page(request):
 
 @login_required(login_url='signin')
 def order_confirm(request):
+    if request.session.has_key('coupon'):
+        del request.session['coupon']
     return render(request, 'user/order-confirmed.html')
 
 

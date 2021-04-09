@@ -295,6 +295,7 @@ def apply_coupon(request):
     if Coupon.objects.filter(code=code).exists():
         coupon = Coupon.objects.get(code=code)
         total = request.session['total']
+        request.session['coupon'] = coupon.id
         discount = total - (total * coupon.discount) / 100
         request.session['discount'] = discount
         amount_deducted = total - discount
