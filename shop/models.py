@@ -72,6 +72,7 @@ class Coupon(models.Model):
     code = models.CharField(unique=True, max_length=16)
     discount = models.IntegerField()
     valid = models.BooleanField(default=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.code

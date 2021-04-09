@@ -6,6 +6,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     phone_num = models.CharField(max_length=12, unique=True)
+    refer = models.CharField(max_length=10, unique=True, default='REFER')
+    refer_by = models.CharField(max_length=10, unique=True, null=True)
 
 
     def __str__(self):

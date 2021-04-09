@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('products/', shop_view.products, name='products'),
     path('signup/', views.register, name='signup'),
+    path('signup/<str:uid>', views.register_refer, name='signup'),
     path('login/', views.login_user, name='signin'),
     path('logout/', views.logout_user, name='logout'),
     path('cart/', shop_view.cart, name='cart'),
@@ -34,5 +35,5 @@ urlpatterns = [
     path('change-image/', views.change_image, name='change-image'),
     path('search/', views.search, name='search'),
     path('edit-profile/<int:id>', views.edit_profile, name='edit-profile'),
-    path('apply-coupon/', views.apply_coupon, name='apply-coupon')
+    path('apply-coupon/', views.apply_coupon, name='apply-coupon'),
 ]

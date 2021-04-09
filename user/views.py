@@ -4,7 +4,7 @@ from .forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Profile, Address
-import requests, json
+import requests, json, uuid
 from shop.models import Product, Order, Size, Offer, Category, Coupon
 from django.contrib.auth import login, authenticate, logout
 from datetime import date
@@ -14,9 +14,12 @@ from django.contrib import messages
 
 def index(request):
     products = Product.objects.all()
+    refer = uuid.uuid4().hex[:6].upper()
+    print(type(refer))
     size = Size.objects.all()
     for product in products:
-        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),end_date__gte=date.today()).first()
+        offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
+                                     end_date__gte=date.today()).first()
         if offer is not None:
             product.offerPrice = product.price - (product.price * offer.discount) / 100
         else:
@@ -36,7 +39,26 @@ def register(request):
                 user = form.save()
                 print(user)
                 login(request, user)
-                Profile.objects.create(user=user)
+                refer = uuid.uuid4().hex[:6].upper()
+                Profile.objects.create(user=user, refer=refer)
+                return redirect('register-user')
+        else:
+            form = UserRegisterForm()
+        return render(request, 'user/register.html', {"form": form})
+    else:
+        return redirect(index)
+
+
+def register_refer(request,uid):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                print(user)
+                login(request, user)
+                refer = uuid.uuid4().hex[:6].upper()
+                Profile.objects.create(user=user, refer=refer, refer_by=uid)
                 return redirect('register-user')
         else:
             form = UserRegisterForm()
@@ -278,7 +300,7 @@ def search(request):
 
 
 def edit_profile(request, id):
-    user_profile = Profile.objects.get(id = id)
+    user_profile = Profile.objects.get(id=id)
     user = User.objects.get(id=request.user.id)
     user.username = request.POST.get('username')
     user.email = request.POST.get('email')

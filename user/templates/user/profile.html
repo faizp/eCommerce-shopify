@@ -25,7 +25,7 @@
                         </tr>
                         <tr>
                             <th class="pl-0 w-25" scope="row"><strong>Full Name: </strong></th>
-                            <td>{{ profile.first_name }} {{ profile.user.last_name }}</td>
+                            <td>{{ profile.user.first_name }} {{ profile.user.last_name }}</td>
                         </tr>
                         <tr>
                             <th class="pl-0 w-25" scope="row"><strong>Email: </strong></th>
@@ -34,6 +34,14 @@
                         <tr>
                             <th class="pl-0 w-25" scope="row"><strong>Phone Number: </strong></th>
                             <td>{{ profile.phone_num }}</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0" scope="row"><strong>Refer Link: </strong></th>
+                            <td><input class="form-control" id="refer-link" type="text"
+                                       style="width: 18em; background-color: #cbd4cd"
+                                       value="http://localhost:8000/signup/{{ profile.refer }}" readonly>
+                                <button onclick="copyText()" class="btn btn-success">copy</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -58,7 +66,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="text-center text-danger">
-                                <h5>To edit Image click on the Image</h5>
+                                    <h5>To edit Image click on the Image</h5>
                                 </div>
                                 <form method="POST" action="{% url 'edit-profile' profile.id %}">{% csrf_token %}
                                     <div class="modal-body">
@@ -100,7 +108,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
+                                                data-dismiss="modal">Close
+                                        </button>
                                         <button type="submit" class="btn btn-primary">SAVE</button>
                                     </div>
                                 </form>
@@ -127,5 +136,12 @@
             $("input[id='my_file']").click();
         }
 
+        function copyText() {
+            let copyText = document.getElementById("refer-link");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Copied link: " + copyText.value);
+        }
     </script>
 {% endblock %}
