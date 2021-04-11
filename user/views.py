@@ -14,8 +14,6 @@ from django.contrib import messages
 
 def index(request):
     products = Product.objects.all()
-    refer = uuid.uuid4().hex[:6].upper()
-    print(type(refer))
     size = Size.objects.all()
     for product in products:
         offer = Offer.objects.filter(category=product.category, start_date__lte=date.today(),
@@ -37,7 +35,6 @@ def register(request):
             form = UserRegisterForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                print(user)
                 login(request, user)
                 refer = uuid.uuid4().hex[:6].upper()
                 Profile.objects.create(user=user, refer=refer)
@@ -55,7 +52,6 @@ def register_refer(request,uid):
             form = UserRegisterForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                print(user)
                 login(request, user)
                 refer = uuid.uuid4().hex[:6].upper()
                 Profile.objects.create(user=user, refer=refer, refer_by=uid)
@@ -147,7 +143,6 @@ def delete_address(request, id):
 
 @login_required(login_url='signin')
 def profile(request):
-    print(request)
     profile = Profile.objects.get(user=request.user)
     return render(request, 'user/profile.html', {'profile': profile})
 
@@ -180,7 +175,6 @@ def phone(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
             phone = request.POST.get('phone')
-            print(phone)
             if Profile.objects.filter(phone_num=phone).exists():
                 request.session['phone'] = phone
                 url = "https://d7networks.com/api/verifier/send"
@@ -199,9 +193,6 @@ def phone(request):
                 dict = json.loads(data.decode('utf8'))
                 otp_id = dict["otp_id"]
                 request.session['otp_id'] = otp_id
-                print(request.session['otp_id'])
-                print(response.text.encode('utf8'))
-                print('work avind')
                 return JsonResponse('true', safe=False)
             else:
                 return JsonResponse('false', safe=False)
@@ -217,12 +208,9 @@ def otp_login(request):
             phone = request.session['phone']
             url = "https://d7networks.com/api/verifier/verify"
             otp = request.POST['otp']
-            print(otp)
-            print(phone)
             profile = Profile.objects.get(phone_num=phone)
             user = User.objects.get(id=profile.id)
             otp_id = request.session['otp_id']
-            print(otp_id)
             payload = {'otp_id': otp_id, 'otp_code': otp}
             files = [
             ]
@@ -230,7 +218,6 @@ def otp_login(request):
                 'Authorization': 'Token de1422343677e30e08c10f633afde0954a576fcd'
             }
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
-            print(response.text.encode('utf8'))
             data = response.text.encode('utf8')
             dict = json.loads(data.decode('utf8'))
             status = dict['status']
@@ -243,10 +230,6 @@ def otp_login(request):
             return redirect('otp-login')
     else:
         return redirect('index')
-        # if request.session.has_key('otp_id_signup'):
-        #     phone = request.session['phone_signup']
-        #     context = {'phone': phone}
-        #     return render(request, 'user/otp-login.html', context)
 
 
 @login_required(login_url='signin')
@@ -269,7 +252,6 @@ def contact(request):
 def change_image(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
-        print(image)
         user = Profile.objects.get(user=request.user)
         user.image = image
         user.save()

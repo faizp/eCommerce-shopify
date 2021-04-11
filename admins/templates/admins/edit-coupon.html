@@ -45,28 +45,4 @@
             </div>
         </div>
     </div>
-{#    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>#}
-{#    <script>#}
-{#        function updateCoupon(id) {#}
-{#            let code = $('#coupon-code').val();#}
-{#            let discount = $('#coupon-discount').val();#}
-{#            $.ajax({#}
-{#                url: '/admin/edit-coupon/' + id,#}
-{#                method: 'POST',#}
-{#                data: {'code': code, 'discount': discount},#}
-{#                dataType: 'json',#}
-{#                success: function (data) {#}
-{#                    if (data == 'true') {#}
-{#                        window.location.replace('/admin/coupon/')#}
-{#                    }#}
-{#                    if (data == 'false') {#}
-{#                        swal('This coupon code already exists', {#}
-{#                            icon: 'error'#}
-{#                        })#}
-{#                    }#}
-{##}
-{#                }#}
-{#            })#}
-{#        }#}
-{#    </script>#}
 {% endblock %}

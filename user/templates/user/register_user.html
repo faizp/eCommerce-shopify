@@ -8,12 +8,6 @@ Sign Up
             <div class="col-md-4"></div>
             <div class="col-md-4 text-center">
                 <h3 class="text mt-2">Please upload a profile picture: </h3>
-                {#        <form action="">#}
-                {#        <div class="form-group">#}
-                {#                <label for="image1">Select images of product</label><br>#}
-                {#                <input type="file" name="image1" class="form-control-file" id="image1" required>#}
-                {#        </div>#}
-                {#        </form>#}
                 <form method="POST" enctype="multipart/form-data" class="md-form">{% csrf_token %}
                     <div class="file-field">
                         <div class="mb-4">

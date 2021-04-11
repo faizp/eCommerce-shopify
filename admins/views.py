@@ -15,12 +15,10 @@ from django.contrib import messages
 
 def home(request):
     if request.session.has_key('password'):
-        # users
         users = User.objects.all().count()
         new_users = User.objects.filter(date_joined__month=datetime.now().month).count()
         active_users = User.objects.filter(is_active=True).count()
         blocked_users = User.objects.filter(is_active=False).count()
-        # orders
         orders = Order.objects.all()
         orders_today = Order.objects.filter(order_date__date=date.today()).count()
         delivered_orders = Order.objects.filter(order_status='delivered').count()
@@ -319,7 +317,6 @@ def add_offer(request):
         start_date = request.POST['startDate']
         end_date = request.POST['endDate']
         if Offer.objects.filter(category=category, end_date__lte=end_date).exists():
-            print('exists')
             return JsonResponse('false', safe=False)
         else:
             name = request.POST['name']
@@ -354,7 +351,6 @@ def monthly_report(request):
             user_dict[x.user.id] = x.user.first_name
             product_dict[x.product.id] = x.product.name
         serialized_data = serializers.serialize('json', user_order)
-        # print(serialized_data)
         serialized_data = json.loads(serialized_data)
         for x in serialized_data:
             x['fields']['user_name'] = user_dict[x['fields']['user']]
@@ -363,11 +359,6 @@ def monthly_report(request):
             'user_order': json.dumps(serialized_data)
         }
         return JsonResponse(context)
-        #     return render(request, 'admins/report.html', context)
-        # else:
-
-        #     return render(request, 'admins/report.html', {'user_order': book})
-        # return render(request, 'admins/report.html', context)
 
 
 def report(request):
@@ -385,7 +376,6 @@ def report_date_range(request):
     if request.method == 'POST':
         start_date = request.POST.get('date-start')
         end_date = request.POST.get('date-end')
-        print(start_date, end_date)
         order = Order.objects.filter(order_date__range=[start_date, end_date])
         if len(order) < 1:
             messages.error(request, "There is no orders in selected dates")
@@ -416,7 +406,6 @@ def edit_coupon(request, id):
     if request.method == 'POST':
         _coupon = Coupon.objects.get(id=id)
         code = request.POST.get('coupon-code')
-        print(code)
         if Coupon.objects.filter(code=code).exists():
             messages.error(request, 'This coupon code already exists')
             return redirect('/admin/edit-coupon/'+str(id))

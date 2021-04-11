@@ -37,7 +37,6 @@ def cart(request):
             continue
         else:
             coupons.append(coup)
-    print(coupons)
     total = 0
     for cart in carts:
         offer = Offer.objects.filter(category=cart.product.category, start_date__lte=date.today(),
@@ -87,7 +86,6 @@ def add_to_cart(request, p_id):
             return JsonResponse('false', safe=False)
         else:
             new_added = Cart.objects.create(user=user, product_id=p_id, size=size)
-            print(new_added.id)
 
     cart_count = Cart.objects.filter(user=user).count()
     data = {
@@ -138,9 +136,7 @@ def add_quantity(request, cart_id):
 @login_required(login_url='signin')
 def reduce_quantity(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
-    print(cart.quantity)
     cart.quantity -= 1
-    print('after ', cart.quantity)
     cart.save()
     if cart.quantity < 1:
         cart.delete()

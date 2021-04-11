@@ -29,8 +29,6 @@ $('#btn').click(function () {
         })
     }
 });
-
-
 function addToCart(id) {
     var size = $('#size').val();
     $.ajax({
@@ -60,8 +58,6 @@ function addToCart(id) {
         }
     })
 }
-
-
 function addProduct() {
     var id = $('#product-id').val()
     var size = $('#product-size').val();
@@ -91,28 +87,6 @@ function addProduct() {
         }
     })
 }
-
-
-// function removeFromCart(id) {
-//     $.ajax({
-//         url: '/remove_from_cart/' + id,
-//         method: 'POST',
-//         success: function (data) {
-//             console.log(data)
-//             if (data == 'true') {
-//                 $('#' + id + '-cart').remove()
-//             }
-//             if (data == 'false') {
-//                 console.log('hello')
-//                 $('#' + id + '-cart').remove()
-//                 window.location.reload()
-//             }
-//         }
-//     })
-//
-// }
-
-
 function addQuantity(id) {
     $.ajax({
         url: '/add_quantity/' + id,
@@ -136,8 +110,6 @@ function addQuantity(id) {
         }
     })
 }
-
-
 function reduceQuantity(id) {
     $.ajax({
         url: '/reduce_quantity/' + id,
@@ -187,8 +159,6 @@ $(document).ready(function () {
         }
     });
 });
-
-
 function addOffer() {
     let isvalid = $('#form_id').valid();
     if (isvalid) {
