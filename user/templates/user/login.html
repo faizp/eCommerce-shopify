@@ -1,6 +1,6 @@
 {% extends 'user/index1.html' %}
 {% block title %}
-Login
+    Login
 {% endblock %}
 {% block content %}
     <section style="margin-top: 10em; height: 50vh;">
@@ -38,4 +38,38 @@ Login
             <div class="col-md-3"></div>
         </div>
     </section>
+{#    <script>#}
+{#        $('#btn').click(function () {#}
+{#            var username = $('#username').val()#}
+{#            var password = $('#password').val()#}
+{#            var data = {#}
+{#                'csrfmiddlewaretoken': '{{csrf_token}}',#}
+{#                'username': username,#}
+{#                'password': password#}
+{#            }#}
+{#            if (username == "") {#}
+{#                $('#invalid').html("The username that you've entered doesn't match any account")#}
+{#            } else if (password == "") {#}
+{#                $('#invalid').html("The password you have entered is incorrect")#}
+{#            } else {#}
+{#                $.ajax({#}
+{#                    url: '/login/',#}
+{#                    method: 'POST',#}
+{#                    data: data,#}
+{#                    dataType: 'json',#}
+{#                    success: function (data) {#}
+{#                        console.log('hello')#}
+{#                        if (data == 'true') {#}
+{##}
+{#                            window.location.replace('/')#}
+{#                        }#}
+{#                        if (data == 'false') {#}
+{#                            console.log('thett');#}
+{#                            $('#invalid').html("Please enter a valid username and password")#}
+{#                        }#}
+{#                    }#}
+{#                })#}
+{#            }#}
+{#        })#}
+{#    </script>#}
 {% endblock %}

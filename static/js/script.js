@@ -2,7 +2,7 @@ $('#btn').click(function () {
     var username = $('#username').val()
     var password = $('#password').val()
     var data = {
-        'csrfmiddlewaretoken': '{{csrf token}}',
+        'csrfmiddlewaretoken': '{{csrf_token}}',
         'username': username,
         'password': password
     }
@@ -17,20 +17,21 @@ $('#btn').click(function () {
             data: data,
             dataType: 'json',
             success: function (data) {
+                console.log('hello')
                 if (data == 'true') {
                     window.location.replace('/')
                 }
                 if (data == 'false') {
+                    console.log('thett');
                     $('#invalid').html("Please enter a valid username and password")
                 }
             }
         })
     }
-})
+});
 
 
 function addToCart(id) {
-    console.log(id)
     var size = $('#size').val();
     $.ajax({
         url: '/add_cart/' + id,
@@ -41,10 +42,20 @@ function addToCart(id) {
             if (data == 'false') {
                 swal("Sorry", "Product Out of Stock", "error");
             }
+            if (data.type == '1') {
+                $('#' + data.id + '-quantity').html(data.quantity);
+                console.log(data.id)
+                swal(data.name, "is added to cart !", "success");
+            }
             else {
-                console.log(data.count)
+                $('#image').remove();
+                data1 = JSON.parse(data.product);
+                console.log(data1)
                 $('#cart-icon').attr('data-notify', data.count);
                 swal(data.name, "is added to cart !", "success");
+                html_value = '<li class="header-cart-item flex-w flex-t m-b-12"><div class="header-cart-item-img"><img src=/media/' + data1[0].fields.image1 + ' alt="IMG"></div><div class="header-cart-item-txt p-t-8"><a href="#!"class="header-cart-item-name m-b-18 hov-cl1 trans-04">' + data1[0].fields.name + '</a><span class="header-cart-item-info"><span id="' + data1[0].pk + '-quantity">' + data.quantity + '</span> x <span class="font-weight-bold">₹</span>' + data1[0].fields.price + '</span></div></li>'
+                $('#side-cart').append(html_value);
+                $('#checkout').show()
             }
         }
     })
@@ -63,10 +74,19 @@ function addProduct() {
             if (data == 'false') {
                 swal("Sorry", "Product Out of Stock", "error");
             }
-            else {
-                $('#cart-icon').attr('data-notify', data.count);
-                console.log($('#cart-icon').val());
+            if (data.type == '1') {
+                $('#' + data.id + '-quantity').html(data.quantity);
+                console.log(data.id)
                 swal(data.name, "is added to cart !", "success");
+            }
+            else {
+                $('#image').remove();
+                data1 = JSON.parse(data.product);
+                $('#cart-icon').attr('data-notify', data.count);
+                swal(data.name, "is added to cart !", "success");
+                html_value = '<li class="header-cart-item flex-w flex-t m-b-12"><div class="header-cart-item-img"><img src=/media/' + data1[0].fields.image1 + ' alt="IMG"></div><div class="header-cart-item-txt p-t-8"><a href="#!"class="header-cart-item-name m-b-18 hov-cl1 trans-04">' + data1[0].fields.name + '</a><span class="header-cart-item-info"><span id="'+ data.c_id +'-quantity">' + data.quantity + '</span> x <span class="font-weight-bold">₹</span>' + data1[0].fields.price + '</span></div></li>'
+                $('#side-cart').append(html_value);
+                $('#checkout').show()
             }
         }
     })
