@@ -362,7 +362,7 @@ def monthly_report(request):
 
 
 def report(request):
-    today = date.today()
+    today = date.today() + timedelta(days=1)
     week = date.today() - timedelta(days=7)
     book = Order.objects.filter(order_date__range=(week, today))
     context = {
