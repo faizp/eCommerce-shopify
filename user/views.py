@@ -301,7 +301,7 @@ def edit_profile(request, id):
 def apply_coupon(request):
     code = request.POST['code']
     if Coupon.objects.filter(code=code).exists():
-        coupon = Coupon.objects.get(code=code)
+        coupon = Coupon.objects.filter(code=code, user=request.user)
         total = request.session['total']
         request.session['coupon'] = coupon.id
         discount = total - (total * coupon.discount) / 100
