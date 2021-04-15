@@ -38,7 +38,7 @@ def register(request):
                 login(request, user)
                 refer = uuid.uuid4().hex[:6].upper()
                 Coupon.objects.create(code='WELCOME50', discount=50, user=user)
-                Profile.objects.create(user=user, refer=refer)
+                Profile.objects.create(user=user, phone_num = None, refer=refer)
                 return redirect('register-user')
         else:
             form = UserRegisterForm()
@@ -55,7 +55,7 @@ def register_refer(request,uid):
                 user = form.save()
                 login(request, user)
                 refer = uuid.uuid4().hex[:6].upper()
-                Profile.objects.create(user=user, refer=refer, refer_by=uid)
+                Profile.objects.create(user=user,phone_num = None, refer=refer, refer_by=uid)
                 Coupon.objects.create(code='WELCOME50', discount=50, user=user)
                 user = Profile.objects.get(refer=uid).user
                 Coupon.objects.create(code='RFR30', discount=30, user=user)
