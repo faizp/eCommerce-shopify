@@ -200,7 +200,6 @@ def place_order(request):
     else:
         status = False
     carts = Cart.objects.filter(user=user)
-    transaction_id = uuid.uuid4()
     address_id = Address.objects.get(id=address)
     if request.session.has_key('coupon'):
         coupon = request.session['coupon']
@@ -212,8 +211,7 @@ def place_order(request):
         product.stock = product.stock - cart.quantity
         product.save()
         Order.objects.create(user=user, product=cart.product, quantity=cart.quantity,
-                             size=cart.size, payment_status=status, amount_paid=amount_paid, address=address_id,
-                             transaction_id=transaction_id)
+                             size=cart.size, payment_status=status, amount_paid=amount_paid, address=address_id)
         amount_paid = 0
     carts.delete()
     return JsonResponse('true', safe=False)
