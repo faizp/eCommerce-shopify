@@ -69,7 +69,7 @@ class Cart(models.Model):
 
 
 class Coupon(models.Model):
-    code = models.CharField(unique=True, max_length=16)
+    code = models.CharField(max_length=16)
     discount = models.IntegerField()
     valid = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -87,9 +87,7 @@ class Order(models.Model):
     amount_paid = models.FloatField(max_length=6, default=0.00)
     payment_status = models.BooleanField(default=False)
     order_status = models.CharField(default='pending', max_length=16)
-    transaction_id = models.CharField(max_length=256)
     order_date = models.DateTimeField(auto_now_add=True)
-    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
 
 
 class Offer(models.Model):
@@ -98,7 +96,6 @@ class Offer(models.Model):
     discount = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
-    valid = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

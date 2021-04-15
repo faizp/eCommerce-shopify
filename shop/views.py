@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import uuid
 from datetime import date
+from django.db.models import Q
 
 
 def products(request):
@@ -30,9 +31,20 @@ def products(request):
 def cart(request):
     user = request.user.id
     carts = Cart.objects.filter(user_id=user)
+    coupon = []
+    if Coupon.objects.filter(valid=True, user=user).exists():
+        coupon1 = Coupon.objects.filter(user=None)
+        coupon2 = Coupon.objects.filter(user=user)
+        for coups in coupon1:
+            coupon.append(coups)
+        for coups in coupon2:
+            coupon.append(coups)
+    else:
+        coupon1 = Coupon.objects.filter(valid=True, user=user)
+        for coups in coupon1:
+            coupon.append(coups)
     coupons = []
-    coup = Coupon.objects.filter(valid=True)
-    for coup in coup:
+    for coup in coupon:
         if UsedOffer.objects.filter(coupon=coup, user=user).exists():
             continue
         else:
