@@ -25,35 +25,39 @@
     <!-- Page-header end -->
     <div class="row">
         <div class="container-fluid">
-        <h6 class="mt-2">Last Week Report:</h6>
+            <h6 class="mt-2">Last Week Report:</h6>
             <div class="col-12">
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">USER</th>
-                        <th scope="col">PRODUCT</th>
-                        <th scope="col">QTY</th>
-                        <th scope="col">PRICE</th>
-                        <th scope="col">STATUS</th>
-                        <th scope="col">PAYMENT STATUS</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for order in order %}
+                <input type="button" style="margin-bottom: 3px" class="btn btn-success rounded how-shadow1"
+                       onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+                <button class="btn btn-danger rounded" style="margin-bottom: 3px" onclick="javascript:demoFromHTML();">Export To PDF</button>
+                <div id="report-week">
+                    <table id="week-table" class="table">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>{{ order.id }}</td>
-                            <td>{{ order.user.username }}</td>
-                            <td>{{ order.product.name }}</td>
-                            <td>{{ order.quantity }}</td>
-                            <td>{{ order.product.price }}</td>
-                            <td>{{ order.order_status }}</td>
-                            <td>{% if order.payment_status == 'false' %} Not Paid {% else %} Paid {% endif %}</td>
+                            <th scope="col">ID</th>
+                            <th scope="col">USER</th>
+                            <th scope="col">PRODUCT</th>
+                            <th scope="col">QTY</th>
+                            <th scope="col">PRICE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">PAYMENT STATUS</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                        {% for order in order %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.user.username }}</td>
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.product.price }}</td>
+                                <td>{{ order.order_status }}</td>
+                                <td>{% if order.payment_status == 'false' %} Not Paid {% else %} Paid {% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="col-12">
                 <h6>Monthly Report:</h6>
@@ -89,7 +93,7 @@
             console.log('helo')
             var date = new Date($('#month').val());
             console.log(date)
-            if (date == 'Invalid Date'){
+            if (date == 'Invalid Date') {
                 window.alert('please chose a month')
             }
             var month = date.getMonth() + 1;
@@ -104,9 +108,10 @@
                 },
                 dataType: 'json',
                 success: function (data) {
+                    $('#report-tab').html('')
                     data1 = JSON.parse(data.user_order);
                     for (var i = 0; i < data1.length; i++) {
-                        let j = i+1;
+                        let j = i + 1;
                         data = data1[i].fields
                         payment_status = data.payment_status ? "Paid" : "Not Paid"
                         html_value = '<tr><td>' + j + '</td><td>' + data.user_name + '</td><td>' + data.product_name + '</td><td>' + data.quantity + '</td><td>' + data.amount_paid / data.quantity + '</td><td>' + data.order_status + '</td><td>' + payment_status + '</td></tr>'
@@ -115,6 +120,57 @@
                     }
                 }
             })
+        }
+    </script>
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                ,
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+                , format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById('week-table')
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script>
+        function demoFromHTML() {
+            var pdf = new jsPDF('p', 'pt', 'letter');
+            source = $('#report-week')[0];
+            specialElementHandlers = {
+                // element with id of "bypass" - jQuery style selector
+                '#bypassme': function (element, renderer) {
+                    // true = "handled elsewhere, bypass text extraction"
+                    return true
+                }
+            };
+            margins = {
+                top: 80,
+                bottom: 60,
+                left: 40,
+                width: 522
+            };
+            pdf.fromHTML(
+                source, // HTML string or DOM elem ref.
+                margins.left, // x coord
+                margins.top, { // y coord
+                    'width': margins.width, // max width of content on PDF
+                    'elementHandlers': specialElementHandlers
+                },
+
+                function (dispose) {
+                    pdf.save('Report.pdf');
+                }, margins);
         }
     </script>
 {% endblock %}

@@ -51,6 +51,12 @@
 
                     {% endif %}
                 {% else %}
+                    <input type="button" style="margin-bottom: 3px" class="btn btn-success rounded how-shadow1"
+                           onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+                    <button class="btn btn-danger rounded" style="margin-bottom: 3px"
+                            onclick="javascript:demoFromHTML();">Export To PDF
+                    </button>
+                    <div id="report-week">
                     <table id="reportTable" class="table">
                         <thead class="thead-dark">
                         <tr>
@@ -77,28 +83,80 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    </div>
                 {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js' %}"></script>
-    <script>
-        $(document).ready(function () {
-            $("#date-start").datepicker({
-                dateFormat: 'yy-mm-dd',
-                numberOfMonths: 2,
-                onSelect: function (selected) {
-                    $("#date-end").datepicker("option", "minDate", selected);
-                    // $("#end-date").datepicker("setDate", '+1y');
-                }
+        <script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js' %}"></script>
+        <script>
+            $(document).ready(function () {
+                $("#date-start").datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    numberOfMonths: 2,
+                    onSelect: function (selected) {
+                        $("#date-end").datepicker("option", "minDate", selected);
+                        // $("#end-date").datepicker("setDate", '+1y');
+                    }
+                });
+                $("#date-end").datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    numberOfMonths: 2,
+                    onSelect: function (selected) {
+                        $("#date-start").datepicker("option", "maxDate", selected)
+                    }
+                });
             });
-            $("#date-end").datepicker({
-                dateFormat: 'yy-mm-dd',
-                numberOfMonths: 2,
-                onSelect: function (selected) {
-                    $("#date-start").datepicker("option", "maxDate", selected)
+        </script>
+        <script type="text/javascript">
+            var tableToExcel = (function () {
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                    ,
+                    template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+                    , base64 = function (s) {
+                        return window.btoa(unescape(encodeURIComponent(s)))
+                    }
+                    , format = function (s, c) {
+                        return s.replace(/{(\w+)}/g, function (m, p) {
+                            return c[p];
+                        })
+                    }
+                return function (table, name) {
+                    if (!table.nodeType) table = document.getElementById('reportTable')
+                    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                    window.location.href = uri + base64(format(template, ctx))
                 }
-            });
-        });
-    </script>
+            })()
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+        <script>
+            function demoFromHTML() {
+                var pdf = new jsPDF('p', 'pt', 'letter');
+                source = $('#report-week')[0];
+                specialElementHandlers = {
+                    // element with id of "bypass" - jQuery style selector
+                    '#bypassme': function (element, renderer) {
+                        // true = "handled elsewhere, bypass text extraction"
+                        return true
+                    }
+                };
+                margins = {
+                    top: 80,
+                    bottom: 60,
+                    left: 40,
+                    width: 522
+                };
+                pdf.fromHTML(
+                    source, // HTML string or DOM elem ref.
+                    margins.left, // x coord
+                    margins.top, { // y coord
+                        'width': margins.width, // max width of content on PDF
+                        'elementHandlers': specialElementHandlers
+                    },
+
+                    function (dispose) {
+                        pdf.save('Report.pdf');
+                    }, margins);
+            }
+        </script>
 {% endblock %}
