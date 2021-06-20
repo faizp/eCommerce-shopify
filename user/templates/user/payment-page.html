@@ -179,6 +179,9 @@
             console.log(address);
             var amount_paid = '{{ total }}';
             console.log(amount_paid)
+            if (address == null) {
+                window.alert('Please provide address details')
+            } else {
             $.ajax({
                 url: '/place-order/',
                 method: 'POST',
@@ -195,11 +198,16 @@
                     }
                 }
             })
+            }
         }
     </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         function razorpay() {
+            var address = $('#address').val();
+            if (address == null) {
+                window.alert('Please provide address details')
+            } else {
             var payment_status = 'razorpay'
             var options = {
                 "key": "rzp_test_0CJlFTJsvWeMla", // Enter the Key ID generated from the Dashboard
@@ -228,6 +236,7 @@
             };
             var rzp1 = new Razorpay(options);
             rzp1.open();
+        }
         }
     </script>
 
